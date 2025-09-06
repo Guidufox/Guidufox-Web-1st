@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://guidufox.github.io/Guidufox-Web-1st/sitemap.xml
