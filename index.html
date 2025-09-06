@@ -10,7 +10,7 @@
 
     <!-- ETIQUETAS SEO MEJORADAS -->
     <meta name="description" content="Guía interactiva para analizar, comparar y elegir las mejores opciones de ahorro en Paraguay. Encuentra tasas de interés de bancos y cooperativas.">
-    <meta name="keywords" content="ahorro paraguay, invertir en paraguay, plazo fijo, cda, banco nacional de fomento, itaú, visión banco, cooperativa medalla milagrosa, cooperativa universitaria, tasas de interés paraguay, comparador ahorro">
+    <meta name="keywords" content="ahorro paraguay, invertir en paraguay, plazo fijo, cda, banco nacional de fomento, itaú, familiar, visión banco, cooperativa medalla milagrosa, cooperativa universitaria, tasas de interés paraguay, comparador ahorro">
     <meta name="author" content="AhorroPY">
     <meta property="og:title" content="Guía Interactiva de Ahorro en Paraguay">
     <meta property="og:description" content="Compara y elige la mejor opción de ahorro en Paraguay con nuestra guía interactiva.">
@@ -23,6 +23,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Twitch Embed Script -->
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
     <script>
         // Cargar Chart.js solo cuando sea necesario
         function loadChartJS() {
@@ -325,17 +327,8 @@
 </head>
 <body class="antialiased">
 
-    <!-- Twitch Background Player -->
-    <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.1; pointer-events: none;">
-        <iframe
-            src="https://player.twitch.tv/?channel=guidufox&parent=guidufox.github.io&muted=true&autoplay=true"
-            height="100%"
-            width="100%"
-            frameborder="0"
-            scrolling="no"
-            allowfullscreen="false">
-        </iframe>
-    </div>
+    <!-- Twitch Background Player Container -->
+    <div id="twitch-embed" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.1; pointer-events: none;"></div>
 
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -436,6 +429,8 @@
                         <select id="filter-institution" class="p-2 border rounded">
                             <option value="all">Todas las instituciones</option>
                             <option value="bnf">BNF</option>
+                            <option value="itaú">Itaú</option>
+                            <option value="familiar">Familiar</option>
                             <option value="continental">Continental</option>
                             <option value="gnb">GNB</option>
                             <option value="vision">Visión</option>
@@ -529,7 +524,7 @@
                     <p class="text-gray-600 mb-4">Buscas un rendimiento justo por tu dinero, pero sin renunciar a una seguridad alta. Estás dispuesto a inmovilizar una parte de tus ahorros por un tiempo corto o mediano para obtener una mejor tasa.</p>
                     <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
                         <p class="font-bold text-gray-800">Mejor Opción:</p>
-                        <p class="text-gray-700">Un <span class="font-semibold">Certificado de Depósito de Ahorro (CDA) a mediano plazo (12 a 24 meses)</span> en bancos privados sólidos como <span class="font-semibold">Banco Continental o Banco Atlas</span>. También, un CDA en una Cooperativa de Ahorro y Crédito grande como <span class="font-semibold">Medalla Milagrosa</span> puede ofrecer tasas muy competitivas con un buen nivel de seguridad.</p>
+                        <p class="text-gray-700">Un <span class="font-semibold">Certificado de Depósito de Ahorro (CDA) a mediano plazo (12 a 24 meses)</span> en bancos privados sólidos como <span class="font-semibold">Itaú, Continental o Familiar</span>. También, un CDA en una Cooperativa de Ahorro y Crédito grande como <span class="font-semibold">Medalla Milagrosa</span> puede ofrecer tasas muy competitivas con un buen nivel de seguridad.</p>
                     </div>
                 </div>
                 <div id="content-maximizador" class="profile-content card p-8 hidden">
@@ -537,7 +532,7 @@
                     <p class="text-gray-600 mb-4">Tu objetivo principal es obtener la tasa de interés más alta posible. Comprendes que para ello necesitas inmovilizar tu dinero por plazos más largos y estás cómodo con ello.</p>
                      <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
                         <p class="font-bold text-gray-800">Mejor Opción:</p>
-                        <p class="text-gray-700">Un <span class="font-semibold">CDA a largo plazo (más de 24 meses)</span>. Investiga las ofertas de bancos como <span class="font-semibold">Banco GNB o Visión Banco</span>, que a menudo tienen tasas promocionales atractivas para plazos extendidos. Las Cooperativas como <span class="font-semibold">Medalla Milagrosa o Universitaria</span> también son una excelente alternativa en este segmento, usualmente liderando las tasas de mercado para socios.</p>
+                        <p class="text-gray-700">Un <span class="font-semibold">CDA a largo plazo (más de 24 meses)</span>. Investiga las ofertas de bancos como <span class="font-semibold">Banco GNB o Banco Familiar</span>, que a menudo tienen tasas promocionales atractivas para plazos extendidos. Las Cooperativas como <span class="font-semibold">Medalla Milagrosa o Universitaria</span> también son una excelente alternativa en este segmento, usualmente liderando las tasas de mercado para socios.</p>
                     </div>
                 </div>
             </div>
@@ -556,12 +551,12 @@
                         <h3 class="text-xl font-bold text-[#2E5A88] mb-4">Parámetros de simulación</h3>
                         
                         <div class="mb-4">
-                            <label for="sim-amount" class="block text-gray-700 mb-2">Monto a invertir (Gs.)</label>
-                            <input type="number" id="sim-amount" min="100000" step="100000" value="5000000" class="calculator-input">
+                            <label for="sim-amount" class="block text-gray-700 mb-2">Monto (Gs.)</label>
+                            <input type="text" id="sim-amount" value="5.000.000" class="calculator-input">
                         </div>
                         
                         <div class="mb-4">
-                            <label for="sim-institution" class="block text-gray-700 mb-2">Producto</label>
+                            <label for="sim-product" class="block text-gray-700 mb-2">Producto</label>
                             <select id="sim-product" class="calculator-input">
                                 <!-- Options will be populated by JavaScript -->
                             </select>
@@ -582,7 +577,7 @@
                         
                         <div class="mb-4 p-4 bg-blue-50 rounded-lg">
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-700">Inversión inicial:</span>
+                                <span id="initial-label" class="text-gray-700">Inversión inicial:</span>
                                 <span id="result-initial" class="font-bold">5.000.000 Gs.</span>
                             </div>
                         </div>
@@ -602,7 +597,7 @@
                         </div>
                         
                         <div class="mt-6 text-sm text-gray-500">
-                            <p>💡 Esta simulación es una estimación. Los valores reales pueden variar. El cálculo para Ahorro Programado es una aproximación simple.</p>
+                            <p>💡 Esta simulación es una estimación. El cálculo para Ahorro Programado es una aproximación simple.</p>
                         </div>
                     </div>
                 </div>
@@ -667,212 +662,95 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Mobile menu functionality
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
-    
-    // --- NUEVA BASE DE DATOS AMPLIADA ---
+    // --- DATABASE ---
     const data = [
-        // --- CDA / Ahorro a Plazo Fijo ---
-        {
-            id: 'medalla-cda',
-            institucion: 'Cooperativa Medalla Milagrosa',
-            producto: 'Ahorro a Plazo Fijo',
-            tipo: 'cda',
-            tasa: 11.00,
-            montoMinimo: '1.000.000',
-            plazoMinimo: '12 meses',
-            ventaja: 'Suele ofrecer las tasas más altas del mercado',
-            desventaja: 'Requiere ser socio de la cooperativa',
-            proceso: 'Primero debes asociarte, lo que implica un pequeño aporte de capital. Luego, la apertura del plazo fijo es presencial. Se necesita CI y ser socio activo.',
-            capitalizacion: 'Al vencimiento. Los intereses se acreditan junto con el capital al finalizar el periodo pactado.',
-            riesgo: 'Las cooperativas son reguladas por el INCOOP, no por el BCP. Medalla es una de las más grandes y sólidas, pero el riesgo se percibe de forma distinta a un banco. No cuentan con el fondo de garantía de depósitos del BCP.',
-            fiscal: 'Los rendimientos (excedentes en cooperativas) tienen un tratamiento fiscal diferente, a menudo con tasas preferenciales o exenciones, lo que aumenta su atractivo. Se debe consultar la ley de cooperativas vigente.'
-        },
-        {
-            id: 'universitaria-cda',
-            institucion: 'Cooperativa Universitaria',
-            producto: 'CDA Socios',
-            tipo: 'cda',
-            tasa: 10.50,
-            montoMinimo: '1.000.000',
-            plazoMinimo: '12 meses',
-            ventaja: 'Excelentes tasas y gran solidez en el sector cooperativo',
-            desventaja: 'Requiere ser socio y cumplir con requisitos de membresía',
-            proceso: 'Debes ser socio para acceder. El proceso implica presentar documentos y un aporte de capital. La apertura del CDA se realiza en sus sucursales.',
-            capitalizacion: 'Generalmente al vencimiento, depositando el capital e intereses en la cuenta del socio.',
-            riesgo: 'Regulada por INCOOP. Es una de las cooperativas más grandes y con mayor trayectoria del país, considerada de muy bajo riesgo dentro de su sector.',
-            fiscal: 'Los rendimientos de los socios de cooperativas (excedentes) suelen tener beneficios fiscales. Es importante consultar la normativa actual para detalles específicos.'
-        },
-        {
-            id: 'gnb-cda',
-            institucion: 'Banco GNB Paraguay',
-            producto: 'CDA a Plazo Fijo',
-            tipo: 'cda',
-            tasa: 8.75,
-            montoMinimo: '10.000.000',
-            plazoMinimo: '12 meses',
-            ventaja: 'Tasas de interés muy competitivas',
-            desventaja: 'Monto de apertura más elevado',
-            proceso: 'Se puede gestionar en sucursales. Requiere documentación estándar (CI, comprobante de ingresos). Ofrecen atención personalizada para estos productos.',
-            capitalizacion: 'Generalmente al vencimiento, aunque pueden ofrecer opciones de pago de intereses periódicos (mensual, trimestral) que no se capitalizan, sino que se pagan en una cuenta.',
-            riesgo: 'Parte de un grupo financiero internacional sólido, el Banco GNB es una entidad bien calificada y segura en el mercado paraguayo.',
-            fiscal: 'Los rendimientos están sujetos a la retención del impuesto a la renta correspondiente, según la legislación vigente.'
-        },
-        {
-            id: 'atlas-cda',
-            institucion: 'Banco Atlas',
-            producto: 'CDA Plus',
-            tipo: 'cda',
-            tasa: 8.50,
-            montoMinimo: '5.000.000',
-            plazoMinimo: '12 meses',
-            ventaja: 'Buenas tasas y promociones frecuentes',
-            desventaja: 'Las mejores tasas a veces exigen plazos más largos',
-            proceso: 'Contratación en sucursales con asesoría personalizada. Requieren CI, comprobantes de ingresos y justificativo del origen de los fondos.',
-            capitalizacion: 'La capitalización es al vencimiento del plazo. El total (capital + intereses) es depositado en la cuenta del cliente.',
-            riesgo: 'Banco privado con décadas en el mercado, conocido por su solidez financiera y buena gestión de riesgo.',
-            fiscal: 'Los rendimientos de capital están alcanzados por el IRP o IRE. El banco se encarga de realizar la retención impositiva.'
-        },
-        {
-            id: 'continental-cda',
-            institucion: 'Banco Continental',
-            producto: 'CDA Digital a 1 año',
-            tipo: 'cda',
-            tasa: 8.25,
-            montoMinimo: '1.000.000',
-            plazoMinimo: '12 meses',
-            ventaja: 'Proceso 100% online y montos accesibles',
-            desventaja: 'Tasas competitivas pero pueden no ser las más altas',
-            proceso: 'Fácil y rápido a través de su app o banca web si ya eres cliente. Requiere tener una cuenta activa en el banco. La apertura es inmediata.',
-            capitalizacion: 'Al vencimiento. El banco deposita el capital más los intereses en tu cuenta de ahorros asociada una vez cumplido el plazo.',
-            riesgo: 'Es uno de los bancos privados más grandes y sólidos del país, con excelente calificación de riesgo. Se considera una institución muy segura.',
-            fiscal: 'Aplica la misma normativa fiscal. Los intereses generados son considerados renta y están gravados. El banco practica la retención correspondiente al momento del pago.'
-        },
-        {
-            id: 'bnf-cda',
-            institucion: 'Banco Nacional de Fomento (BNF)',
-            producto: 'CDA a 1 año',
-            tipo: 'cda',
-            tasa: 7.50,
-            montoMinimo: '5.000.000',
-            plazoMinimo: '12 meses',
-            ventaja: 'Máxima seguridad (banco estatal)',
-            desventaja: 'Procesos pueden ser más burocráticos',
-            proceso: 'Generalmente presencial en sucursales. Se requiere cédula de identidad, comprobante de ingresos y a veces una factura de servicio básico.',
-            capitalizacion: 'Al vencimiento. Recibes tu capital inicial más todos los intereses generados.',
-            riesgo: 'Considerado el riesgo más bajo del sistema financiero paraguayo al contar con el respaldo directo del Estado.',
-            fiscal: 'Los rendimientos de capital están sujetos al Impuesto a la Renta (IRP o IRE). La entidad financiera realiza la retención.'
-        },
-        // --- Ahorro Programado ---
-        {
-            id: 'vision-ahorro',
-            institucion: 'Visión Banco',
-            producto: 'Ahorro Programado Anual',
-            tipo: 'ahorro',
-            tasa: 7.00,
-            montoMinimo: '100.000 (cuota mensual)',
-            plazoMinimo: '12 meses',
-            ventaja: 'Fomenta el hábito del ahorro con cuotas bajas',
-            desventaja: 'Tasa menor a un CDA por el mismo plazo',
-            proceso: 'Contratación sencilla en sucursales o a través de canales digitales para clientes existentes.',
-            capitalizacion: 'Los intereses se calculan sobre el saldo promedio y se acreditan al final del plazo.',
-            riesgo: 'Banco de gran trayectoria y solidez en Paraguay. Es una opción segura.',
-            fiscal: 'Los intereses ganados están sujetos a las retenciones de impuestos correspondientes.'
-        },
-        {
-            id: 'atlas-ahorro',
-            institucion: 'Banco Atlas',
-            producto: 'Ahorro Programado Mi Meta',
-            tipo: 'ahorro',
-            tasa: 6.50,
-            montoMinimo: '100.000 (cuota mensual)',
-            plazoMinimo: '12 meses',
-            ventaja: 'Flexibilidad en plazos y cuotas, 100% digital',
-            desventaja: 'Tasa inferior a otras opciones de inversión',
-            proceso: 'Se puede abrir y gestionar completamente desde la app del banco si ya eres cliente.',
-            capitalizacion: 'Al final del periodo, se acredita el capital más los intereses ganados.',
-            riesgo: 'Banco privado sólido y seguro, con buena reputación en el mercado.',
-            fiscal: 'Los rendimientos están sujetos a la retención de impuestos vigente.'
-        },
-         {
-            id: 'bnf-ahorro',
-            institucion: 'Banco Nacional de Fomento (BNF)',
-            producto: 'Ahorro Programado',
-            tipo: 'ahorro',
-            tasa: 5.50,
-            montoMinimo: '100.000 (cuota mensual)',
-            plazoMinimo: '12 meses',
-            ventaja: 'Seguridad máxima del estado, ideal para iniciar el hábito',
-            desventaja: 'Tasa de interés más baja del mercado',
-            proceso: 'La apertura se realiza de forma presencial en las sucursales del banco.',
-            capitalizacion: 'Al vencimiento del plazo, se entrega el monto ahorrado más los intereses.',
-            riesgo: 'El más bajo posible al ser el banco del estado paraguayo.',
-            fiscal: 'Rendimientos sujetos a la retención de impuestos correspondiente.'
-        }
+        { id: 'medalla-cda', institucion: 'Cooperativa Medalla Milagrosa', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 11.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Suele ofrecer las tasas más altas del mercado', desventaja: 'Requiere ser socio de la cooperativa', proceso: 'Primero debes asociarte (implica un aporte de capital). La apertura del plazo fijo es presencial.', capitalizacion: 'Al vencimiento.', riesgo: 'Regulada por INCOOP. Considerada de bajo riesgo en el sector cooperativo.', fiscal: 'Rendimientos (excedentes) suelen tener beneficios fiscales.' },
+        { id: 'universitaria-cda', institucion: 'Cooperativa Universitaria', producto: 'CDA Socios', tipo: 'cda', tasa: 10.50, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Excelentes tasas y gran solidez', desventaja: 'Requiere ser socio y cumplir requisitos', proceso: 'Debes ser socio para acceder. La apertura se realiza en sucursales.', capitalizacion: 'Generalmente al vencimiento.', riesgo: 'Regulada por INCOOP. Una de las cooperativas más grandes y seguras del país.', fiscal: 'Excedentes de socios suelen tener beneficios fiscales. Consultar normativa.' },
+        { id: 'gnb-cda', institucion: 'Banco GNB Paraguay', producto: 'CDA a Plazo Fijo', tipo: 'cda', tasa: 8.75, montoMinimo: '10.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas muy competitivas', desventaja: 'Monto de apertura elevado', proceso: 'Gestión en sucursales con atención personalizada. Requiere documentación estándar.', capitalizacion: 'Al vencimiento.', riesgo: 'Parte de un grupo financiero internacional sólido. Entidad segura.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.' },
+        { id: 'familiar-cda', institucion: 'Banco Familiar', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 8.60, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas atractivas y buena atención al cliente', desventaja: 'Red de sucursales más pequeña que los bancos más grandes', proceso: 'Apertura generalmente presencial. Se requiere documentación básica y comprobante de ingresos.', capitalizacion: 'Al vencimiento del plazo.', riesgo: 'Banco de larga trayectoria en el país, regulado y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.' },
+        { id: 'atlas-cda', institucion: 'Banco Atlas', producto: 'CDA Plus', tipo: 'cda', tasa: 8.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Buenas tasas y promociones frecuentes', desventaja: 'Mejores tasas a veces exigen plazos más largos', proceso: 'Contratación en sucursales con asesoría. Requiere CI y comprobantes de ingresos.', capitalizacion: 'Al vencimiento.', riesgo: 'Banco privado con décadas en el mercado, de alta solidez.', fiscal: 'Rendimientos alcanzados por el IRP o IRE. El banco realiza la retención.' },
+        { id: 'continental-cda', institucion: 'Banco Continental', producto: 'CDA Digital a 1 año', tipo: 'cda', tasa: 8.25, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Proceso 100% online y montos accesibles', desventaja: 'Tasas competitivas pero no siempre las más altas', proceso: 'Fácil y rápido a través de su app o web si ya eres cliente.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos privados más grandes y sólidos del país.', fiscal: 'Rendimientos gravados. El banco practica la retención correspondiente.' },
+        { id: 'itau-cda', institucion: 'Banco Itaú', producto: 'CDA Digital', tipo: 'cda', tasa: 8.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Plataforma digital robusta y gran solidez del banco', desventaja: 'Sus tasas de interés no suelen ser las más altas del mercado', proceso: 'Fácil de gestionar desde la app o web para clientes. No requiere ir a sucursal.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos más grandes y seguros de la región.', fiscal: 'Rendimientos sujetos a la retención de impuestos vigente.' },
+        { id: 'bnf-cda', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'CDA a 1 año', tipo: 'cda', tasa: 7.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Máxima seguridad (banco estatal)', desventaja: 'Procesos pueden ser más burocráticos', proceso: 'Generalmente presencial en sucursales. Requiere documentación básica.', capitalizacion: 'Al vencimiento.', riesgo: 'Considerado el riesgo más bajo del sistema financiero paraguayo.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.' },
+        { id: 'familiar-ahorro', institucion: 'Banco Familiar', producto: 'Ahorro Flexible', tipo: 'ahorro', tasa: 7.25, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Tasa muy competitiva para ahorro programado y plazos flexibles', desventaja: 'Puede requerir apertura presencial de cuenta base', proceso: 'Se puede programar desde la app o web una vez que se es cliente.', capitalizacion: 'Al final del plazo.', riesgo: 'Banco seguro y con buena reputación.', fiscal: 'Intereses sujetos a retención de impuestos.' },
+        { id: 'vision-ahorro', institucion: 'Visión Banco', producto: 'Ahorro Programado Anual', tipo: 'ahorro', tasa: 7.00, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Fomenta el hábito del ahorro con cuotas bajas', desventaja: 'Tasa menor a un CDA por el mismo plazo', proceso: 'Contratación sencilla en sucursales o canales digitales para clientes.', capitalizacion: 'Los intereses se calculan sobre el saldo promedio y se acreditan al final.', riesgo: 'Banco de gran trayectoria y solidez. Opción segura.', fiscal: 'Intereses sujetos a retenciones de impuestos.' },
+        { id: 'atlas-ahorro', institucion: 'Banco Atlas', producto: 'Ahorro Programado Mi Meta', tipo: 'ahorro', tasa: 6.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Flexibilidad en plazos y cuotas, 100% digital', desventaja: 'Tasa inferior a otras opciones de inversión', proceso: 'Se puede abrir y gestionar desde la app del banco si ya eres cliente.', capitalizacion: 'Al final del periodo.', riesgo: 'Banco privado sólido y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.' },
+        { id: 'itau-ahorro', institucion: 'Banco Itaú', producto: 'Mi Ahorro', tipo: 'ahorro', tasa: 6.00, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Muy fácil de configurar desde la app, fomenta el hábito', desventaja: 'Rendimiento modesto en comparación con otras opciones', proceso: 'Totalmente digital para clientes a través de la app de Itaú.', capitalizacion: 'Al final del plazo elegido.', riesgo: 'Muy bajo, respaldado por la solidez del banco.', fiscal: 'Intereses sujetos a retención de impuestos.' },
+        { id: 'bnf-ahorro', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'Ahorro Programado', tipo: 'ahorro', tasa: 5.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Seguridad máxima del estado', desventaja: 'Tasa de interés más baja del mercado', proceso: 'Apertura presencial en sucursales.', capitalizacion: 'Al vencimiento.', riesgo: 'El más bajo posible al ser el banco del estado.', fiscal: 'Rendimientos sujetos a retención.' }
     ];
 
-    // Favorites functionality
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-    
+    // --- GENERAL PAGE SETUP ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuButton) mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    // --- TWITCH FALLBACK PLAYER LOGIC ---
+    const twitchChannels = ['guidufox', 'deihvaok', 'draco_fds'];
+    function loadTwitchPlayer(options) {
+        document.getElementById('twitch-embed').innerHTML = '';
+        new Twitch.Embed("twitch-embed", { ...options, width: "100%", height: "100%", parent: ["guidufox.github.io"], muted: true, autoplay: true });
+    }
+
+    function checkChannel(index) {
+        if (index >= twitchChannels.length) {
+            console.log("No live channels. Loading VODs for guidufox.");
+            loadTwitchPlayer({ collection: 'vods', channel: 'guidufox' });
+            return;
+        }
+        const channel = twitchChannels[index];
+        const embed = new Twitch.Embed("twitch-embed", { width: "1", height: "1", channel: channel, parent: ["guidufox.github.io"], muted: true, autoplay: true });
+        let isLive = false;
+        embed.addEventListener(Twitch.Embed.VIDEO_PLAY, () => {
+            isLive = true;
+            console.log(`${channel} is live. Loading player.`);
+            loadTwitchPlayer({ channel: channel });
+        });
+        setTimeout(() => {
+            if (!isLive) {
+                console.log(`${channel} is offline. Checking next...`);
+                checkChannel(index + 1);
+            }
+        }, 4000); // Check for liveness after 4 seconds
+    }
+    checkChannel(0); // Start the process
+
+    // --- COMPARATOR LOGIC ---
     const tbody = document.getElementById('comparison-body');
     const modal = document.getElementById('details-modal');
     const modalBody = document.getElementById('modal-body');
     const modalClose = document.getElementById('modal-close');
-    
-    // Filter elements
     const filterInstitution = document.getElementById('filter-institution');
     const filterProduct = document.getElementById('filter-product');
     const filterMinRate = document.getElementById('filter-min-rate');
     const sortBy = document.getElementById('sort-by');
     const resetFilters = document.getElementById('reset-filters');
-    
-    // Render table function
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+
     function renderTable() {
         tbody.innerHTML = '';
-        
-        // Get filter values
         const institutionValue = filterInstitution.value;
         const productValue = filterProduct.value;
         const minRateValue = parseFloat(filterMinRate.value) || 0;
         const sortValue = sortBy.value;
-        
-        // Filter and sort data
-        let filteredData = data.filter(item => {
-            return (institutionValue === 'all' || item.institucion.toLowerCase().includes(institutionValue.toLowerCase())) &&
-                   (productValue === 'all' || item.tipo === productValue) &&
-                   item.tasa >= minRateValue;
+
+        let filteredData = data.filter(item => 
+            (institutionValue === 'all' || item.institucion.toLowerCase().includes(institutionValue.toLowerCase())) &&
+            (productValue === 'all' || item.tipo === productValue) &&
+            item.tasa >= minRateValue
+        );
+
+        filteredData.sort((a, b) => {
+            if (sortValue === 'tasa-desc') return b.tasa - a.tasa;
+            if (sortValue === 'tasa-asc') return a.tasa - b.tasa;
+            if (sortValue === 'name') return a.institucion.localeCompare(b.institucion);
         });
-        
-        // Sort data
-        if (sortValue === 'tasa-desc') {
-            filteredData.sort((a, b) => b.tasa - a.tasa);
-        } else if (sortValue === 'tasa-asc') {
-            filteredData.sort((a, b) => a.tasa - b.tasa);
-        } else if (sortValue === 'name') {
-            filteredData.sort((a, b) => a.institucion.localeCompare(b.institucion));
-        }
-        
-        // Render rows
+
         filteredData.forEach(item => {
             const tr = document.createElement('tr');
-            tr.className = 'border-b border-gray-200';
             tr.dataset.id = item.id;
-            
             const isFavorite = favorites[item.id] || false;
-            
             tr.innerHTML = `
-                <td class="py-3 px-4 text-center" data-label="Favorito">
-                    <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${item.id}" aria-label="${isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}">
-                        ${isFavorite ? '❤️' : '🤍'}
-                    </button>
-                </td>
+                <td class="py-3 px-4 text-center" data-label="Favorito"><button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${item.id}">${isFavorite ? '❤️' : '🤍'}</button></td>
                 <td class="py-3 px-4 font-medium" data-label="Institución">${item.institucion}</td>
                 <td class="py-3 px-4" data-label="Producto">${item.producto}</td>
                 <td class="py-3 px-4 text-center font-semibold text-green-700" data-label="Tasa Anual">${item.tasa.toFixed(2)}%</td>
@@ -881,125 +759,77 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             tbody.appendChild(tr);
         });
-        
-        // Add event listeners to favorite buttons
-        document.querySelectorAll('.favorite-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const id = this.dataset.id;
-                favorites[id] = !favorites[id];
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                this.classList.toggle('active');
-                this.innerHTML = favorites[id] ? '❤️' : '🤍';
-                this.setAttribute('aria-label', favorites[id] ? 'Quitar de favoritos' : 'Agregar a favoritos');
-            });
-        });
     }
-    
-    // Table row click event
-    tbody.addEventListener('click', function(e) {
+
+    tbody.addEventListener('click', (e) => {
         const row = e.target.closest('tr');
-        if (!row || e.target.classList.contains('favorite-btn')) return;
-
-        const id = row.dataset.id;
-        const itemData = data.find(d => d.id === id);
-
-        if (itemData) {
-            modalBody.innerHTML = `
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">${itemData.institucion}</h3>
-                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 text-left">
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-[#2E5A88]">Ventajas y Desventajas</h4>
-                        <p class="mt-2"><span class="font-semibold text-green-600">Ventaja:</span> ${itemData.ventaja}</p>
-                        <p class="mt-1"><span class="font-semibold text-red-600">Desventaja:</span> ${itemData.desventaja}</p>
+        if (e.target.classList.contains('favorite-btn')) {
+            e.stopPropagation();
+            const btn = e.target;
+            const id = btn.dataset.id;
+            favorites[id] = !favorites[id];
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            btn.classList.toggle('active');
+            btn.innerHTML = favorites[id] ? '❤️' : '🤍';
+            return;
+        }
+        if (row) {
+            const itemData = data.find(d => d.id === row.dataset.id);
+            if (itemData) {
+                modalBody.innerHTML = `
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">${itemData.institucion}</h3>
+                    <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 text-left">
+                        <div class="bg-gray-50 p-4 rounded-lg"><h4 class="font-bold text-lg text-[#2E5A88]">Ventajas y Desventajas</h4><p class="mt-2"><span class="font-semibold text-green-600">Ventaja:</span> ${itemData.ventaja}</p><p class="mt-1"><span class="font-semibold text-red-600">Desventaja:</span> ${itemData.desventaja}</p></div>
+                        <div class="bg-gray-50 p-4 rounded-lg"><h4 class="font-bold text-lg text-[#2E5A88]">Proceso de Contratación</h4><p class="mt-2">${itemData.proceso}</p></div>
+                        <div class="bg-gray-50 p-4 rounded-lg"><h4 class="font-bold text-lg text-[#2E5A88]">Capitalización y Riesgo</h4><p class="mt-2"><span class="font-semibold">Capitalización:</span> ${itemData.capitalizacion}</p><p class="mt-1"><span class="font-semibold">Nivel de Riesgo:</span> ${itemData.riesgo}</p></div>
+                        <div class="bg-gray-50 p-4 rounded-lg"><h4 class="font-bold text-lg text-[#2E5A88]">Aspectos Fiscales</h4><p class="mt-2">${itemData.fiscal}</p></div>
                     </div>
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-[#2E5A88]">Proceso de Contratación</h4>
-                        <p class="mt-2">${itemData.proceso}</p>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-[#2E5A88]">Capitalización y Riesgo</h4>
-                        <p class="mt-2"><span class="font-semibold">Capitalización:</span> ${itemData.capitalizacion}</p>
-                        <p class="mt-1"><span class="font-semibold">Nivel de Riesgo:</span> ${itemData.riesgo}</p>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h4 class="font-bold text-lg text-[#2E5A88]">Aspectos Fiscales</h4>
-                        <p class="mt-2">${itemData.fiscal}</p>
-                    </div>
-                </div>
-                <div class="mt-6 flex justify-center">
-                    <button class="bg-[#2E5A88] text-white font-bold py-2 px-6 rounded hover:bg-[#25486C] transition-colors" onclick="document.getElementById('details-modal').style.display='none'">
-                        Cerrar
-                    </button>
-                </div>
-            `;
-            modal.style.display = 'flex';
+                    <div class="mt-6 flex justify-center"><button class="bg-[#2E5A88] text-white font-bold py-2 px-6 rounded hover:bg-[#25486C]" onclick="document.getElementById('details-modal').style.display='none'">Cerrar</button></div>`;
+                modal.style.display = 'flex';
+            }
         }
     });
-    
-    // Modal close event
-    modalClose.addEventListener('click', () => { modal.style.display = 'none'; });
+
+    modalClose.addEventListener('click', () => modal.style.display = 'none');
     window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
-    
-    // Load chart
+    [filterInstitution, filterProduct, filterMinRate, sortBy].forEach(filter => filter.addEventListener('change', renderTable));
+    filterMinRate.addEventListener('input', renderTable);
+    resetFilters.addEventListener('click', () => {
+        filterInstitution.value = 'all'; filterProduct.value = 'all'; filterMinRate.value = ''; sortBy.value = 'tasa-desc';
+        renderTable();
+    });
+
+    // --- OTHER PAGE LOGIC (Chart, Profiles, Back-to-Top) ---
     loadChartJS().then(() => {
-        const tpmCtx = document.getElementById('tpmChart').getContext('2d');
-        new Chart(tpmCtx, {
-            type: 'line',
-            data: {
-                labels: ['Ene', 'Mar', 'May', 'Jul', 'Sep', 'Nov', 'Actual'],
-                datasets: [{
-                    label: 'Evolución Tasa de Política Monetaria (%)',
-                    data: [8.50, 8.50, 8.25, 7.75, 7.25, 6.75, 6.00],
-                    backgroundColor: 'rgba(46, 90, 136, 0.1)',
-                    borderColor: '#2E5A88',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: { y: { beginAtZero: false, ticks: { callback: (value) => value + '%' } } },
-                plugins: { legend: { display: false } }
-            }
-        });
+        new Chart(document.getElementById('tpmChart').getContext('2d'), { type: 'line', data: { labels: ['Ene', 'Mar', 'May', 'Jul', 'Sep', 'Nov', 'Actual'], datasets: [{ label: 'Evolución Tasa de Política Monetaria (%)', data: [8.50, 8.50, 8.25, 7.75, 7.25, 6.75, 6.00], backgroundColor: 'rgba(46, 90, 136, 0.1)', borderColor: '#2E5A88', borderWidth: 2, fill: true, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false, ticks: { callback: (v) => v + '%' } } }, plugins: { legend: { display: false } } } });
     }).catch(err => console.error('Failed to load Chart.js', err));
-    
-    // Profile switching
-    const profileButtons = document.querySelectorAll('.btn-profile');
-    const profileContents = document.querySelectorAll('.profile-content');
-    profileButtons.forEach(button => {
+
+    document.querySelectorAll('.btn-profile').forEach(button => {
         button.addEventListener('click', () => {
             const profile = button.id.replace('btn-', '');
-            profileButtons.forEach(btn => btn.classList.remove('active'));
-            profileContents.forEach(content => content.classList.add('hidden'));
+            document.querySelectorAll('.btn-profile').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.profile-content').forEach(content => content.classList.add('hidden'));
             button.classList.add('active');
             document.getElementById(`content-${profile}`).classList.remove('hidden');
         });
     });
 
-    // Back to top button
     const backToTopButton = document.getElementById('back-to-top');
-    window.onscroll = () => {
-        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-            backToTopButton.classList.remove('opacity-0', 'invisible');
-        } else {
-            backToTopButton.classList.add('opacity-0', 'invisible');
-        }
-    };
+    window.onscroll = () => { backToTopButton.classList.toggle('opacity-0', !(document.body.scrollTop > 300 || document.documentElement.scrollTop > 300)); backToTopButton.classList.toggle('invisible', !(document.body.scrollTop > 300 || document.documentElement.scrollTop > 300)); };
     
-    // --- SIMULATOR LOGIC ---
+    // --- SIMULATOR LOGIC & NUMBER FORMATTING ---
     const calculateBtn = document.getElementById('calculate-btn');
     const simAmount = document.getElementById('sim-amount');
     const simProductSelect = document.getElementById('sim-product');
     const simPeriod = document.getElementById('sim-period');
-    
     const resultInitial = document.getElementById('result-initial');
     const resultInterest = document.getElementById('result-interest');
     const resultTotal = document.getElementById('result-total');
-    
+    const initialLabel = document.getElementById('initial-label');
+
+    const formatNumber = num => new Intl.NumberFormat('es-PY').format(Math.round(num));
+    const parseNumber = str => parseFloat(String(str).replace(/\./g, '')) || 0;
+
     function populateSimulatorProducts() {
         simProductSelect.innerHTML = '';
         data.forEach(item => {
@@ -1011,66 +841,50 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function calculateReturns() {
-        const amount = parseFloat(simAmount.value);
+        const amount = parseNumber(simAmount.value);
         const productId = simProductSelect.value;
         const periodMonths = parseInt(simPeriod.value);
-        
         const selectedProduct = data.find(item => item.id === productId);
         if (!selectedProduct) return;
 
         const rate = selectedProduct.tasa;
         let interest = 0;
+        let initialAmount = amount;
+        let finalAmount = 0;
 
         if (selectedProduct.tipo === 'cda') {
-            // Simple interest for CDA
+            initialLabel.textContent = "Inversión inicial:";
             interest = amount * (rate / 100) * (periodMonths / 12);
+            finalAmount = amount + interest;
         } else if (selectedProduct.tipo === 'ahorro') {
-            // Approximate calculation for programmed savings
-            // This is a simplification; real calculations are more complex.
-            // It assumes average balance over the period.
+            initialLabel.textContent = "Total Ahorrado (cuotas):";
             const totalSaved = amount * periodMonths;
-            interest = (totalSaved / 2) * (rate / 100) * (periodMonths / 12);
-             // For simplicity, we'll calculate based on the initial amount as a single deposit
-            resultInitial.textContent = `${formatNumber(amount * periodMonths)} Gs. (Cuotas)`;
-            resultTotal.textContent = `${formatNumber(amount * periodMonths + interest)} Gs.`;
-            resultInterest.textContent = `${formatNumber(interest)} Gs.`;
-            return;
+            interest = (totalSaved / 2) * (rate / 100) * (periodMonths / 12); // Approximation
+            initialAmount = totalSaved;
+            finalAmount = totalSaved + interest;
         }
-
-        const total = amount + interest;
         
-        resultInitial.textContent = `${formatNumber(amount)} Gs.`;
+        resultInitial.textContent = `${formatNumber(initialAmount)} Gs.`;
         resultInterest.textContent = `${formatNumber(interest)} Gs.`;
-        resultTotal.textContent = `${formatNumber(total)} Gs.`;
+        resultTotal.textContent = `${formatNumber(finalAmount)} Gs.`;
     }
 
-    const formatNumber = num => new Intl.NumberFormat('es-PY').format(Math.round(num));
+    simAmount.addEventListener('blur', (e) => {
+        const value = parseNumber(e.target.value);
+        e.target.value = formatNumber(value);
+    });
     
-    calculateBtn.addEventListener('click', calculateReturns);
-    simAmount.addEventListener('input', calculateReturns);
-    simProductSelect.addEventListener('change', calculateReturns);
-    simPeriod.addEventListener('input', calculateReturns);
-    
-    // Initial setup
+    [calculateBtn, simProductSelect, simPeriod, simAmount].forEach(el => {
+        el.addEventListener('change', calculateReturns);
+        el.addEventListener('input', calculateReturns);
+    });
+
+    // Initial page load setup
     renderTable();
     populateSimulatorProducts();
     calculateReturns();
-
-    // Filter event listeners
-    [filterInstitution, filterProduct, filterMinRate, sortBy].forEach(filter => {
-        filter.addEventListener('change', renderTable);
-    });
-    filterMinRate.addEventListener('input', renderTable);
-    resetFilters.addEventListener('click', () => {
-        filterInstitution.value = 'all';
-        filterProduct.value = 'all';
-        filterMinRate.value = '';
-        sortBy.value = 'tasa-desc';
-        renderTable();
-    });
 });
 </script>
 
 </body>
 </html>
-
