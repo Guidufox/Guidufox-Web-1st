@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guía Interactiva de Ahorro en Paraguay</title>
+
+    <!-- ETIQUETAS SEO -->
+    <meta name="description" content="La mejor guía interactiva para analizar, comparar y elegir opciones de ahorro en Paraguay. Encuentra las tasas de interés de bancos y cooperativas.">
+    <meta name="keywords" content="ahorro paraguay, invertir en paraguay, plazo fijo, cda, banco nacional de fomento, itaú, visión banco, cooperativa medalla milagrosa, tasas de interés paraguay">
+    <!-- FIN DE ETIQUETAS SEO -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,6 +81,9 @@
             height: 300px;
             max-height: 400px;
         }
+        #back-to-top {
+            transition: opacity 0.3s, visibility 0.3s;
+        }
         @media (min-width: 768px) {
             .chart-container {
                 height: 350px;
@@ -87,13 +96,14 @@
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-gray-800">
-                <span class="text-[#2E5A88]">Ahorro</span>PY
+                <a href="#inicio"><span class="text-[#2E5A88]">Ahorro</span>PY</a>
             </div>
             <div class="hidden md:flex space-x-8">
                 <a href="#contexto" class="nav-link text-gray-600 font-medium pb-1">Contexto</a>
                 <a href="#comparador" class="nav-link text-gray-600 font-medium pb-1">Comparador</a>
                 <a href="#perfiles" class="nav-link text-gray-600 font-medium pb-1">Perfiles</a>
                 <a href="#fuentes" class="nav-link text-gray-600 font-medium pb-1">Fuentes</a>
+                <a href="#contacto" class="nav-link text-gray-600 font-medium pb-1">Contacto</a>
             </div>
              <div class="md:hidden">
                 <select onchange="window.location.hash=this.value" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -102,6 +112,7 @@
                     <option value="#comparador">Comparador</option>
                     <option value="#perfiles">Perfiles</option>
                     <option value="#fuentes">Fuentes</option>
+                    <option value="#contacto">Contacto</option>
                 </select>
             </div>
         </nav>
@@ -228,11 +239,33 @@
                 </a>
             </div>
         </section>
-    </main>
 
-    <footer class="bg-white py-6">
+        <!-- NUEVA SECCIÓN DE CONTACTO -->
+        <section id="contacto" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-2xl font-bold text-gray-800">Sugerencias y Contacto</h2>
+                 <p class="mt-4 text-gray-600 max-w-3xl mx-auto">Esta es una herramienta independiente creada para facilitar la toma de decisiones financieras en Paraguay. Si encuentras algún error, tienes alguna sugerencia para mejorar la web o quieres añadir alguna institución, no dudes en escribirme.</p>
+                 <p class="mt-6">
+                    <a href="mailto:guidufox@proton.me" class="text-[#2E5A88] font-bold text-lg hover:underline">
+                        guidufox@proton.me
+                    </a>
+                </p>
+            </div>
+        </section>
+        <!-- FIN DE LA NUEVA SECCIÓN -->
+
+    </main>
+    
+    <a href="#inicio" id="back-to-top" class="fixed bottom-5 right-5 bg-[#2E5A88] text-white p-3 rounded-full shadow-lg hover:bg-[#25486C] transition-opacity duration-300 opacity-0 invisible" title="Volver arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+    </a>
+
+    <footer class="bg-white py-6 border-t">
         <div class="container mx-auto px-6 text-center text-gray-500">
             <p>&copy; 2025 AhorroPY. Herramienta de análisis financiero para el mercado paraguayo.</p>
+            <p class="text-sm mt-2">Desarrollado por <a href="https://github.com/Guidufox" target="_blank" rel="noopener noreferrer" class="text-[#2E5A88] hover:underline">Guidufox</a>.</p>
         </div>
     </footer>
 
@@ -439,8 +472,20 @@ document.addEventListener('DOMContentLoaded', function () {
     profileButtons.moderado.addEventListener('click', () => switchProfile('moderado'));
     profileButtons.maximizador.addEventListener('click', () => switchProfile('maximizador'));
 
+    // Back to top button logic
+    const backToTopButton = document.getElementById('back-to-top');
+    window.onscroll = function() {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            backToTopButton.classList.remove('opacity-0', 'invisible');
+            backToTopButton.classList.add('opacity-100', 'visible');
+        } else {
+            backToTopButton.classList.remove('opacity-100', 'visible');
+            backToTopButton.classList.add('opacity-0', 'invisible');
+        }
+    };
 });
 </script>
 
 </body>
 </html>
+
