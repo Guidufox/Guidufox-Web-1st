@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>https://guidufox.github.io/Guidufox-Web-1st/</loc>
+  <lastmod>2025-09-06T21:10:00+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://guidufox.github.io/Guidufox-Web-1st/#contexto</loc>
+  <lastmod>2025-09-06T21:10:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://guidufox.github.io/Guidufox-Web-1st/#comparador</loc>
+  <lastmod>2025-09-06T21:10:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://guidufox.github.io/Guidufox-Web-1st/#perfiles</loc>
+  <lastmod>2025-09-06T21:10:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://guidufox.github.io/Guidufox-Web-1st/#simulador</loc>
+  <lastmod>2025-09-06T21:10:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://guidufox.github.io/Guidufox-Web-1st/#fuentes</loc>
+  <lastmod>2025-09-06T21:10:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://guidufox.github.io/Guidufox-Web-1st/#contacto</loc>
+  <lastmod>2025-09-06T21:10:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+</urlset>
