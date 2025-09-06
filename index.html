@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guía Interactiva de Ahorro en Paraguay</title>
 
+    <!-- ETIQUETA DE VERIFICACIÓN DE GOOGLE -->
     <meta name="google-site-verification" content="qBR45iQnVdAz-G01792fk1Mdzh7Rg-BOvy30nMg-wQI" />
 
+    <!-- ETIQUETAS SEO MEJORADAS -->
     <meta name="description" content="Guía interactiva para analizar, comparar y elegir las mejores opciones de ahorro en Paraguay. Encuentra tasas de interés de bancos y cooperativas.">
     <meta name="keywords" content="ahorro paraguay, invertir en paraguay, plazo fijo, cda, banco nacional de fomento, itaú, familiar, visión banco, cooperativa medalla milagrosa, cooperativa universitaria, tasas de interés paraguay, comparador ahorro">
     <meta name="author" content="AhorroPY">
     <meta property="og:title" content="Guía Interactiva de Ahorro en Paraguay">
     <meta property="og:description" content="Compara y elige la mejor opción de ahorro en Paraguay con nuestra guía interactiva.">
     <meta property="og:type" content="website">
+    <!-- FIN DE ETIQUETAS SEO -->
+
+    <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://embed.twitch.tv/embed/v1.js"></script>
     <script>
         // Cargar Chart.js solo cuando sea necesario
         function loadChartJS() {
@@ -75,30 +79,6 @@
         h1, h2, h3, h4, h5, h6 {
             color: var(--text-strong-color);
         }
-
-        #inicio {
-            position: relative; /* Necesario para el pseudo-elemento de fondo */
-            z-index: 1;
-        }
-
-        #inicio::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('assets/hero-background.webp');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.05; /* Opacidad muy sutil */
-            z-index: -1;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        html.dark #inicio::before {
-            opacity: 0.1; /* Un poco más visible en modo oscuro */
-        }
         
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
         .nav-link { transition: color 0.3s, border-bottom-color 0.3s; position: relative; }
@@ -130,25 +110,25 @@
         .calculator-input, select { background-color: var(--background-color); border: 1px solid var(--border-color); color: var(--text-color); }
         select option { background-color: var(--card-background); color: var(--text-color); }
 
-        /* Estilos para enlaces externos */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
+        /* Estilos para el fondo de la sección #inicio */
+        #inicio {
+            position: relative;
+            overflow: hidden;
         }
-        
-        .external-link:hover {
-            color: var(--primary-hover);
-            text-decoration: underline;
-        }
-        
-        .external-link-icon {
-            width: 16px;
-            height: 16px;
+        #inicio::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/gem.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.08;
+            z-index: -1;
+            transition: opacity 0.3s ease-in-out;
         }
 
         @media (max-width: 768px) {
@@ -163,8 +143,6 @@
     </style>
 </head>
 <body class="antialiased">
-
-    <div id="twitch-embed" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.1; pointer-events: none;"></div>
 
     <header class="sticky top-0 z-50 shadow-sm bg-opacity-80 backdrop-blur-md" style="background-color: var(--header-bg);">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -355,10 +333,10 @@
                 </div>
                 <div id="content-moderado" class="profile-content card p-8 hidden">
                      <h3 class="text-2xl font-bold mb-4" style="color: var(--primary-color);">Perfil Moderado: Equilibrio Inteligente</h3>
-                    <p class="mb-4">Buscas un rendimiento justo por tu dinero, pero sin renunciar a una seguridad alta. Estás dispuesto a inmovilizar una parte de tus ahorros por un tiempo corto o mediano untuk obtener una mejor tasa.</p>
+                    <p class="mb-4">Buscas un rendimiento justo por tu dinero, pero sin renunciar a una seguridad alta. Estás dispuesto a inmovilizar una parte de tus ahorros por un tiempo corto o mediano para obtener una mejor tasa.</p>
                     <div class="p-4 rounded-r-lg border-l-4" style="background-color: var(--background-color); border-color: var(--primary-color);">
                         <p class="font-bold">Mejor Opción:</p>
-                        <p>Un <span class="font-semibold">Certificado de Depósito de Ahorro (CDA) a mediano plazo (12 a 24 meses)</span> en bancos privados sólidos como <span class="font-semibold">Itaú, Continental или Familiar</span>. También, un CDA en una Cooperativa de Ahorro y Crédito grande como <span class="font-semibold">Medalla Milagrosa</span> puede ofrecer tasas muy competitivas con un buen nivel de seguridad.</p>
+                        <p>Un <span class="font-semibold">Certificado de Depósito de Ahorro (CDA) a mediano plazo (12 a 24 meses)</span> en bancos privados sólidos como <span class="font-semibold">Itaú, Continental o Familiar</span>. También, un CDA en una Cooperativa de Ahorro y Crédito grande como <span class="font-semibold">Medalla Milagrosa</span> puede ofrecer tasas muy competitivas con un buen nivel de seguridad.</p>
                     </div>
                 </div>
                 <div id="content-maximizador" class="profile-content card p-8 hidden">
@@ -463,12 +441,12 @@
                     </a>
                     <a href="https://www.instagram.com/guidufox/" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de Instagram" class="hover:text-[var(--primary-color)] transition-colors">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427C2.013 15.098 2 14.744 2 12.315s.013-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.902 2.013 9.256 2 11.685 2h.630zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.023.047 1.351.058 3.807.058h.468c2.456 0 2.784-.011 3.807-.058.975-.045 1.504-.207 1.857-.344.467-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.047-1.023.058-1.351.058-3.807v-.468c0-2.456-.011-2.784-.058-3.807-.045-.975-.207-1.504-.344-1.857a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427C2.013 15.098 2 14.744 2 12.315s.013-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.902 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.023.047 1.351.058 3.807.058h.468c2.456 0 2.784-.011 3.807-.058.975-.045 1.504-.207 1.857-.344.467-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882-.344-1.857.047-1.023.058-1.351-.058-3.807v-.468c0-2.456-.011-2.784-.058-3.807-.045-.975-.207-1.504-.344-1.857a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z" clip-rule="evenodd"></path>
                         </svg>
                     </a>
                     <a href="https://www.twitch.tv/guidufox" target="_blank" rel="noopener noreferrer" aria-label="Visitar canal de Twitch" class="hover:text-[var(--primary-color)] transition-colors">
                         <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M11.571 4.714h1.715v5.143H11.57zM8 4.714h1.714v5.143H8zM2 0v16.286h5.143V20l4.286-3.714h4.286L22 10.142V0zm18.286 9.571l-3.429 3.429h-3.428l-3 3v-3H6.857V1.714h13.429z"></path>
+                            <path d="M11.571 4.714h1.715v5.143H11.57zM8 4.714h1.714v5.143H8zM2 0v16.286h5.143V20l4.286-3.714h4.286L22 10.142V0zm18.286 9.571-3.429 3.429h-3.428l-3 3v-3H6.857V1.714h13.429z"></path>
                         </svg>
                     </a>
                 </div>
@@ -486,6 +464,7 @@
     <footer class="py-6 border-t" style="background-color: var(--card-background); border-color: var(--border-color);">
         <div class="container mx-auto px-6 text-center">
             <p>&copy; 2025 AhorroPY. Herramienta de análisis financiero para el mercado paraguayo.</p>
+            <p class="text-sm mt-2" style="color: var(--secondary-color);">Este sitio es una herramienta con fines puramente informativos. No representa una crítica o ataque hacia ninguna de las entidades mencionadas.</p>
             <p class="text-sm mt-2">Desarrollado por <a href="https://github.com/Guidufox" target="_blank" rel="noopener noreferrer" class="hover:underline" style="color: var(--primary-color);">Guidufox</a>.</p>
         </div>
     </footer>
@@ -494,19 +473,19 @@
 document.addEventListener('DOMContentLoaded', function () {
     // --- DATABASE ---
     const data = [
-        { id: 'medalla-cda', institucion: 'Cooperativa Medalla Milagrosa', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 11.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Suele ofrecer las tasas más altas del mercado', desventaja: 'Requiere ser socio de la cooperativa', proceso: 'Primero debes asociarte (implica un aporte de capital). La apertura del plazo fijo es presencial.', capitalizacion: 'Al vencimiento.', riesgo: 'Regulada por INCOOP. Considerada de bajo riesgo en el sector cooperativo.', fiscal: 'Rendimientos (excedentes) suelen tener beneficios fiscales.', url: 'https://www.medallamilagrosa.com.py/' },
-        { id: 'universitaria-cda', institucion: 'Cooperativa Universitaria', producto: 'CDA Socios', tipo: 'cda', tasa: 10.50, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Excelentes tasas y gran solidez', desventaja: 'Requiere ser socio y cumplir requisitos', proceso: 'Debes ser socio para acceder. La apertura se realiza en sucursales.', capitalizacion: 'Generalmente al vencimiento.', riesgo: 'Regulada por INCOOP. Una de las cooperativas más grandes y seguras del país.', fiscal: 'Excedentes de socios suelen tener beneficios fiscales. Consultar normativa.', url: 'https://www.cooperativauniversitaria.com.py/' },
-        { id: 'gnb-cda', institucion: 'Banco GNB Paraguay', producto: 'CDA a Plazo Fijo', tipo: 'cda', tasa: 8.75, montoMinimo: '10.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas muy competitivas', desventaja: 'Monto de apertura elevado', proceso: 'Gestión en sucursales con atención personalizada. Requiere documentación estándar.', capitalizacion: 'Al vencimiento.', riesgo: 'Parte de un grupo financiero internacional sólido. Entidad segura.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.', url: 'https://www.bancognb.com.py/' },
-        { id: 'familiar-cda', institucion: 'Banco Familiar', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 8.60, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas atractivas y buena atención al cliente', desventaja: 'Red de sucursales más pequeña que los bancos más grandes', proceso: 'Apertura generalmente presencial. Se requiere documentación básica y comprobante de ingresos.', capitalizacion: 'Al vencimiento del plazo.', riesgo: 'Banco de larga trayectoria en el país, regulado y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.', url: 'https://www.bancofamiliar.com.py/' },
-        { id: 'atlas-cda', institucion: 'Banco Atlas', producto: 'CDA Plus', tipo: 'cda', tasa: 8.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Buenas tasas y promociones frecuentes', desventaja: 'Mejores tasas a veces exigen plazos más largos', proceso: 'Contratación en sucursales con asesoría. Requiere CI y comprobantes de ingresos.', capitalizacion: 'Al vencimiento.', riesgo: 'Banco privado con décadas en el mercado, de alta solidez.', fiscal: 'Rendimientos alcanzados por el IRP o IRE. El banco realiza la retención.', url: 'https://www.bancatlas.com.py/' },
-        { id: 'continental-cda', institucion: 'Banco Continental', producto: 'CDA Digital a 1 año', tipo: 'cda', tasa: 8.25, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Proceso 100% online y montos accesibles', desventaja: 'Tasas competitivas pero no siempre las más altas', proceso: 'Fácil y rápido a través de su app o web si ya eres cliente.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos privados más grandes y sólidos del país.', fiscal: 'Rendimientos gravados. El banco practica la retención correspondiente.', url: 'https://www.bancocontinental.com.py/' },
-        { id: 'itau-cda', institucion: 'Banco Itaú', producto: 'CDA Digital', tipo: 'cda', tasa: 8.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Plataforma digital robusta y gran solidez del banco', desventaja: 'Sus tasas de interés no suelen ser las más altas del mercado', proceso: 'Fácil de gestionar desde la app o web para clientes. No requiere ir a sucursal.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos más grandes y seguros de la región.', fiscal: 'Rendimientos sujetos a la retención de impuestos vigente.', url: 'https://www.itau.com.py/' },
-        { id: 'bnf-cda', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'CDA a 1 año', tipo: 'cda', tasa: 7.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Máxima seguridad (banco estatal)', desventaja: 'Procesos pueden ser más burocráticos', proceso: 'Generalmente presencial en sucursales. Requiere documentación básica.', capitalizacion: 'Al vencimiento.', riesgo: 'Considerado el riesgo más bajo del sistema financiero paraguayo.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.', url: 'https://www.bnf.gov.py/' },
-        { id: 'familiar-ahorro', institucion: 'Banco Familiar', producto: 'Ahorro Flexible', tipo: 'ahorro', tasa: 7.25, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Tasa muy competitiva para ahorro programado y plazos flexibles', desventaja: 'Puede requerir apertura presencial de cuenta base', proceso: 'Se puede programar desde la app o web una vez que se es cliente.', capitalizacion: 'Al final del plazo.', riesgo: 'Banco seguro y con buena reputación.', fiscal: 'Intereses sujetos a retención de impuestos.', url: 'https://www.bancofamiliar.com.py/' },
-        { id: 'vision-ahorro', institucion: 'Visión Banco', producto: 'Ahorro Programado Anual', tipo: 'ahorro', tasa: 7.00, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Fomenta el hábito del ahorro con cuotas bajas', desventaja: 'Tasa menor a un CDA por el mismo plazo', proceso: 'Contratación sencilla en sucursales o canales digitales para clientes.', capitalizacion: 'Los intereses se calculan sobre el saldo promedio y se acreditan al final.', riesgo: 'Banco de gran trayectoria y solidez. Opción segura.', fiscal: 'Intereses sujetos a retenciones de impuestos.', url: 'https://www.visionbanco.com/' },
-        { id: 'atlas-ahorro', institucion: 'Banco Atlas', producto: 'Ahorro Programado Mi Meta', tipo: 'ahorro', tasa: 6.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Flexibilidad en plazos y cuotas, 100% digital', desventaja: 'Tasa inferior a otras opciones de inversión', proceso: 'Se puede abrir y gestionar desde la app del banco si ya eres cliente.', capitalizacion: 'Al final del periodo.', riesgo: 'Banco privado sólido y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.', url: 'https://www.bancatlas.com.py/' },
-        { id: 'itau-ahorro', institucion: 'Banco Itaú', producto: 'Mi Ahorro', tipo: 'ahorro', tasa: 6.00, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Muy fácil de configurar desde la app, fomenta el hábito', desventaja: 'Rendimiento modesto en comparación con otras opciones', proceso: 'Totalmente digital para clientes a través de la app de Itaú.', capitalizacion: 'Al final del plazo elegido.', riesgo: 'Muy bajo, respaldado por la solidez del banco.', fiscal: 'Intereses sujetos a retención de impuestos.', url: 'https://www.itau.com.py/' },
-        { id: 'bnf-ahorro', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'Ahorro Programado', tipo: 'ahorro', tasa: 5.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Seguridad máxima del estado', desventaja: 'Tasa de interés más baja del mercado', proceso: 'Apertura presencial en sucursales.', capitalizacion: 'Al vencimiento.', riesgo: 'El más bajo posible al ser el banco del estado.', fiscal: 'Rendimientos sujetos a retención.', url: 'https://www.bnf.gov.py/' }
+        { id: 'medalla-cda', institucion: 'Cooperativa Medalla Milagrosa', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 11.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Suele ofrecer las tasas más altas del mercado', desventaja: 'Requiere ser socio de la cooperativa', proceso: 'Primero debes asociarte (implica un aporte de capital). La apertura del plazo fijo es presencial.', capitalizacion: 'Al vencimiento.', riesgo: 'Regulada por INCOOP. Considerada de bajo riesgo en el sector cooperativo.', fiscal: 'Rendimientos (excedentes) suelen tener beneficios fiscales.' },
+        { id: 'universitaria-cda', institucion: 'Cooperativa Universitaria', producto: 'CDA Socios', tipo: 'cda', tasa: 10.50, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Excelentes tasas y gran solidez', desventaja: 'Requiere ser socio y cumplir requisitos', proceso: 'Debes ser socio para acceder. La apertura se realiza en sucursales.', capitalizacion: 'Generalmente al vencimiento.', riesgo: 'Regulada por INCOOP. Una de las cooperativas más grandes y seguras del país.', fiscal: 'Excedentes de socios suelen tener beneficios fiscales. Consultar normativa.' },
+        { id: 'gnb-cda', institucion: 'Banco GNB Paraguay', producto: 'CDA a Plazo Fijo', tipo: 'cda', tasa: 8.75, montoMinimo: '10.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas muy competitivas', desventaja: 'Monto de apertura elevado', proceso: 'Gestión en sucursales con atención personalizada. Requiere documentación estándar.', capitalizacion: 'Al vencimiento.', riesgo: 'Parte de un grupo financiero internacional sólido. Entidad segura.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.' },
+        { id: 'familiar-cda', institucion: 'Banco Familiar', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 8.60, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas atractivas y buena atención al cliente', desventaja: 'Red de sucursales más pequeña que los bancos más grandes', proceso: 'Apertura generalmente presencial. Se requiere documentación básica y comprobante de ingresos.', capitalizacion: 'Al vencimiento del plazo.', riesgo: 'Banco de larga trayectoria en el país, regulado y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.' },
+        { id: 'atlas-cda', institucion: 'Banco Atlas', producto: 'CDA Plus', tipo: 'cda', tasa: 8.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Buenas tasas y promociones frecuentes', desventaja: 'Mejores tasas a veces exigen plazos más largos', proceso: 'Contratación en sucursales con asesoría. Requiere CI y comprobantes de ingresos.', capitalizacion: 'Al vencimiento.', riesgo: 'Banco privado con décadas en el mercado, de alta solidez.', fiscal: 'Rendimientos alcanzados por el IRP o IRE. El banco realiza la retención.' },
+        { id: 'continental-cda', institucion: 'Banco Continental', producto: 'CDA Digital a 1 año', tipo: 'cda', tasa: 8.25, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Proceso 100% online y montos accesibles', desventaja: 'Tasas competitivas pero no siempre las más altas', proceso: 'Fácil y rápido a través de su app o web si ya eres cliente.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos privados más grandes y sólidos del país.', fiscal: 'Rendimientos gravados. El banco practica la retención correspondiente.' },
+        { id: 'itau-cda', institucion: 'Banco Itaú', producto: 'CDA Digital', tipo: 'cda', tasa: 8.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Plataforma digital robusta y gran solidez del banco', desventaja: 'Sus tasas de interés no suelen ser las más altas del mercado', proceso: 'Fácil de gestionar desde la app o web para clientes. No requiere ir a sucursal.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos más grandes y seguros de la región.', fiscal: 'Rendimientos sujetos a la retención de impuestos vigente.' },
+        { id: 'bnf-cda', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'CDA a 1 año', tipo: 'cda', tasa: 7.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Máxima seguridad (banco estatal)', desventaja: 'Procesos pueden ser más burocráticos', proceso: 'Generalmente presencial en sucursales. Requiere documentación básica.', capitalizacion: 'Al vencimiento.', riesgo: 'Considerado el riesgo más bajo del sistema financiero paraguayo.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.' },
+        { id: 'familiar-ahorro', institucion: 'Banco Familiar', producto: 'Ahorro Flexible', tipo: 'ahorro', tasa: 7.25, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Tasa muy competitiva para ahorro programado y plazos flexibles', desventaja: 'Puede requerir apertura presencial de cuenta base', proceso: 'Se puede programar desde la app o web una vez que se es cliente.', capitalizacion: 'Al final del plazo.', riesgo: 'Banco seguro y con buena reputación.', fiscal: 'Intereses sujetos a retención de impuestos.' },
+        { id: 'vision-ahorro', institucion: 'Visión Banco', producto: 'Ahorro Programado Anual', tipo: 'ahorro', tasa: 7.00, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Fomenta el hábito del ahorro con cuotas bajas', desventaja: 'Tasa menor a un CDA por el mismo plazo', proceso: 'Contratación sencilla en sucursales o canales digitales para clientes.', capitalizacion: 'Los intereses se calculan sobre el saldo promedio y se acreditan al final.', riesgo: 'Banco de gran trayectoria y solidez. Opción segura.', fiscal: 'Intereses sujetos a retenciones de impuestos.' },
+        { id: 'atlas-ahorro', institucion: 'Banco Atlas', producto: 'Ahorro Programado Mi Meta', tipo: 'ahorro', tasa: 6.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Flexibilidad en plazos y cuotas, 100% digital', desventaja: 'Tasa inferior a otras opciones de inversión', proceso: 'Se puede abrir y gestionar desde la app del banco si ya eres cliente.', capitalizacion: 'Al final del periodo.', riesgo: 'Banco privado sólido y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.' },
+        { id: 'itau-ahorro', institucion: 'Banco Itaú', producto: 'Mi Ahorro', tipo: 'ahorro', tasa: 6.00, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Muy fácil de configurar desde la app, fomenta el hábito', desventaja: 'Rendimiento modesto en comparación con otras opciones', proceso: 'Totalmente digital para clientes a través de la app de Itaú.', capitalizacion: 'Al final del plazo elegido.', riesgo: 'Muy bajo, respaldado por la solidez del banco.', fiscal: 'Intereses sujetos a retención de impuestos.' },
+        { id: 'bnf-ahorro', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'Ahorro Programado', tipo: 'ahorro', tasa: 5.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Seguridad máxima del estado', desventaja: 'Tasa de interés más baja del mercado', proceso: 'Apertura presencial en sucursales.', capitalizacion: 'Al vencimiento.', riesgo: 'El más bajo posible al ser el banco del estado.', fiscal: 'Rendimientos sujetos a retención.' }
     ];
 
     // --- GENERAL PAGE SETUP ---
@@ -514,72 +493,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const mobileMenu = document.getElementById('mobile-menu');
     if (mobileMenuButton) mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
-    // --- TWITCH FALLBACK PLAYER LOGIC (ROBUST VERSION) ---
-    const twitchChannels = ['guidufox', 'deihvaok', 'draco_fds'];
-    function loadTwitchPlayer(options) {
-        document.getElementById('twitch-embed').innerHTML = '';
-        new Twitch.Embed("twitch-embed", { ...options, width: "100%", height: "100%", parent: ["guidufox.github.io"], muted: true, autoplay: true });
-    }
-
-    function checkChannel(index) {
-        if (index >= twitchChannels.length) {
-            console.log("No live channels. Loading VODs for guidufox.");
-            loadTwitchPlayer({ collection: 'vods', channel: 'guidufox' });
-            return;
-        }
-        
-        const channel = twitchChannels[index];
-        const tempEmbedContainer = document.createElement('div');
-        tempEmbedContainer.style.display = 'none'; // Hide the temporary player
-        document.body.appendChild(tempEmbedContainer);
-        
-        let player = new Twitch.Embed(tempEmbedContainer, { width: 1, height: 1, channel, parent: ["guidufox.github.io"] });
-        let isLive = false;
-        let timeout = setTimeout(() => {
-            if (!isLive) {
-                console.log(`${channel} is offline (timeout). Checking next...`);
-                player = null; // Clean up embed
-                tempEmbedContainer.remove();
-                checkChannel(index + 1);
-            }
-        }, 5000);
-
-        player.addEventListener(Twitch.Embed.ONLINE, () => {
-            isLive = true;
-            clearTimeout(timeout);
-            console.log(`${channel} is live (ONLINE event). Loading main player.`);
-            loadTwitchPlayer({ channel });
-            player = null;
-            tempEmbedContainer.remove();
-        });
-
-        player.addEventListener(Twitch.Embed.OFFLINE, () => {
-            if (!isLive) {
-                clearTimeout(timeout);
-                console.log(`${channel} is offline (OFFLINE event). Checking next...`);
-                player = null;
-                tempEmbedContainer.remove();
-                checkChannel(index + 1);
-            }
-        });
-    }
-    checkChannel(0);
-
     // --- THEME TOGGLE LOGIC ---
     const themeToggle = document.getElementById('theme-toggle');
     const themeToggleMobile = document.getElementById('theme-toggle-mobile');
     const lightIcon = document.getElementById('theme-icon-light');
     const darkIcon = document.getElementById('theme-icon-dark');
-    const mobileIconUse = themeToggleMobile.querySelector('svg use');
-
+    
     function applyTheme(isDark) {
         document.documentElement.classList.toggle('dark', isDark);
         document.documentElement.classList.toggle('light', !isDark);
         lightIcon.classList.toggle('hidden', isDark);
         darkIcon.classList.toggle('hidden', !isDark);
-        // This line is a bit tricky with `use`. Let's create a combined icon sprite.
-        // For simplicity, we'll just show/hide two separate SVGs in the mobile button.
-        // Or update the style directly as we did before.
+        const mobileIconHTML = isDark ? darkIcon.outerHTML : lightIcon.outerHTML;
+        themeToggleMobile.innerHTML = mobileIconHTML;
+        themeToggleMobile.querySelector('svg').classList.remove('hidden');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
 
@@ -588,13 +515,11 @@ document.addEventListener('DOMContentLoaded', function () {
         applyTheme(!isDark);
     }
     
-    themeToggle.addEventListener('click', toggleTheme);
-    themeToggleMobile.addEventListener('click', toggleTheme); // Simplified for now
+    [themeToggle, themeToggleMobile].forEach(btn => btn.addEventListener('click', toggleTheme));
     
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (savedTheme) applyTheme(savedTheme === 'dark');
-    else applyTheme(prefersDark);
+    applyTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
 
 
     // --- COMPARATOR LOGIC ---
@@ -659,21 +584,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (row) {
             const itemData = data.find(d => d.id === row.dataset.id);
             if (itemData) {
-                // Crear el enlace externo si existe URL
-                const websiteLink = itemData.url ? `
-                    <div class="mb-4 text-center">
-                        <a href="${itemData.url}" target="_blank" rel="noopener noreferrer" class="external-link">
-                            <svg class="external-link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                            </svg>
-                            Visitar sitio web oficial
-                        </a>
-                    </div>
-                ` : '';
-                
                 modalBody.innerHTML = `
-                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: var(--primary-color);">${itemData.institucion}</h3>
-                    ${websiteLink}
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--primary-color);">${itemData.institucion}</h3>
                     <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 text-left">
                         <div class="p-4 rounded-lg" style="background-color: var(--background-color);"><h4 class="font-bold text-lg" style="color: var(--primary-color);">Ventajas y Desventajas</h4><p class="mt-2"><span class="font-semibold text-green-600">Ventaja:</span> ${itemData.ventaja}</p><p class="mt-1"><span class="font-semibold text-red-600">Desventaja:</span> ${itemData.desventaja}</p></div>
                         <div class="p-4 rounded-lg" style="background-color: var(--background-color);"><h4 class="font-bold text-lg" style="color: var(--primary-color);">Proceso de Contratación</h4><p class="mt-2">${itemData.proceso}</p></div>
@@ -697,7 +609,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- OTHER PAGE LOGIC (Chart, Profiles, Back-to-Top) ---
     loadChartJS().then(() => {
-        new Chart(document.getElementById('tpmChart').getContext('2d'), { type: 'line', data: { labels: ['Ene', 'Mar', 'May', 'Jul', 'Sep', 'Nov', 'Actual'], datasets: [{ label: 'Evolución Tasa de Política Monetaria (%)', data: [8.50, 8.50, 8.25, 7.75, 7.25, 6.75, 6.00], backgroundColor: 'rgba(46, 90, 136, 0.1)', borderColor: '#2E5A88', borderWidth: 2, fill: true, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false, ticks: { callback: (v) => v + '%', color: 'var(--text-color)' } }, x: { ticks: { color: 'var(--text-color)' } } }, plugins: { legend: { display: false } } } });
+        const chartCtx = document.getElementById('tpmChart').getContext('2d');
+        const updateChartColors = () => {
+            const chartLineColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+            const chartTextColor = getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim();
+            if (window.tpmChartInstance) {
+                window.tpmChartInstance.data.datasets[0].borderColor = chartLineColor;
+                window.tpmChartInstance.data.datasets[0].backgroundColor = `rgba(${chartLineColor.match(/\d+/g).join(',')}, 0.1)`;
+                window.tpmChartInstance.options.scales.y.ticks.color = chartTextColor;
+                window.tpmChartInstance.options.scales.x.ticks.color = chartTextColor;
+                window.tpmChartInstance.update();
+            }
+        };
+
+        window.tpmChartInstance = new Chart(chartCtx, { type: 'line', data: { labels: ['Ene', 'Mar', 'May', 'Jul', 'Sep', 'Nov', 'Actual'], datasets: [{ label: 'Evolución Tasa de Política Monetaria (%)', data: [8.50, 8.50, 8.25, 7.75, 7.25, 6.75, 6.00], borderWidth: 2, fill: true, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false }, x: {} }, plugins: { legend: { display: false } } } });
+        
+        const observer = new MutationObserver(updateChartColors);
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        updateChartColors();
     }).catch(err => console.error('Failed to load Chart.js', err));
 
     document.querySelectorAll('.btn-profile').forEach(button => {
@@ -784,3 +713,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
