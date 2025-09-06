@@ -1,68 +1,29 @@
-Guía Interactiva de Ahorro en Paraguay 🏦
-¡Hola! Esta es mi primera página web abierta al público.
+Guía Interactiva de Ahorro en Paraguay 🇵🇾
+Una herramienta web de código abierto para analizar, comparar y elegir las mejores opciones de ahorro e inversión en Paraguay.
 
-📋 Sobre el proyecto
-Me parece un tema importante para analizar entre las distintas entidades financieras que hay en Paraguay y poder ver cuál es la mejor opción dependiendo de cada caso particular.
+➡️ Ver la Demo en Vivo ⬅️
+(Todavia no lo hice dx)
 
-La página web permite:
+🎯 Sobre el Proyecto
+Este proyecto nace de la necesidad de tener un lugar centralizado para analizar y comparar las distintas entidades financieras que hay en Paraguay, permitiendo a los usuarios tomar decisiones informadas sobre dónde colocar sus ahorros. El objetivo es que cualquier persona pueda ver y entender cuál es la mejor opción dependiendo de su perfil y sus metas financieras.
 
-Comparar tasas de interés de bancos y cooperativas paraguayas
+✨ Características Principales
+📊 Comparador Interactivo: Filtra y ordena las opciones de ahorro de los principales bancos y cooperativas del país.
 
-Simular rendimientos de diferentes instrumentos de ahorro
+📈 Simulador de Rendimientos: Calcula las ganancias potenciales de tu inversión basándote en el monto, plazo y producto elegido.
 
-Encontrar recomendaciones según tu perfil de inversionista
+👤 Recomendaciones por Perfil: Obtén sugerencias de inversión personalizadas según tu tolerancia al riesgo (Conservador, Moderado, Maximizador).
 
-Entender el mercado financiero paraguayo y sus particularidades
+📱 Diseño Responsivo: Accede y utiliza la herramienta cómodamente desde cualquier dispositivo.
 
-🚀 Características principales
-📊 Comparador interactivo de instituciones financieras
-
-💰 Simulador de rendimientos de ahorros
-
-🎯 Recomendaciones personalizadas por perfil
-
-📱 Diseño responsive y moderno
-
-🔍 Optimizado para motores de búsqueda
-
-🛠️ Tecnologías utilizadas
+🛠️ Tecnologías Utilizadas
 HTML5
 
-CSS3 (Tailwind CSS)
+CSS3 con TailwindCSS
 
-JavaScript (Chart.js para gráficos)
+JavaScript (Vanilla JS)
 
-Diseño responsive
+Chart.js para la visualización de datos.
 
-Optimización SEO
-
-🌐 Acceso al sitio
-Puedes visitar la página en:
-https://guidufox.github.io/Guidufox-Web-1st/
-
-📈 Próximas mejoras
-Actualización automática de tasas de interés
-
-Más instituciones financieras
-
-Calculadora de impuestos
-
-Blog educativo sobre finanzas personales
-
-Versión en inglés/portugués
-
-🤝 Contribuciones
-¡Las contribuciones son bienvenidas! Si tienes sugerencias para mejorar la guía o quieres agregar más instituciones financieras, no dudes en hacer un fork y enviar un pull request.
-
-📞 Contacto
-Si tienes preguntas o sugerencias, puedes contactarme a través de:
-
-📧 Email: guidufox@proton.me
-
-🐦 Twitter: @guidufox
-
-🎥 Twitch: guidufox
-
-📷 Instagram: @guidufox
-
-Este proyecto es de código abierto y tiene fines educativos. La información presentada es referencial y debe verificarse directamente con las instituciones financieras antes de tomar decisiones de inversión.
+🚀 Cómo Contribuir
+¡Las contribuciones son bienvenidas! Si tienes ideas para mejorar la herramienta, encuentras un error o quieres añadir datos de nuevas instituciones, por favor abre un "Issue" en este repositorio.
