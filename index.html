@@ -1,52 +1,38 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía de Ahorro en Paraguay 2025 | Comparador de Tasas de Interés y Mejores Inversiones</title>
-    <meta name="description" content="Guía completa para ahorrar en Paraguay. Compara tasas de interés de bancos y cooperativas, calcula rendimientos y encuentra la mejor opción de inversión según tu perfil.">
-    <meta name="keywords" content="ahorro paraguay, tasas de interés paraguay, invertir en paraguay, plazo fijo, CDA, banco nacional de fomento, itaú, visión banco, cooperativa medalla milagrosa, comparador de inversiones">
-    <meta name="author" content="AhorroPY">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Canonical URL para evitar contenido duplicado -->
-    <link rel="canonical" href="https://guidufox.github.io/Guidufox-Web-1st/">
-    
-    <!-- Open Graph para redes sociales -->
-    <meta property="og:title" content="Guía de Ahorro en Paraguay 2025 | Comparador de Tasas de Interés">
-    <meta property="og:description" content="Compara tasas de interés de bancos y cooperativas paraguayas. Encuentra la mejor opción de inversión según tu perfil.">
-    <meta property="og:url" content="https://guidufox.github.io/Guidufox-Web-1st/">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://guidufox.github.io/Guidufox-Web-1st/og-image.png">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Guía de Ahorro en Paraguay 2025">
-    <meta name="twitter:description" content="Compara tasas de interés de bancos y cooperativas paraguayas. Encuentra la mejor opción de inversión.">
-    
-    <!-- Esquema JSON-LD para rich snippets -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Guía Interactiva de Ahorro en Paraguay",
-      "url": "https://guidufox.github.io/Guidufox-Web-1st/",
-      "description": "Compara tasas de interés de bancos y cooperativas paraguayas. Encuentra la mejor opción de inversión según tu perfil.",
-      "applicationCategory": "FinancialApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
+    <title>Guía Interactiva de Ahorro en Paraguay</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="description" content="Guía interactiva para analizar, comparar y elegir las mejores opciones de ahorro en Paraguay. Encuentra tasas de interés de bancos y cooperativas.">
+    <meta name="keywords" content="ahorro paraguay, invertir en paraguay, plazo fijo, cda, banco nacional de fomento, itaú, visión banco, cooperativa medalla milagrosa, tasas de interés paraguay, comparador ahorro">
+    <meta name="author" content="AhorroPY">
+    <meta property="og:title" content="Guía Interactiva de Ahorro en Paraguay">
+    <meta property="og:description" content="Compara y elige la mejor opción de ahorro en Paraguay con nuestra guía interactiva.">
+    <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Cargar Chart.js solo cuando sea necesario
+        function loadChartJS() {
+            return new Promise((resolve, reject) => {
+                if (typeof Chart !== 'undefined') {
+                    resolve();
+                    return;
+                }
+                
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+    </script>
     <style>
         :root {
             --primary-color: #2E5A88;
@@ -67,12 +53,30 @@
             line-height: 1.6;
         }
         
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
         .nav-link {
             transition: color 0.3s, border-bottom-color 0.3s;
+            position: relative;
         }
         
         .nav-link:hover {
             color: var(--primary-color);
+        }
+        
+        .nav-link:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
         }
         
         .nav-link.active {
@@ -93,6 +97,15 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07);
         }
         
+        .btn {
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+        
+        .btn:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+        
         .btn-profile {
             transition: background-color 0.3s, color 0.3s, transform 0.3s;
         }
@@ -103,9 +116,23 @@
             transform: scale(1.05);
         }
         
+        .comparison-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .comparison-table th {
+            background-color: #F9FAFB;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
         .comparison-table tbody tr {
             cursor: pointer;
             transition: background-color 0.2s;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .comparison-table tbody tr:hover {
@@ -116,6 +143,10 @@
             background-color: #DAE4EE;
             outline: 2px solid var(--primary-color);
             outline-offset: -2px;
+        }
+        
+        .comparison-table td {
+            padding: 0.75rem;
         }
         
         .chart-container {
@@ -132,27 +163,150 @@
             transition: opacity 0.3s, visibility 0.3s;
         }
         
-        /* Mejoras de rendimiento */
-        .lazy-load {
-            opacity: 0;
-            transition: opacity 0.3s;
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
         }
         
-        .lazy-load.loaded {
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            width: 600px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Filter styles */
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        /* Favorites */
+        .favorite-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            color: #ccc;
+            transition: color 0.2s;
+        }
+        
+        .favorite-btn.active {
+            color: #F05252;
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted #ccc;
+            cursor: help;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.875rem;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
             opacity: 1;
         }
         
-        /* Mejoras de accesibilidad */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
+        /* Calculator */
+        .calculator-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+        }
+        
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .comparison-table thead {
+                display: none;
+            }
+            
+            .comparison-table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid var(--border-color);
+                border-radius: 0.5rem;
+            }
+            
+            .comparison-table td {
+                display: block;
+                text-align: right;
+                padding: 0.5rem 1rem;
+                position: relative;
+                padding-left: 50%;
+            }
+            
+            .comparison-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 1rem;
+                width: calc(50% - 1rem);
+                padding-right: 1rem;
+                text-align: left;
+                font-weight: 600;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 1rem;
+            }
         }
         
         @media (min-width: 768px) {
@@ -161,58 +315,55 @@
             }
         }
     </style>
-    
-    <!-- Google Analytics (reemplazar con tu ID) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
 </head>
 <body class="antialiased">
 
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-gray-800">
-                <a href="#inicio"><span class="text-[#2E5A88]">Ahorro</span>PY</a>
+                <a href="#inicio" aria-label="Ir al inicio"><span class="text-[#2E5A88]">Ahorro</span>PY</a>
             </div>
             <div class="hidden md:flex space-x-8">
                 <a href="#contexto" class="nav-link text-gray-600 font-medium pb-1">Contexto</a>
                 <a href="#comparador" class="nav-link text-gray-600 font-medium pb-1">Comparador</a>
                 <a href="#perfiles" class="nav-link text-gray-600 font-medium pb-1">Perfiles</a>
                 <a href="#simulador" class="nav-link text-gray-600 font-medium pb-1">Simulador</a>
-                <a href="#faq" class="nav-link text-gray-600 font-medium pb-1">Preguntas Frecuentes</a>
                 <a href="#fuentes" class="nav-link text-gray-600 font-medium pb-1">Fuentes</a>
                 <a href="#contacto" class="nav-link text-gray-600 font-medium pb-1">Contacto</a>
             </div>
              <div class="md:hidden">
-                <select onchange="window.location.hash=this.value" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <option value="#inicio">Inicio</option>
-                    <option value="#contexto">Contexto</option>
-                    <option value="#comparador">Comparador</option>
-                    <option value="#perfiles">Perfiles</option>
-                    <option value="#simulador">Simulador</option>
-                    <option value="#faq">Preguntas Frecuentes</option>
-                    <option value="#fuentes">Fuentes</option>
-                    <option value="#contacto">Contacto</option>
-                </select>
+                <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <span class="sr-only">Abrir menú</span>
+                </button>
             </div>
         </nav>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#contexto" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Contexto</a>
+                <a href="#comparador" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Comparador</a>
+                <a href="#perfiles" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Perfiles</a>
+                <a href="#simulador" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Simulador</a>
+                <a href="#fuentes" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Fuentes</a>
+                <a href="#contacto" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Contacto</a>
+            </div>
+        </div>
     </header>
 
     <main>
         <section id="inicio" class="py-20 bg-white">
             <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight">Guía de Ahorro en Paraguay 2025: Compara y Elige la Mejor Inversión</h1>
-                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Analiza, compara y elige la mejor opción para maximizar tus rendimientos. Encuentra las tasas de interés más altas de bancos y cooperativas paraguayas.</p>
-                <div class="mt-8 flex flex-wrap justify-center gap-4">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight">Tu Guía Interactiva de Ahorro en Paraguay</h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Analiza, compara y elige la mejor opción para maximizar tus rendimientos. Tomar decisiones financieras informadas nunca fue tan fácil.</p>
+                <div class="mt-8 flex justify-center gap-4">
                     <a href="#comparador" class="bg-[#2E5A88] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#25486C] transition-colors">
-                        Comparar Tasas de Interés
+                        Comparar opciones
                     </a>
                     <a href="#simulador" class="bg-white text-[#2E5A88] font-bold py-3 px-6 rounded-lg border border-[#2E5A88] hover:bg-gray-50 transition-colors">
-                        Simular Mis Rendimientos
+                        Simular rendimientos
                     </a>
                 </div>
             </div>
@@ -221,25 +372,25 @@
         <section id="contexto" class="py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800">Entendiendo el Mercado de Ahorro Paraguayo</h2>
-                    <p class="mt-2 text-gray-600">Conoce los instrumentos de ahorro y los factores que influyen en tus ganancias en Paraguay.</p>
+                    <h2 class="text-3xl font-bold text-gray-800">Entendiendo el Mercado Paraguayo</h2>
+                    <p class="mt-2 text-gray-600">Conoce los instrumentos de ahorro y los factores que influyen en tus ganancias.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                     <div class="card p-6">
-                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">Cuentas de Ahorro en Paraguay</h3>
+                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">Cuentas de Ahorro</h3>
                         <p class="text-gray-600">Son la opción más básica y líquida. Ofrecen disponibilidad inmediata de tu dinero, pero sus tasas de interés suelen ser las más bajas. Ideales para fondos de emergencia o ahorros a muy corto plazo.</p>
                     </div>
                     <div class="card p-6">
-                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">Ahorro a Plazo Fijo (CDA) en Paraguay</h3>
+                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">Ahorro a Plazo Fijo (CDA)</h3>
                         <p class="text-gray-600">Consiste en depositar una suma de dinero por un plazo determinado (30, 90, 180, 365+ días) a una tasa de interés fija. A mayor plazo, mayor suele ser la tasa. Ofrece rendimientos superiores a las cuentas de ahorro.</p>
                     </div>
                     <div class="card p-6">
-                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">Fondos Mutuos de Inversión en Paraguay</h3>
+                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">Fondos Mutuos / Inversión</h3>
                         <p class="text-gray-600">Instrumentos más sofisticados donde tu dinero se junta con el de otros inversores para ser gestionado por profesionales en una cartera diversificada. El rendimiento es variable y existe un mayor nivel de riesgo.</p>
                     </div>
                 </div>
                 <div class="card p-6 md:p-8">
-                    <h3 class="text-2xl font-bold text-center text-gray-800 mb-2">Factor Clave: Tasa de Política Monetaria (TPM) del BCP</h3>
+                    <h3 class="text-2xl font-bold text-center text-gray-800 mb-2">Factor Clave: Tasa de Política Monetaria (TPM)</h3>
                     <p class="text-center text-gray-600 max-w-3xl mx-auto mb-6">La TPM es la tasa de interés de referencia fijada por el Banco Central del Paraguay (BCP). Influye directamente en las tasas que los bancos ofrecen por los ahorros. Una TPM alta generalmente se traduce en mejores tasas para los ahorristas.</p>
                     <div class="text-center mb-6">
                         <span class="text-lg font-medium text-gray-600">Tasa Actual (Referencial):</span>
@@ -255,28 +406,49 @@
         <section id="comparador" class="py-20 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800">Comparador de Tasas de Ahorro en Paraguay</h2>
-                    <p class="mt-2 text-gray-600">Compara las tasas de interés de bancos y cooperativas paraguayas. Selecciona una institución para ver los detalles completos.</p>
+                    <h2 class="text-3xl font-bold text-gray-800">Comparador de Productos de Ahorro</h2>
+                    <p class="mt-2 text-gray-600">Selecciona una institución para ver los detalles. Las tasas son estimadas y pueden variar.</p>
                 </div>
                 
-                <div class="mb-6 flex flex-wrap gap-4 justify-center">
-                    <div class="flex items-center">
-                        <label for="filter-type" class="mr-2">Filtrar por:</label>
-                        <select id="filter-type" class="p-2 border rounded">
-                            <option value="all">Todos</option>
-                            <option value="bank">Bancos</option>
-                            <option value="cooperative">Cooperativas</option>
+                <div class="filter-container mb-6">
+                    <div class="filter-group">
+                        <label for="filter-institution" class="filter-label">Institución</label>
+                        <select id="filter-institution" class="p-2 border rounded">
+                            <option value="all">Todas las instituciones</option>
+                            <option value="bnf">BNF</option>
+                            <option value="continental">Continental</option>
+                            <option value="gnb">GNB</option>
+                            <option value="vision">Visión</option>
+                            <option value="atlas">Atlas</option>
+                            <option value="medalla">Medalla Milagrosa</option>
                         </select>
                     </div>
-                    <div class="flex items-center">
-                        <label for="filter-term" class="mr-2">Plazo:</label>
-                        <select id="filter-term" class="p-2 border rounded">
-                            <option value="all">Todos los plazos</option>
-                            <option value="30">30 días</option>
-                            <option value="90">90 días</option>
-                            <option value="180">180 días</option>
-                            <option value="365">365 días</option>
+                    
+                    <div class="filter-group">
+                        <label for="filter-product" class="filter-label">Producto</label>
+                        <select id="filter-product" class="p-2 border rounded">
+                            <option value="all">Todos los productos</option>
+                            <option value="cda">CDA</option>
+                            <option value="ahorro">Ahorro Programado</option>
                         </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filter-min-rate" class="filter-label">Tasa mínima</label>
+                        <input type="number" id="filter-min-rate" min="0" max="20" step="0.1" placeholder="0%" class="p-2 border rounded">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="sort-by" class="filter-label">Ordenar por</label>
+                        <select id="sort-by" class="p-2 border rounded">
+                            <option value="tasa-desc">Mayor tasa primero</option>
+                            <option value="tasa-asc">Menor tasa primero</option>
+                            <option value="name">Nombre A-Z</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group flex flex-col justify-end">
+                        <button id="reset-filters" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">Limpiar filtros</button>
                     </div>
                 </div>
                 
@@ -284,6 +456,7 @@
                     <table class="min-w-full bg-white comparison-table">
                         <thead class="bg-gray-100">
                             <tr>
+                                <th class="text-left py-3 px-4 font-semibold text-gray-700">Favorito</th>
                                 <th class="text-left py-3 px-4 font-semibold text-gray-700">Institución</th>
                                 <th class="text-left py-3 px-4 font-semibold text-gray-700">Producto</th>
                                 <th class="text-center py-3 px-4 font-semibold text-gray-700">Tasa Anual (%)</th>
@@ -296,19 +469,24 @@
                     </table>
                 </div>
 
-                <div id="details-panel" class="mt-12">
-                    <div class="card p-8 text-center text-gray-500">
-                        <p>👆 Haz clic en una fila de la tabla para ver los detalles completos de la institución y el producto.</p>
-                    </div>
+                <div class="mt-8 text-center text-sm text-gray-500">
+                    <p>💡 Consejo: Haz clic en cualquier fila para ver detalles completos. Marca tus opciones favoritas para compararlas más fácilmente.</p>
                 </div>
             </div>
         </section>
 
+        <div id="details-modal" class="modal">
+            <div class="modal-content relative">
+                <button id="modal-close" class="modal-close" aria-label="Cerrar modal">&times;</button>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+
         <section id="perfiles" class="py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800">Recomendaciones de Ahorro Según tu Perfil</h2>
-                    <p class="mt-2 text-gray-600">Encuentra la estrategia de ahorro que mejor se adapta a tus metas y tolerancia al riesgo en Paraguay.</p>
+                    <h2 class="text-3xl font-bold text-gray-800">Recomendación Según tu Perfil</h2>
+                    <p class="mt-2 text-gray-600">Encuentra la estrategia que mejor se adapta a tus metas y tolerancia al riesgo.</p>
                 </div>
                 <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
                     <button id="btn-conservador" class="btn-profile active bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-full">Conservador</button>
@@ -318,9 +496,9 @@
                 
                 <div id="content-conservador" class="profile-content card p-8">
                     <h3 class="text-2xl font-bold text-[#2E5A88] mb-4">Perfil Conservador: Seguridad y Liquidez</h3>
-                    <p class="text-gray-600 mb-4">Tu prioridad es proteger tu capital y tener acceso a él en cualquier momento. No te importa sacrificar un poco de rendimiento a cambio de máxima seguridad y disponibilidad.</p>
+                    <p class="text-gray-600 mb-4">Tu prioridad es proteger tu capital y tener acceso a él en cualquier momento. No te importa sacrificar un poco de rendimiento a exchange de máxima seguridad y disponibilidad.</p>
                     <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
-                        <p class="font-bold text-gray-800">Mejor Opción en Paraguay:</p>
+                        <p class="font-bold text-gray-800">Mejor Opción:</p>
                         <p class="text-gray-700">Una <span class="font-semibold">Cuenta de Ahorros tradicional o Ahorro Programado</span> en un banco de primera línea y con respaldo estatal como el <span class="font-semibold">Banco Nacional de Fomento (BNF)</span>. Ofrece la máxima seguridad del sistema y te permite retirar tus fondos cuando los necesites sin penalización.</p>
                     </div>
                 </div>
@@ -328,7 +506,7 @@
                      <h3 class="text-2xl font-bold text-[#2E5A88] mb-4">Perfil Moderado: Equilibrio Inteligente</h3>
                     <p class="text-gray-600 mb-4">Buscas un rendimiento justo por tu dinero, pero sin renunciar a una seguridad alta. Estás dispuesto a inmovilizar una parte de tus ahorros por un tiempo corto o mediano para obtener una mejor tasa.</p>
                     <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
-                        <p class="font-bold text-gray-800">Mejor Opción en Paraguay:</p>
+                        <p class="font-bold text-gray-800">Mejor Opción:</p>
                         <p class="text-gray-700">Un <span class="font-semibold">Certificado de Depósito de Ahorro (CDA) a mediano plazo (180 a 365 días)</span> en bancos privados sólidos como <span class="font-semibold">Banco Continental o Banco Atlas</span>. También, un CDA en una Cooperativa de Ahorro y Crédito grande como <span class="font-semibold">Medalla Milagrosa</span> puede ofrecer tasas muy competitivas con un buen nivel de seguridad.</p>
                     </div>
                 </div>
@@ -336,7 +514,7 @@
                      <h3 class="text-2xl font-bold text-[#2E5A88] mb-4">Perfil Maximizador: A por el Mayor Rendimiento</h3>
                     <p class="text-gray-600 mb-4">Tu objetivo principal es obtener la tasa de interés más alta posible. Comprendes que para ello necesitas inmovilizar tu dinero por plazos más largos y estás cómodo con ello.</p>
                      <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
-                        <p class="font-bold text-gray-800">Mejor Opción en Paraguay:</p>
+                        <p class="font-bold text-gray-800">Mejor Opción:</p>
                         <p class="text-gray-700">Un <span class="font-semibold">CDA a largo plazo (más de 365 días)</span>. Investiga las ofertas de bancos como <span class="font-semibold">Banco GNB o Visión Banco</span>, que a menudo tienen tasas promocionales atractivas para plazos extendidos. Las Cooperativas también son una excelente alternativa en este segmento, usualmente liderando las tasas de mercado para socios.</p>
                     </div>
                 </div>
@@ -346,34 +524,34 @@
         <section id="simulador" class="py-20 bg-gray-50">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800">Simulador de Rendimientos de Ahorro</h2>
-                    <p class="mt-2 text-gray-600">Calcula cuánto puedes ganar con diferentes opciones de ahorro en Paraguay.</p>
+                    <h2 class="text-3xl font-bold text-gray-800">Simulador de Rendimientos</h2>
+                    <p class="mt-2 text-gray-600">Calcula cuánto podrías ganar con diferentes opciones de ahorro.</p>
                 </div>
                 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="card p-6">
-                        <h3 class="text-xl font-bold text-[#2E5A88] mb-4">Parámetros de Simulación</h3>
+                        <h3 class="text-xl font-bold text-[#2E5A88] mb-4">Parámetros de simulación</h3>
                         
                         <div class="mb-4">
                             <label for="sim-amount" class="block text-gray-700 mb-2">Monto a invertir (Gs.)</label>
-                            <input type="number" id="sim-amount" min="100000" step="100000" value="5000000" class="w-full p-2 border rounded">
+                            <input type="number" id="sim-amount" min="100000" step="100000" value="5000000" class="calculator-input">
                         </div>
                         
                         <div class="mb-4">
                             <label for="sim-institution" class="block text-gray-700 mb-2">Institución</label>
-                            <select id="sim-institution" class="w-full p-2 border rounded">
-                                <option value="7.5">BNF (7.5%)</option>
-                                <option value="8.25">Continental (8.25%)</option>
-                                <option value="8.75">GNB (8.75%)</option>
-                                <option value="7.0">Visión (7.0%)</option>
-                                <option value="8.5">Atlas (8.5%)</option>
-                                <option value="11.0">Medalla Milagrosa (11.0%)</option>
+                            <select id="sim-institution" class="calculator-input">
+                                <option value="bnf">BNF (7.5%)</option>
+                                <option value="continental">Continental (8.25%)</option>
+                                <option value="gnb">GNB (8.75%)</option>
+                                <option value="vision">Visión (7.0%)</option>
+                                <option value="atlas">Atlas (8.5%)</option>
+                                <option value="medalla">Medalla Milagrosa (11.0%)</option>
                             </select>
                         </div>
                         
                         <div class="mb-4">
                             <label for="sim-period" class="block text-gray-700 mb-2">Plazo (días)</label>
-                            <input type="number" id="sim-period" min="30" max="1095" value="365" class="w-full p-2 border rounded">
+                            <input type="number" id="sim-period" min="30" max="1095" value="365" class="calculator-input">
                         </div>
                         
                         <button id="calculate-btn" class="w-full bg-[#2E5A88] text-white font-bold py-2 px-4 rounded hover:bg-[#25486C] transition-colors">
@@ -382,7 +560,7 @@
                     </div>
                     
                     <div class="card p-6">
-                        <h3 class="text-xl font-bold text-[#2E5A88] mb-4">Resultados de la Simulación</h3>
+                        <h3 class="text-xl font-bold text-[#2E5A88] mb-4">Resultados de la simulación</h3>
                         
                         <div class="mb-4 p-4 bg-blue-50 rounded-lg">
                             <div class="flex justify-between items-center">
@@ -412,39 +590,7 @@
                 </div>
             </div>
         </section>
-
-        <section id="faq" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800">Preguntas Frecuentes sobre Ahorro en Paraguay</h2>
-                    <p class="mt-2 text-gray-600">Resuelve tus dudas sobre inversiones y ahorros en el sistema financiero paraguayo.</p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">¿Qué es un CDA en Paraguay?</h3>
-                        <p class="text-gray-600">Un Certificado de Depósito de Ahorro (CDA) es un instrumento financiero que ofrece una tasa de interés fija por un plazo determinado. Es una forma segura de ahorrar con rendimientos predecibles.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">¿Cómo elijo la mejor opción de ahorro en Paraguay?</h3>
-                        <p class="text-gray-600">Debes considerar tu tolerancia al riesgo, el plazo en que necesitas el dinero y tus objetivos financieros. Nuestra herramienta de perfiles te ayuda a identificar la mejor opción según tus necesidades.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">¿Qué tan seguras son las cooperativas en Paraguay?</h3>
-                        <p class="text-gray-600">Las cooperativas están reguladas por el INCOOP y muchas son muy sólidas. Sin embargo, no cuentan con el mismo fondo de garantía que los bancos, por lo que es importante investigar su trayectoria y solidez financiera.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold text-[#2E5A88] mb-2">¿Qué impuestos pagan los rendimientos de ahorro en Paraguay?</h3>
-                        <p class="text-gray-600">Los rendimientos de capital, como los intereses de un CDA, están sujetos al Impuesto a la Renta Personal (IRP) o al IRE, según corresponda al contribuyente. La entidad financiera suele realizar la retención correspondiente.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="fuentes" class="py-20 bg-gray-50">
+        <section id="fuentes" class="py-20 bg-white">
             <div class="container mx-auto px-6 text-center">
                  <h2 class="text-2xl font-bold text-gray-800">Aviso Importante y Fuentes de Información</h2>
                  <p class="mt-4 text-gray-600 max-w-3xl mx-auto">Las tasas de interés y condiciones de los productos financieros cambian constantemente. La información presentada en esta guía es referencial y fue recopilada con fines ilustrativos.</p>
@@ -455,7 +601,7 @@
             </div>
         </section>
 
-        <section id="contacto" class="py-20 bg-white">
+        <section id="contacto" class="py-20 bg-gray-50">
             <div class="container mx-auto px-6 text-center">
                  <h2 class="text-2xl font-bold text-gray-800">Sugerencias y Contacto</h2>
                  <p class="mt-4 text-gray-600 max-w-3xl mx-auto">Esta es una herramienta independiente creada para facilitar la toma de decisiones financieras en Paraguay. Si encuentras algún error, tienes alguna sugerencia para mejorar la web o quieres añadir alguna institución, no dudes en escribirme.</p>
@@ -464,12 +610,29 @@
                         guidufox@proton.me
                     </a>
                 </p>
+                <div class="mt-8 flex justify-center gap-6">
+                    <a href="https://x.com/guidufox" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de X" class="text-gray-500 hover:text-[#2E5A88] transition-colors">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/guidufox/" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de Instagram" class="text-gray-500 hover:text-[#2E5A88] transition-colors">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427C2.013 15.098 2 14.744 2 12.315s.013-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.902 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.023.047 1.351.058 3.807.058h.468c2.456 0 2.784-.011 3.807-.058.975-.045 1.504-.207 1.857-.344.467-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.047-1.023.058-1.351.058-3.807v-.468c0-2.456-.011-2.784-.058-3.807-.045-.975-.207-1.504-.344-1.857a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a href="https://www.twitch.tv/guidufox" target="_blank" rel="noopener noreferrer" aria-label="Visitar canal de Twitch" class="text-gray-500 hover:text-[#2E5A88] transition-colors">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M11.571 4.714h1.715v5.143H11.57zM8 4.714h1.714v5.143H8zM2 0v16.286h5.143V20l4.286-3.714h4.286L22 10.142V0zm18.286 9.571-3.429 3.429h-3.428l-3 3v-3H6.857V1.714h13.429z"></path>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </section>
 
     </main>
     
-    <a href="#inicio" id="back-to-top" class="fixed bottom-5 right-5 bg-[#2E5A88] text-white p-3 rounded-full shadow-lg hover:bg-[#25486C] transition-opacity duration-300 opacity-0 invisible" title="Volver arriba">
+    <a href="#inicio" id="back-to-top" class="fixed bottom-5 right-5 bg-[#2E5A88] text-white p-3 rounded-full shadow-lg hover:bg-[#25486C] transition-opacity duration-300 opacity-0 invisible" title="Volver arriba" aria-label="Volver al inicio">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
         </svg>
@@ -479,15 +642,22 @@
         <div class="container mx-auto px-6 text-center text-gray-500">
             <p>&copy; 2025 AhorroPY. Herramienta de análisis financiero para el mercado paraguayo.</p>
             <p class="text-sm mt-2">Desarrollado por <a href="https://github.com/Guidufox" target="_blank" rel="noopener noreferrer" class="text-[#2E5A88] hover:underline">Guidufox</a>.</p>
-            <p class="text-xs mt-2">
-                <a href="/sitemap.xml" class="text-[#2E5A88] hover:underline">Mapa del sitio</a> | 
-                <a href="/politica-privacidad" class="text-[#2E5A88] hover:underline">Política de privacidad</a>
-            </p>
         </div>
     </footer>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+    
+    // Data for financial products
     const data = [
         {
             id: 'bnf',
@@ -501,8 +671,7 @@ document.addEventListener('DOMContentLoaded', function () {
             proceso: 'Generalmente presencial en sucursales. Se requiere cédula de identidad, comprobante de ingresos y a veces una factura de servicio básico. Como banco estatal, sus procesos pueden ser más tradicionales.',
             capitalizacion: 'Los intereses se capitalizan generalmente al vencimiento del plazo. Es decir, al final del año, recibes tu capital inicial más todos los intereses generados.',
             riesgo: 'Considerado el riesgo más bajo del sistema financiero paraguayo al contar con el respaldo directo del Estado. Ideal para perfiles muy conservadores.',
-            fiscal: 'Los rendimientos de capital, como los intereses de un CDA, están sujetos al Impuesto a la Renta Personal (IRP) o al IRE, según corresponda al contribuyente. La entidad financiera suele realizar la retención.',
-            tipo: 'bank'
+            fiscal: 'Los rendimientos de capital, como los intereses de un CDA, están sujetos al Impuesto a la Renta Personal (IRP) o al IRE, según corresponda al contribuyente. La entidad financiera suele realizar la retención.'
         },
         {
             id: 'continental',
@@ -516,8 +685,7 @@ document.addEventListener('DOMContentLoaded', function () {
             proceso: 'Fácil y rápido a través de su app o banca web si ya eres cliente. Requiere tener una cuenta activa en el banco. La apertura es inmediata.',
             capitalizacion: 'Al vencimiento. El banco deposita el capital más los intereses en tu cuenta de ahorros asociada una vez cumplido el plazo.',
             riesgo: 'Es uno de los bancos privados más grandes y sólidos del país, con excelente calificación de riesgo. Se considera una institución muy segura.',
-            fiscal: 'Aplica la misma normativa fiscal. Los intereses generados son considerados renta y están gravados. El banco practica la retención correspondiente al momento del pago.',
-            tipo: 'bank'
+            fiscal: 'Aplica la misma normativa fiscal. Los intereses generados son considerados renta y están gravados. El banco practica la retención correspondiente al momento del pago.'
         },
         {
             id: 'gnb',
@@ -531,8 +699,7 @@ document.addEventListener('DOMContentLoaded', function () {
             proceso: 'Se puede gestionar en sucursales. Requiere documentación estándar (CI, comprobante de ingresos). Ofrecen atención personalizada para estos productos.',
             capitalizacion: 'Generalmente al vencimiento, aunque pueden ofrecer opciones de pago de intereses periódicos (mensual, trimestral) que no se capitalizan, sino que se pagan en una cuenta.',
             riesgo: 'Parte de un grupo financiero internacional sólido, el Banco GNB es una entidad bien calificada y segura en el mercado paraguayo.',
-            fiscal: 'Los rendimientos están sujetos a la retención del impuesto a la renta correspondiente, según la legislación vigente.',
-            tipo: 'bank'
+            fiscal: 'Los rendimientos están sujetos a la retención del impuesto a la renta correspondiente, según la legislación vigente.'
         },
         {
             id: 'vision',
@@ -546,8 +713,7 @@ document.addEventListener('DOMContentLoaded', function () {
             proceso: 'Contratación sencilla en sucursales o a través de canales digitales para clientes existentes. Ideal para quienes prefieren ahorrar montos pequeños de forma periódica.',
             capitalizacion: 'Los intereses se calculan sobre el saldo promedio y se acreditan al final del plazo del programa de ahorro.',
             riesgo: 'Es un banco de gran trayectoria y solidez en Paraguay, con una amplia red de sucursales. Es una opción segura.',
-            fiscal: 'Los intereses ganados están sujetos a las retenciones de impuestos correspondientes, al igual que otros productos de ahorro.',
-            tipo: 'bank'
+            fiscal: 'Los intereses ganados están sujetos a las retenciones de impuestos correspondientes, al igual que otros productos de ahorro.'
         },
         {
             id: 'atlas',
@@ -561,8 +727,7 @@ document.addEventListener('DOMContentLoaded', function () {
             proceso: 'Contratación en sucursales con asesoría personalizada. Requieren CI, comprobantes de ingresos y justificativo del origen de los fondos.',
             capitalizacion: 'La capitalización es al vencimiento del plazo. El total (capital + intereses) es depositado en la cuenta del cliente.',
             riesgo: 'Banco privado con décadas en el mercado, conocido por su solidez financiera y buena gestión de riesgo.',
-            fiscal: 'Los rendimientos de capital están alcanzados por el IRP o IRE. El banco se encarga de realizar la retención impositiva.',
-            tipo: 'bank'
+            fiscal: 'Los rendimientos de capital están alcanzados por el IRP o IRE. El banco se encarga de realizar la retención impositiva.'
         },
         {
             id: 'medalla',
@@ -576,39 +741,86 @@ document.addEventListener('DOMContentLoaded', function () {
             proceso: 'Primero debes asociarte, lo que implica un pequeño aporte de capital. Luego, la apertura del plazo fijo es presencial. Se necesita CI y ser socio activo.',
             capitalizacion: 'Al vencimiento. Los intereses se acreditan junto con el capital al finalizar el periodo pactado.',
             riesgo: 'Las cooperativas son reguladas por el INCOOP, no por el BCP. Medalla es una de las más grandes y sólidas, pero el riesgo se percibe de forma distinta a un banco. No cuentan con el fondo de garantía de depósitos del BCP.',
-            fiscal: 'Los rendimientos (excedentes en cooperativas) tienen un tratamiento fiscal diferente, a menudo con tasas preferenciales o exenciones, lo que aumenta su atractivo. Se debe consultar la ley de cooperativas vigente.',
-            tipo: 'cooperative'
+            fiscal: 'Los rendimientos (excedentes en cooperativas) tienen un tratamiento fiscal diferente, a menudo con tasas preferenciales o exenciones, lo que aumenta su atractivo. Se debe consultar la ley de cooperativas vigente.'
         }
     ];
 
+    // Favorites functionality
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+    
     const tbody = document.getElementById('comparison-body');
-    const detailsPanel = document.getElementById('details-panel');
-    const filterType = document.getElementById('filter-type');
-    const filterTerm = document.getElementById('filter-term');
-
+    const modal = document.getElementById('details-modal');
+    const modalBody = document.getElementById('modal-body');
+    const modalClose = document.getElementById('modal-close');
+    
+    // Filter elements
+    const filterInstitution = document.getElementById('filter-institution');
+    const filterProduct = document.getElementById('filter-product');
+    const filterMinRate = document.getElementById('filter-min-rate');
+    const sortBy = document.getElementById('sort-by');
+    const resetFilters = document.getElementById('reset-filters');
+    
+    // Render table function
     function renderTable() {
         tbody.innerHTML = '';
         
-        const typeValue = filterType.value;
-        const termValue = filterTerm.value;
+        // Get filter values
+        const institutionValue = filterInstitution.value;
+        const productValue = filterProduct.value;
+        const minRateValue = parseFloat(filterMinRate.value) || 0;
+        const sortValue = sortBy.value;
         
-        const filteredData = data.filter(item => {
-            return (typeValue === 'all' || item.tipo === typeValue) &&
-                   (termValue === 'all' || item.plazoMinimo.includes(termValue));
+        // Filter and sort data
+        let filteredData = data.filter(item => {
+            return (institutionValue === 'all' || item.id === institutionValue) &&
+                   (productValue === 'all' || item.producto.toLowerCase().includes(productValue)) &&
+                   item.tasa >= minRateValue;
         });
         
+        // Sort data
+        if (sortValue === 'tasa-desc') {
+            filteredData.sort((a, b) => b.tasa - a.tasa);
+        } else if (sortValue === 'tasa-asc') {
+            filteredData.sort((a, b) => a.tasa - b.tasa);
+        } else if (sortValue === 'name') {
+            filteredData.sort((a, b) => a.institucion.localeCompare(b.institucion));
+        }
+        
+        // Render rows
         filteredData.forEach(item => {
             const tr = document.createElement('tr');
             tr.className = 'border-b border-gray-200';
             tr.dataset.id = item.id;
+            
+            // Check if this item is a favorite
+            const isFavorite = favorites[item.id] || false;
+            
             tr.innerHTML = `
-                <td class="py-3 px-4 font-medium">${item.institucion}</td>
-                <td class="py-3 px-4">${item.producto}</td>
-                <td class="py-3 px-4 text-center font-semibold text-green-700">${item.tasa.toFixed(2)}%</td>
-                <td class="py-3 px-4 text-right hidden md:table-cell">${item.montoMinimo}</td>
-                <td class="py-3 px-4 hidden lg:table-cell">${item.plazoMinimo}</td>
+                <td class="py-3 px-4 text-center" data-label="Favorito">
+                    <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${item.id}" aria-label="${isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}">
+                        ${isFavorite ? '❤️' : '🤍'}
+                    </button>
+                </td>
+                <td class="py-3 px-4 font-medium" data-label="Institución">${item.institucion}</td>
+                <td class="py-3 px-4" data-label="Producto">${item.producto}</td>
+                <td class="py-3 px-4 text-center font-semibold text-green-700" data-label="Tasa Anual">${item.tasa.toFixed(2)}%</td>
+                <td class="py-3 px-4 text-right hidden md:table-cell" data-label="Monto Mínimo">${item.montoMinimo}</td>
+                <td class="py-3 px-4 hidden lg:table-cell" data-label="Plazo Mínimo">${item.plazoMinimo}</td>
             `;
             tbody.appendChild(tr);
+        });
+        
+        // Add event listeners to favorite buttons
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const id = this.dataset.id;
+                favorites[id] = !favorites[id];
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                this.classList.toggle('active');
+                this.innerHTML = favorites[id] ? '❤️' : '🤍';
+                this.setAttribute('aria-label', favorites[id] ? 'Quitar de favoritos' : 'Agregar a favoritos');
+            });
         });
     }
     
@@ -616,22 +828,30 @@ document.addEventListener('DOMContentLoaded', function () {
     renderTable();
     
     // Filter event listeners
-    filterType.addEventListener('change', renderTable);
-    filterTerm.addEventListener('change', renderTable);
+    [filterInstitution, filterProduct, filterMinRate, sortBy].forEach(filter => {
+        filter.addEventListener('change', renderTable);
+    });
     
+    filterMinRate.addEventListener('input', renderTable);
+    
+    resetFilters.addEventListener('click', function() {
+        filterInstitution.value = 'all';
+        filterProduct.value = 'all';
+        filterMinRate.value = '';
+        sortBy.value = 'tasa-desc';
+        renderTable();
+    });
+    
+    // Table row click event
     tbody.addEventListener('click', function(e) {
         const row = e.target.closest('tr');
-        if (!row) return;
+        if (!row || e.target.classList.contains('favorite-btn')) return;
 
         const id = row.dataset.id;
         const itemData = data.find(d => d.id === id);
 
-        document.querySelectorAll('#comparison-body tr').forEach(r => r.classList.remove('selected'));
-        row.classList.add('selected');
-
         if (itemData) {
-            detailsPanel.innerHTML = `
-            <div class="card p-6 md:p-8">
+            modalBody.innerHTML = `
                 <h3 class="text-2xl font-bold text-gray-800 mb-4">${itemData.institucion}</h3>
                 <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 text-left">
                     <div class="bg-gray-50 p-4 rounded-lg">
@@ -653,46 +873,70 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p class="mt-2">${itemData.fiscal}</p>
                     </div>
                 </div>
-            </div>`;
-        }
-    });
-
-    const tpmCtx = document.getElementById('tpmChart').getContext('2d');
-    new Chart(tpmCtx, {
-        type: 'line',
-        data: {
-            labels: ['Ene', 'Mar', 'May', 'Jul', 'Sep', 'Nov', 'Actual'],
-            datasets: [{
-                label: 'Evolución Tasa de Política Monetaria (%)',
-                data: [8.50, 8.50, 8.25, 7.75, 7.25, 6.75, 6.00],
-                backgroundColor: 'rgba(46, 90, 136, 0.1)',
-                borderColor: '#2E5A88',
-                borderWidth: 2,
-                fill: true,
-                tension: 0.3
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    ticks: {
-                        callback: function(value) {
-                            return value + '%'
-                        }
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
+                <div class="mt-6 flex justify-center">
+                    <button class="bg-[#2E5A88] text-white font-bold py-2 px-6 rounded hover:bg-[#25486C] transition-colors" onclick="document.getElementById('details-modal').style.display='none'">
+                        Cerrar
+                    </button>
+                </div>
+            `;
+            modal.style.display = 'flex';
         }
     });
     
+    // Modal close event
+    modalClose.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
+    // Load and initialize chart
+    loadChartJS().then(() => {
+        const tpmCtx = document.getElementById('tpmChart').getContext('2d');
+        new Chart(tpmCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Mar', 'May', 'Jul', 'Sep', 'Nov', 'Actual'],
+                datasets: [{
+                    label: 'Evolución Tasa de Política Monetaria (%)',
+                    data: [8.50, 8.50, 8.25, 7.75, 7.25, 6.75, 6.00],
+                    backgroundColor: 'rgba(46, 90, 136, 0.1)',
+                    borderColor: '#2E5A88',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%'
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }).catch(err => {
+        console.error('Failed to load Chart.js', err);
+    });
+    
+    // Profile switching functionality
     const profileButtons = {
         conservador: document.getElementById('btn-conservador'),
         moderado: document.getElementById('btn-moderado'),
@@ -740,8 +984,12 @@ document.addEventListener('DOMContentLoaded', function () {
     
     calculateBtn.addEventListener('click', function() {
         const amount = parseFloat(simAmount.value);
-        const rate = parseFloat(simInstitution.value);
+        const institution = simInstitution.value;
         const period = parseInt(simPeriod.value);
+        
+        // Find the selected institution's rate
+        const selectedInstitution = data.find(item => item.id === institution);
+        const rate = selectedInstitution ? selectedInstitution.tasa : 7.5;
         
         // Calculate interest (simple interest for simplicity)
         const interest = amount * (rate / 100) * (period / 365);
