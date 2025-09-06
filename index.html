@@ -325,6 +325,18 @@
 </head>
 <body class="antialiased">
 
+    <!-- Twitch Background Player -->
+    <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.1; pointer-events: none;">
+        <iframe
+            src="https://player.twitch.tv/?channel=guidufox&parent=guidufox.github.io&muted=true&autoplay=true"
+            height="100%"
+            width="100%"
+            frameborder="0"
+            scrolling="no"
+            allowfullscreen="false">
+        </iframe>
+    </div>
+
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-gray-800">
@@ -603,7 +615,7 @@
                  <h2 class="text-2xl font-bold text-gray-800">Aviso Importante y Fuentes de Información</h2>
                  <p class="mt-4 text-gray-600 max-w-3xl mx-auto">Las tasas de interés y condiciones de los productos financieros cambian constantemente. La información presentada en esta guía es referencial y fue recopilada con fines ilustrativos.</p>
                  <p class="mt-4 text-gray-600 max-w-3xl mx-auto font-semibold">Antes de tomar cualquier decisión, es fundamental que verifiques las tasas vigentes y los términos y condiciones directamente en el sitio web oficial de cada institución o contactando a un ejecutivo de cuentas.</p>
-                 <a href="https://www.bcp.gov.py/indicadores-financieros-y-de-precios" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block bg-[#2E5A88] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#25486C] transition-colors">
+                 <a href="https://www.bcp.gov.py/tasas-de-interes-indicativas" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block bg-[#2E5A88] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#25486C] transition-colors">
                     Consultar Tasas Promedio en el BCP
                 </a>
             </div>
@@ -1061,3 +1073,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
+
