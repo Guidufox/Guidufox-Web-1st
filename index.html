@@ -58,7 +58,7 @@
         .floating-btn {
             position: fixed;
             bottom: 2rem;
-            left: 2rem; /* <-- CAMBIO REALIZADO AQUÍ */
+            left: 2rem; 
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -86,7 +86,7 @@
             .modal-content { width: 95%; padding: 1rem; }
             .floating-btn {
                 bottom: 1rem;
-                left: 1rem; /* <-- CAMBIO REALIZADO AQUÍ */
+                left: 1rem; 
                 width: 50px;
                 height: 50px;
             }
@@ -328,35 +328,31 @@
                                </div>
                                <div class="p-4 rounded-lg bg-green-100 dark:bg-green-900/50">
                                    <div class="flex justify-between items-center text-green-800 dark:text-green-200">
-                                       <span class="font-medium">Ganancia Real:</span>
+                                       <span class="font-medium">Ganancia Real (Total):</span>
                                        <span id="result-real-interest" class="font-bold">0 Gs.</span>
                                    </div>
                                    <div class="text-xs mt-1">Después de ajustar por inflación</div>
                                </div>
                             </div>
-                            <div class="chart-container self-center" style="height: 180px; max-width: 180px; margin-top: 1rem;">
+                            <div class="chart-container self-center" style="height: 180px; max-width: 180px; margin: auto;">
                                 <canvas id="simulation-chart"></canvas>
                             </div>
                         </div>
                         
-                        <div class="mt-6">
+                        <div class="mt-4">
                             <h4 class="font-bold mb-2">Desglose de resultados</h4>
-                            <div class="grid grid-cols-2 gap-2 text-sm">
-                                <div class="p-2 rounded" style="background-color: var(--background-color);">
-                                    <div>Tasa mensual:</div>
-                                    <div id="monthly-rate" class="font-bold">0%</div>
+                            <div class="space-y-2 text-sm">
+                                <div class="p-2 rounded flex justify-between" style="background-color: var(--background-color);">
+                                    <span>Interés mensual (bruto):</span>
+                                    <span id="monthly-interest" class="font-bold">0 Gs.</span>
                                 </div>
-                                <div class="p-2 rounded" style="background-color: var(--background-color);">
-                                    <div>Rendimiento anual:</div>
-                                    <div id="annual-yield" class="font-bold">0 Gs.</div>
+                                <div class="p-2 rounded flex justify-between" style="background-color: var(--background-color);">
+                                    <span>Pérdida mensual por inflación:</span>
+                                    <span id="monthly-inflation-loss" class="font-bold text-red-500">0 Gs.</span>
                                 </div>
-                                <div class="p-2 rounded" style="background-color: var(--background-color);">
-                                    <div>Pérdida por inflación:</div>
-                                    <div id="inflation-loss" class="font-bold">0 Gs.</div>
-                                </div>
-                                <div class="p-2 rounded" style="background-color: var(--background-color);">
-                                    <div>Poder adquisitivo:</div>
-                                    <div id="purchasing-power" class="font-bold">0 Gs.</div>
+                                <div class="p-2 rounded font-bold flex justify-between bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200">
+                                    <span>Ganancia Real Mensual (Neta):</span>
+                                    <span id="real-monthly-gain">0 Gs.</span>
                                 </div>
                             </div>
                         </div>
@@ -651,10 +647,10 @@
         const resultRealInterest = document.getElementById('result-real-interest');
         const resultTotal = document.getElementById('result-total');
         const initialLabel = document.getElementById('initial-label');
-        const monthlyRate = document.getElementById('monthly-rate');
-        const annualYield = document.getElementById('annual-yield');
-        const inflationLoss = document.getElementById('inflation-loss');
-        const purchasingPower = document.getElementById('purchasing-power');
+        
+        const monthlyInterestEl = document.getElementById('monthly-interest');
+        const monthlyInflationLossEl = document.getElementById('monthly-inflation-loss');
+        const realMonthlyGainEl = document.getElementById('real-monthly-gain');
 
         function initializeApp() {
             lastUpdatedSpans.forEach(span => {
@@ -1027,18 +1023,24 @@
             const finalAmount = initialAmount + interest;
             const inflationLossValue = initialAmount * (inflationRate / 100) * (periodMonths / 12);
             const realInterest = interest - inflationLossValue;
-            const purchasingPowerValue = finalAmount - inflationLossValue;
+            
+            // Cálculos mensuales
+            const monthlyInterestGross = interest / periodMonths;
+            const monthlyInflationLoss = inflationLossValue / periodMonths;
+            const realMonthlyGain = monthlyInterestGross - monthlyInflationLoss;
 
+            // Actualizar UI Principal
             resultInitial.textContent = `${formatNumber(initialAmount)} Gs.`;
             resultInterest.textContent = `${formatNumber(interest)} Gs.`;
             resultTotal.textContent = `${formatNumber(finalAmount)} Gs.`;
             resultRealInterest.textContent = `${formatNumber(realInterest)} Gs.`;
-            resultRealInterest.parentElement.style.color = realInterest >= 0 ? 'var(--success-color)' : '#EF4444';
+            resultRealInterest.parentElement.parentElement.style.color = realInterest >= 0 ? 'var(--success-color)' : '#EF4444';
             
-            monthlyRate.textContent = `${(rate / 12).toFixed(2)}%`;
-            annualYield.textContent = `${formatNumber(initialAmount * (rate / 100))} Gs.`;
-            inflationLoss.textContent = `${formatNumber(inflationLossValue)} Gs.`;
-            purchasingPower.textContent = `${formatNumber(purchasingPowerValue)} Gs.`;
+            // Actualizar UI Desglose
+            monthlyInterestEl.textContent = `${formatNumber(monthlyInterestGross)} Gs.`;
+            monthlyInflationLossEl.textContent = `-${formatNumber(monthlyInflationLoss)} Gs.`;
+            realMonthlyGainEl.textContent = `${formatNumber(realMonthlyGain)} Gs.`;
+            realMonthlyGainEl.parentElement.style.color = realMonthlyGain >= 0 ? 'var(--success-color)' : '#EF4444';
             
             updateSimulationChart(initialAmount, interest);
             saveSimulatorState();
@@ -1325,7 +1327,7 @@
         }
 
         const formatNumber = num => new Intl.NumberFormat('es-PY').format(Math.round(num));
-        const parseNumber = str => parseFloat(String(str).replace(/\./g, '')) || 0;
+        const parseNumber = str => parseFloat(String(str).replace(/\./g, '').replace(/,/g, '.')) || 0;
 
         initializeApp();
     });
