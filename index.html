@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Interactiva de Ahorro en Paraguay</title>
+
+    <meta name="google-site-verification" content="qBR45iQnVdAz-G01792fk1Mdzh7Rg-BOvy30nMg-wQI" />
+
+    <meta name="description" content="Guía interactiva para analizar, comparar y elegir las mejores opciones de ahorro en Paraguay. Encuentra tasas de interés de bancos y cooperativas.">
+    <meta name="keywords" content="ahorro paraguay, invertir en paraguay, plazo fijo, cda, banco nacional de fomento, itaú, familiar, visión banco, cooperativa medalla milagrosa, cooperativa universitaria, tasas de interés paraguay, comparador ahorro">
+    <meta name="author" content="AhorroPY">
+    <meta property="og:title" content="Guía Interactiva de Ahorro en Paraguay">
+    <meta property="og:description" content="Compara y elige la mejor opción de ahorro en Paraguay con nuestra guía interactiva.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <script>
+        // Cargar Chart.js solo cuando sea necesario
+        function loadChartJS() {
+            return new Promise((resolve, reject) => {
+                if (typeof Chart !== 'undefined') {
+                    resolve();
+                    return;
+                }
+                
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+    </script>
+    <style>
+        :root {
+            --primary-color: #2E5A88;
+            --primary-hover: #25486C;
+            --secondary-color: #4A4A4A;
+            --background-color: #FDFBF8;
+            --card-background: #FFFFFF;
+            --text-color: #4A4A4A;
+            --text-strong-color: #1F2937;
+            --border-color: #EAEAEA;
+            --header-bg: rgba(255, 255, 255, 0.8);
+        }
+
+        html.dark {
+            --primary-color: #58A6FF;
+            --primary-hover: #79B8FF;
+            --secondary-color: #8D96A0;
+            --background-color: #0D1117;
+            --card-background: #161B22;
+            --text-color: #C9D1D9;
+            --text-strong-color: #FFFFFF;
+            --border-color: #30363D;
+            --header-bg: rgba(22, 27, 34, 0.8);
+        }
+        
+        body, .card, header, .modal-content {
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-strong-color);
+        }
+
+        #inicio {
+            position: relative; /* Necesario para el pseudo-elemento de fondo */
+            z-index: 1;
+        }
+
+        #inicio::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/hero-background.webp');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.05; /* Opacidad muy sutil */
+            z-index: -1;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        html.dark #inicio::before {
+            opacity: 0.1; /* Un poco más visible en modo oscuro */
+        }
+        
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+        .nav-link { transition: color 0.3s, border-bottom-color 0.3s; position: relative; }
+        .nav-link:hover { color: var(--primary-color); }
+        .nav-link:focus { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+        .nav-link.active { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
+        .card { background-color: var(--card-background); border: 1px solid var(--border-color); border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05); transition: transform 0.3s, box-shadow 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07); }
+        .btn { transition: background-color 0.3s, color 0.3s, transform 0.3s; }
+        .btn:focus { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+        .btn-profile { transition: background-color 0.3s, color 0.3s, transform 0.3s; }
+        .btn-profile.active { background-color: var(--primary-color); color: white; transform: scale(1.05); }
+        .comparison-table { border-collapse: collapse; width: 100%; }
+        .comparison-table th { background-color: var(--card-background); padding: 0.75rem; text-align: left; font-weight: 600; color: var(--secondary-color); }
+        .comparison-table tbody tr { cursor: pointer; transition: background-color 0.2s; border-bottom: 1px solid var(--border-color); }
+        html.light .comparison-table tbody tr:hover { background-color: #F0F5F9; }
+        html.dark .comparison-table tbody tr:hover { background-color: #1f242c; }
+        .comparison-table td { padding: 0.75rem; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        #back-to-top { transition: opacity 0.3s, visibility 0.3s; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background-color: var(--card-background); padding: 2rem; border-radius: 0.5rem; max-width: 90%; max-height: 90%; overflow-y: auto; width: 600px; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); }
+        .filter-container { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+        .filter-group { display: flex; flex-direction: column; }
+        .filter-label { font-weight: 500; margin-bottom: 0.25rem; }
+        .favorite-btn { background: none; border: none; cursor: pointer; font-size: 1.25rem; color: #ccc; transition: color 0.2s; }
+        .favorite-btn.active { color: #F05252; }
+        .calculator-input, select { background-color: var(--background-color); border: 1px solid var(--border-color); color: var(--text-color); }
+        select option { background-color: var(--card-background); color: var(--text-color); }
+
+        /* Estilos para enlaces externos */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .external-link:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+        
+        .external-link-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-table thead { display: none; }
+            .comparison-table tr { display: block; margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; }
+            .comparison-table td { display: block; text-align: right; padding: 0.5rem 1rem; position: relative; padding-left: 50%; }
+            .comparison-table td::before { content: attr(data-label); position: absolute; left: 1rem; width: calc(50% - 1rem); padding-right: 1rem; text-align: left; font-weight: 600; }
+            .filter-container { flex-direction: column; }
+            .modal-content { width: 95%; padding: 1rem; }
+        }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="twitch-embed" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.1; pointer-events: none;"></div>
+
+    <header class="sticky top-0 z-50 shadow-sm bg-opacity-80 backdrop-blur-md" style="background-color: var(--header-bg);">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold">
+                <a href="#inicio" aria-label="Ir al inicio"><span style="color: var(--primary-color);">Ahorro</span>PY</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#contexto" class="nav-link font-medium pb-1">Contexto</a>
+                <a href="#comparador" class="nav-link font-medium pb-1">Comparador</a>
+                <a href="#perfiles" class="nav-link font-medium pb-1">Perfiles</a>
+                <a href="#simulador" class="nav-link font-medium pb-1">Simulador</a>
+                <a href="#fuentes" class="nav-link font-medium pb-1">Fuentes</a>
+                <a href="#contacto" class="nav-link font-medium pb-1">Contacto</a>
+                <button id="theme-toggle" class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2" style="color: var(--text-color); --tw-ring-offset-color: var(--background-color); --tw-ring-color: var(--primary-color);">
+                    <svg id="theme-icon-light" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="theme-icon-dark" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+             <div class="md:hidden flex items-center space-x-4">
+                <button id="theme-toggle-mobile" class="p-2 rounded-full" style="color: var(--text-color);"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><use href="#theme-icon-light"/></svg></button>
+                <button id="mobile-menu-button" class="p-2 rounded-md"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
+            </div>
+        </nav>
+        
+        <div id="mobile-menu" class="hidden md:hidden border-t" style="background-color: var(--card-background); border-color: var(--border-color);">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#contexto" class="block px-3 py-2 rounded-md text-base font-medium">Contexto</a>
+                <a href="#comparador" class="block px-3 py-2 rounded-md text-base font-medium">Comparador</a>
+                <a href="#perfiles" class="block px-3 py-2 rounded-md text-base font-medium">Perfiles</a>
+                <a href="#simulador" class="block px-3 py-2 rounded-md text-base font-medium">Simulador</a>
+                <a href="#fuentes" class="block px-3 py-2 rounded-md text-base font-medium">Fuentes</a>
+                <a href="#contacto" class="block px-3 py-2 rounded-md text-base font-medium">Contacto</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="py-20" style="background-color: var(--card-background);">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight">Tu Guía Interactiva de Ahorro en Paraguay</h1>
+                <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto">Analiza, compara y elige la mejor opción para maximizar tus rendimientos. Tomar decisiones financieras informadas nunca fue tan fácil.</p>
+                <div class="mt-8 flex justify-center gap-4">
+                    <a href="#comparador" class="font-bold py-3 px-6 rounded-lg text-white" style="background-color: var(--primary-color); --hover-bg: var(--primary-hover);" onmouseover="this.style.backgroundColor=getComputedStyle(this).getPropertyValue('--hover-bg')" onmouseout="this.style.backgroundColor=getComputedStyle(this).getPropertyValue('--primary-color')">
+                        Comparar opciones
+                    </a>
+                    <a href="#simulador" class="font-bold py-3 px-6 rounded-lg border" style="color: var(--primary-color); border-color: var(--primary-color);">
+                        Simular rendimientos
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contexto" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Entendiendo el Mercado Paraguayo</h2>
+                    <p class="mt-2">Conoce los instrumentos de ahorro y los factores que influyen en tus ganancias.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--primary-color);">Cuentas de Ahorro</h3>
+                        <p>Son la opción más básica y líquida. Ofrecen disponibilidad inmediata de tu dinero, pero sus tasas de interés suelen ser las más bajas. Ideales para fondos de emergencia o ahorros a muy corto plazo.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--primary-color);">Ahorro a Plazo Fijo (CDA)</h3>
+                        <p>Consiste en depositar una suma de dinero por un plazo determinado (3, 6, 12, 24+ meses) a una tasa de interés fija. A mayor plazo, mayor suele ser la tasa. Ofrece rendimientos superiores a las cuentas de ahorro.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--primary-color);">Ahorro Programado</h3>
+                        <p>Fomenta el hábito de ahorrar mediante depósitos mensuales de un monto fijo por un plazo determinado. Al final del plazo, recibes el capital más los intereses generados. Ideal para metas específicas.</p>
+                    </div>
+                </div>
+                <div class="card p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-center mb-2">Factor Clave: Tasa de Política Monetaria (TPM)</h3>
+                    <p class="text-center max-w-3xl mx-auto mb-6">La TPM es la tasa de interés de referencia fijada por el Banco Central del Paraguay (BCP). Influye directamente en las tasas que los bancos ofrecen por los ahorros. Una TPM alta generalmente se traduce en mejores tasas para los ahorristas.</p>
+                    <div class="text-center mb-6">
+                        <span class="text-lg font-medium">Tasa Actual (Referencial):</span>
+                        <span class="text-3xl font-bold ml-2" style="color: var(--primary-color);">6.00%</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="tpmChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparador" class="py-20" style="background-color: var(--card-background);">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Comparador de Productos de Ahorro</h2>
+                    <p class="mt-2">Selecciona una institución para ver los detalles. Las tasas son estimadas y pueden variar.</p>
+                </div>
+                
+                <div class="filter-container mb-6">
+                    <div class="filter-group">
+                        <label for="filter-institution" class="filter-label">Institución</label>
+                        <select id="filter-institution" class="p-2 rounded calculator-input">
+                            <option value="all">Todas las instituciones</option>
+                            <option value="bnf">BNF</option>
+                            <option value="itaú">Itaú</option>
+                            <option value="familiar">Familiar</option>
+                            <option value="continental">Continental</option>
+                            <option value="gnb">GNB</option>
+                            <option value="vision">Visión</option>
+                            <option value="atlas">Atlas</option>
+                            <option value="medalla">Medalla Milagrosa</option>
+                            <option value="universitaria">Cooperativa Universitaria</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filter-product" class="filter-label">Producto</label>
+                        <select id="filter-product" class="p-2 rounded calculator-input">
+                            <option value="all">Todos los productos</option>
+                            <option value="cda">CDA / Plazo Fijo</option>
+                            <option value="ahorro">Ahorro Programado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filter-min-rate" class="filter-label">Tasa mínima</label>
+                        <input type="number" id="filter-min-rate" min="0" max="20" step="0.1" placeholder="0%" class="p-2 rounded calculator-input">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="sort-by" class="filter-label">Ordenar por</label>
+                        <select id="sort-by" class="p-2 rounded calculator-input">
+                            <option value="tasa-desc">Mayor tasa primero</option>
+                            <option value="tasa-asc">Menor tasa primero</option>
+                            <option value="name">Nombre A-Z</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group flex flex-col justify-end">
+                        <button id="reset-filters" class="px-4 py-2 rounded" style="background-color: var(--border-color); color: var(--text-strong-color);">Limpiar filtros</button>
+                    </div>
+                </div>
+                
+                <div class="w-full overflow-x-auto">
+                    <table class="min-w-full comparison-table">
+                        <thead style="background-color: var(--background-color);">
+                            <tr>
+                                <th class="text-left py-3 px-4 font-semibold">Favorito</th>
+                                <th class="text-left py-3 px-4 font-semibold">Institución</th>
+                                <th class="text-left py-3 px-4 font-semibold">Producto</th>
+                                <th class="text-center py-3 px-4 font-semibold">Tasa Anual (%)</th>
+                                <th class="text-right py-3 px-4 font-semibold hidden md:table-cell">Monto Mínimo (Gs.)</th>
+                                <th class="text-left py-3 px-4 font-semibold hidden lg:table-cell">Plazo Mínimo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-body">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-8 text-center text-sm">
+                    <p>💡 Consejo: Haz clic en cualquier fila para ver detalles completos. Marca tus opciones favoritas para compararlas más fácilmente.</p>
+                </div>
+            </div>
+        </section>
+
+        <div id="details-modal" class="modal">
+            <div class="modal-content relative">
+                <button id="modal-close" class="modal-close" aria-label="Cerrar modal">&times;</button>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+
+        <section id="perfiles" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Recomendación Según tu Perfil</h2>
+                    <p class="mt-2">Encuentra la estrategia que mejor se adapta a tus metas y tolerancia al riesgo.</p>
+                </div>
+                <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
+                    <button id="btn-conservador" class="btn-profile active font-semibold py-2 px-4 rounded-full">Conservador</button>
+                    <button id="btn-moderado" class="btn-profile font-semibold py-2 px-4 rounded-full">Moderado</button>
+                    <button id="btn-maximizador" class="btn-profile font-semibold py-2 px-4 rounded-full">Maximizador</button>
+                </div>
+                
+                <div id="content-conservador" class="profile-content card p-8">
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--primary-color);">Perfil Conservador: Seguridad y Liquidez</h3>
+                    <p class="mb-4">Tu prioridad es proteger tu capital y tener acceso a él en cualquier momento. No te importa sacrificar un poco de rendimiento a cambio de máxima seguridad y disponibilidad.</p>
+                    <div class="p-4 rounded-r-lg border-l-4" style="background-color: var(--background-color); border-color: var(--primary-color);">
+                        <p class="font-bold">Mejor Opción:</p>
+                        <p>Una <span class="font-semibold">Cuenta de Ahorros tradicional o Ahorro Programado</span> en un banco de primera línea y con respaldo estatal como el <span class="font-semibold">Banco Nacional de Fomento (BNF)</span>. Ofrece la máxima seguridad del sistema y te permite retirar tus fondos cuando los necesites sin penalización.</p>
+                    </div>
+                </div>
+                <div id="content-moderado" class="profile-content card p-8 hidden">
+                     <h3 class="text-2xl font-bold mb-4" style="color: var(--primary-color);">Perfil Moderado: Equilibrio Inteligente</h3>
+                    <p class="mb-4">Buscas un rendimiento justo por tu dinero, pero sin renunciar a una seguridad alta. Estás dispuesto a inmovilizar una parte de tus ahorros por un tiempo corto o mediano untuk obtener una mejor tasa.</p>
+                    <div class="p-4 rounded-r-lg border-l-4" style="background-color: var(--background-color); border-color: var(--primary-color);">
+                        <p class="font-bold">Mejor Opción:</p>
+                        <p>Un <span class="font-semibold">Certificado de Depósito de Ahorro (CDA) a mediano plazo (12 a 24 meses)</span> en bancos privados sólidos como <span class="font-semibold">Itaú, Continental или Familiar</span>. También, un CDA en una Cooperativa de Ahorro y Crédito grande como <span class="font-semibold">Medalla Milagrosa</span> puede ofrecer tasas muy competitivas con un buen nivel de seguridad.</p>
+                    </div>
+                </div>
+                <div id="content-maximizador" class="profile-content card p-8 hidden">
+                     <h3 class="text-2xl font-bold mb-4" style="color: var(--primary-color);">Perfil Maximizador: A por el Mayor Rendimiento</h3>
+                    <p class="mb-4">Tu objetivo principal es obtener la tasa de interés más alta posible. Comprendes que para ello necesitas inmovilizar tu dinero por plazos más largos y estás cómodo con ello.</p>
+                     <div class="p-4 rounded-r-lg border-l-4" style="background-color: var(--background-color); border-color: var(--primary-color);">
+                        <p class="font-bold">Mejor Opción:</p>
+                        <p>Un <span class="font-semibold">CDA a largo plazo (más de 24 meses)</span>. Investiga las ofertas de bancos como <span class="font-semibold">Banco GNB o Banco Familiar</span>, que a menudo tienen tasas promocionales atractivas para plazos extendidos. Las Cooperativas como <span class="font-semibold">Medalla Milagrosa o Universitaria</span> también son una excelente alternativa en este segmento, usualmente liderando las tasas de mercado para socios.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulador" class="py-20" style="background-color: var(--card-background);">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Simulador de Rendimientos</h2>
+                    <p class="mt-2">Calcula cuánto podrías ganar con diferentes opciones de ahorro.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-4" style="color: var(--primary-color);">Parámetros de simulación</h3>
+                        
+                        <div class="mb-4">
+                            <label for="sim-amount" class="block mb-2">Monto (Gs.)</label>
+                            <input type="text" id="sim-amount" value="5.000.000" class="calculator-input rounded">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="sim-product" class="block mb-2">Producto</label>
+                            <select id="sim-product" class="calculator-input rounded">
+                                </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="sim-period" class="block mb-2">Plazo (meses)</label>
+                            <input type="number" id="sim-period" min="1" max="60" value="12" class="calculator-input rounded">
+                        </div>
+                        
+                        <button id="calculate-btn" class="w-full text-white font-bold py-2 px-4 rounded" style="background-color: var(--primary-color);">
+                            Calcular rendimiento
+                        </button>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-4" style="color: var(--primary-color);">Resultados de la simulación</h3>
+                        
+                        <div class="mb-4 p-4 rounded-lg" style="background-color: var(--background-color);">
+                            <div class="flex justify-between items-center">
+                                <span id="initial-label">Inversión inicial:</span>
+                                <span id="result-initial" class="font-bold">5.000.000 Gs.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 p-4 rounded-lg" style="background-color: var(--background-color);">
+                            <div class="flex justify-between items-center">
+                                <span>Intereses generados:</span>
+                                <span id="result-interest" class="font-bold">0 Gs.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 p-4 rounded-lg" style="background-color: var(--background-color);">
+                            <div class="flex justify-between items-center">
+                                <span>Monto final:</span>
+                                <span id="result-total" class="font-bold text-lg">5.000.000 Gs.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 text-sm">
+                            <p>💡 Esta simulación es una estimación. El cálculo para Ahorro Programado es una aproximación simple.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="fuentes" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-2xl font-bold">Aviso Importante y Fuentes de Información</h2>
+                 <p class="mt-4 max-w-3xl mx-auto">Las tasas de interés y condiciones de los productos financieros cambian constantemente. La información presentada en esta guía es referencial y fue recopilada con fines ilustrativos.</p>
+                 <p class="mt-4 max-w-3xl mx-auto font-semibold">Antes de tomar cualquier decisión, es fundamental que verifiques las tasas vigentes y los términos y condiciones directamente en el sitio web oficial de cada institución o contactando a un ejecutivo de cuentas.</p>
+                 <a href="https://www.bcp.gov.py/tasas-de-interes-indicativas" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block text-white font-bold py-3 px-6 rounded-lg" style="background-color: var(--primary-color);">
+                    Consultar Tasas Promedio en el BCP
+                </a>
+            </div>
+        </section>
+
+        <section id="contacto" class="py-20" style="background-color: var(--card-background);">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-2xl font-bold">Sugerencias y Contacto</h2>
+                 <p class="mt-4 max-w-3xl mx-auto">Esta es una herramienta independiente creada para facilitar la toma de decisiones financieras en Paraguay. Si encuentras algún error, tienes alguna sugerencia para mejorar la web o quieres añadir alguna institución, no dudes en escribirme.</p>
+                 <p class="mt-6">
+                    <a href="mailto:guidufox@proton.me" class="font-bold text-lg hover:underline" style="color: var(--primary-color);">
+                        guidufox@proton.me
+                    </a>
+                </p>
+                <div class="mt-8 flex justify-center gap-6">
+                    <a href="https://x.com/guidufox" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de X" class="hover:text-[var(--primary-color)] transition-colors">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/guidufox/" target="_blank" rel="noopener noreferrer" aria-label="Visitar perfil de Instagram" class="hover:text-[var(--primary-color)] transition-colors">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427C2.013 15.098 2 14.744 2 12.315s.013-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.902 2.013 9.256 2 11.685 2h.630zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.023.047 1.351.058 3.807.058h.468c2.456 0 2.784-.011 3.807-.058.975-.045 1.504-.207 1.857-.344.467-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.047-1.023.058-1.351.058-3.807v-.468c0-2.456-.011-2.784-.058-3.807-.045-.975-.207-1.504-.344-1.857a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a href="https://www.twitch.tv/guidufox" target="_blank" rel="noopener noreferrer" aria-label="Visitar canal de Twitch" class="hover:text-[var(--primary-color)] transition-colors">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M11.571 4.714h1.715v5.143H11.57zM8 4.714h1.714v5.143H8zM2 0v16.286h5.143V20l4.286-3.714h4.286L22 10.142V0zm18.286 9.571l-3.429 3.429h-3.428l-3 3v-3H6.857V1.714h13.429z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <a href="#inicio" id="back-to-top" class="fixed bottom-5 right-5 text-white p-3 rounded-full shadow-lg transition-opacity duration-300 opacity-0 invisible" style="background-color: var(--primary-color);">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+    </a>
+
+    <footer class="py-6 border-t" style="background-color: var(--card-background); border-color: var(--border-color);">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 AhorroPY. Herramienta de análisis financiero para el mercado paraguayo.</p>
+            <p class="text-sm mt-2">Desarrollado por <a href="https://github.com/Guidufox" target="_blank" rel="noopener noreferrer" class="hover:underline" style="color: var(--primary-color);">Guidufox</a>.</p>
+            <!-- Frase aclaratoria añadida al final de la página -->
+            <p class="text-sm mt-2">Este sitio no busca criticar, difamar ni promover hate hacia ninguna empresa; el contenido es únicamente de carácter informativo para quien lo requiera.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- DATABASE ---
+    const data = [
+        { id: 'medalla-cda', institucion: 'Cooperativa Medalla Milagrosa', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 11.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Suele ofrecer las tasas más altas del mercado', desventaja: 'Requiere ser socio de la cooperativa', proceso: 'Primero debes asociarte (implica un aporte de capital). La apertura del plazo fijo es presencial.', capitalizacion: 'Al vencimiento.', riesgo: 'Regulada por INCOOP. Considerada de bajo riesgo en el sector cooperativo.', fiscal: 'Rendimientos (excedentes) suelen tener beneficios fiscales.', url: '/c/banco/medalla-milagrosa' },
+        { id: 'universitaria-cda', institucion: 'Cooperativa Universitaria', producto: 'CDA Socios', tipo: 'cda', tasa: 10.50, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Excelentes tasas y gran solidez', desventaja: 'Requiere ser socio y cumplir requisitos', proceso: 'Debes ser socio para acceder. La apertura se realiza en sucursales.', capitalizacion: 'Generalmente al vencimiento.', riesgo: 'Regulada por INCOOP. Una de las cooperativas más grandes y seguras del país.', fiscal: 'Excedentes de socios suelen tener beneficios fiscales. Consultar normativa.', url: '/c/banco/cooperativa-universitaria' },
+        { id: 'gnb-cda', institucion: 'Banco GNB Paraguay', producto: 'CDA a Plazo Fijo', tipo: 'cda', tasa: 8.75, montoMinimo: '10.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas muy competitivas', desventaja: 'Monto de apertura elevado', proceso: 'Gestión en sucursales con atención personalizada. Requiere documentación estándar.', capitalizacion: 'Al vencimiento.', riesgo: 'Parte de un grupo financiero internacional sólido. Entidad segura.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.', url: '/c/banco/banco-gnb' },
+        { id: 'familiar-cda', institucion: 'Banco Familiar', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 8.60, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas atractivas y buena atención al cliente', desventaja: 'Red de sucursales más pequeña que los bancos más grandes', proceso: 'Apertura generalmente presencial. Se requiere documentación básica y comprobante de ingresos.', capitalizacion: 'Al vencimiento del plazo.', riesgo: 'Banco de larga trayectoria en el país, regulado y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.', url: '/c/banco/banco-familiar' },
+        { id: 'atlas-cda', institucion: 'Banco Atlas', producto: 'CDA Plus', tipo: 'cda', tasa: 8.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Buenas tasas y promociones frecuentes', desventaja: 'Mejores tasas a veces exigen plazos más largos', proceso: 'Contratación en sucursales con asesoría. Requiere CI y comprobantes de ingresos.', capitalizacion: 'Al vencimiento.', riesgo: 'Banco privado con décadas en el mercado, de alta solidez.', fiscal: 'Rendimientos alcanzados por el IRP o IRE. El banco realiza la retención.', url: '/c/banco/banco-atlas' },
+        { id: 'continental-cda', institucion: 'Banco Continental', producto: 'CDA Digital a 1 año', tipo: 'cda', tasa: 8.25, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Proceso 100% online y montos accesibles', desventaja: 'Tasas competitivas pero no siempre las más altas', proceso: 'Fácil y rápido a través de su app o web si ya eres cliente.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos privados más grandes y sólidos del país.', fiscal: 'Rendimientos gravados. El banco practica la retención correspondiente.', url: '/c/banco/banco-continental' },
+        { id: 'itau-cda', institucion: 'Banco Itaú', producto: 'CDA Digital', tipo: 'cda', tasa: 8.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Plataforma digital robusta y gran solidez del banco', desventaja: 'Sus tasas de interés no suelen ser las más altas del mercado', proceso: 'Fácil de gestionar desde la app o web para clientes. No requiere ir a sucursal.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos más grandes y seguros de la región.', fiscal: 'Rendimientos sujetos a la retención de impuestos vigente.', url: '/c/banco/banco-itau' },
+        { id: 'bnf-cda', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'CDA a 1 año', tipo: 'cda', tasa: 7.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Máxima seguridad (banco estatal)', desventaja: 'Procesos pueden ser más burocráticos', proceso: 'Generalmente presencial en sucursales. Requiere documentación básica.', capitalizacion: 'Al vencimiento.', riesgo: 'Considerado el riesgo más bajo del sistema financiero paraguayo.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.', url: '/c/banco/banco-nacional-de-fomento' },
+        { id: 'familiar-ahorro', institucion: 'Banco Familiar', producto: 'Ahorro Flexible', tipo: 'ahorro', tasa: 7.25, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Tasa muy competitiva para ahorro programado y plazos flexibles', desventaja: 'Puede requerir apertura presencial de cuenta base', proceso: 'Se puede programar desde la app o web una vez que se es cliente.', capitalizacion: 'Al final del plazo.', riesgo: 'Banco seguro y con buena reputación.', fiscal: 'Intereses sujetos a retención de impuestos.', url: '/c/banco/banco-familiar' },
+        { id: 'vision-ahorro', institucion: 'Visión Banco', producto: 'Ahorro Programado Anual', tipo: 'ahorro', tasa: 7.00, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Fomenta el hábito del ahorro con cuotas bajas', desventaja: 'Tasa menor a un CDA por el mismo plazo', proceso: 'Contratación sencilla en sucursales o canales digitales para clientes.', capitalizacion: 'Los intereses se calculan sobre el saldo promedio y se acreditan al final.', riesgo: 'Banco de gran trayectoria y solidez. Opción segura.', fiscal: 'Intereses sujetos a retenciones de impuestos.', url: '/c/banco/banco-vision' },
+        { id: 'atlas-ahorro', institucion: 'Banco Atlas', producto: 'Ahorro Programado Mi Meta', tipo: 'ahorro', tasa: 6.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Flexibilidad en plazos y cuotas, 100% digital', desventaja: 'Tasa inferior a otras opciones de inversión', proceso: 'Se puede abrir y gestionar desde la app del banco si ya eres cliente.', capitalizacion: 'Al final del periodo.', riesgo: 'Banco privado sólido y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.', url: '/c/banco/banco-atlas' },
+        { id: 'itau-ahorro', institucion: 'Banco Itaú', producto: 'Mi Ahorro', tipo: 'ahorro', tasa: 6.00, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Muy fácil de configurar desde la app, fomenta el hábito', desventaja: 'Rendimiento modesto en comparación con otras opciones', proceso: 'Totalmente digital para clientes a través de la app de Itaú.', capitalizacion: 'Al final del plazo elegido.', riesgo: 'Muy bajo, respaldado por la solidez del banco.', fiscal: 'Intereses sujetos a retención de impuestos.', url: '/c/banco/banco-itau' },
+        { id: 'bnf-ahorro', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'Ahorro Programado', tipo: 'ahorro', tasa: 5.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Seguridad máxima del estado', desventaja: 'Tasa de interés más baja del mercado', proceso: 'Apertura presencial en sucursales.', capitalizacion: 'Al vencimiento.', riesgo: 'El más bajo posible al ser el banco del estado.', fiscal: 'Rendimientos sujetos a retención.', url: '/c/banco/banco-nacional-de-fomento' }
+    ];
+
+    // --- GENERAL PAGE SETUP ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuButton) mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    // --- TWITCH FALLBACK PLAYER LOGIC (ROBUST VERSION) ---
+    const twitchChannels = ['guidufox', 'deihvaok', 'draco_fds'];
+    function loadTwitchPlayer(options) {
+        document.getElementById('twitch-embed').innerHTML = '';
+        new Twitch.Embed("twitch-embed", { ...options, width: "100%", height: "100%", parent: ["guidufox.github.io"], muted: true, autoplay: true });
+    }
+
+    function checkChannel(index) {
+        if (index >= twitchChannels.length) {
+            console.log("No live channels. Loading VODs for guidufox.");
+            loadTwitchPlayer({ collection: 'vods', channel: 'guidufox' });
+            return;
+        }
+        
+        const channel = twitchChannels[index];
+        const tempEmbedContainer = document.createElement('div');
+        tempEmbedContainer.style.display = 'none'; // Hide the temporary player
+        document.body.appendChild(tempEmbedContainer);
+        
+        let player = new Twitch.Embed(tempEmbedContainer, { width: 1, height: 1, channel, parent: ["guidufox.github.io"] });
+        let isLive = false;
+        let timeout = setTimeout(() => {
+            if (!isLive) {
+                console.log(`${channel} is offline (timeout). Checking next...`);
+                player = null; // Clean up embed
+                tempEmbedContainer.remove();
+                checkChannel(index + 1);
+            }
+        }, 5000);
+
+        player.addEventListener(Twitch.Embed.ONLINE, () => {
+            isLive = true;
+            clearTimeout(timeout);
+            console.log(`${channel} is live (ONLINE event). Loading main player.`);
+            loadTwitchPlayer({ channel });
+            player = null;
+            tempEmbedContainer.remove();
+        });
+
+        player.addEventListener(Twitch.Embed.OFFLINE, () => {
+            if (!isLive) {
+                clearTimeout(timeout);
+                console.log(`${channel} is offline (OFFLINE event). Checking next...`);
+                player = null;
+                tempEmbedContainer.remove();
+                checkChannel(index + 1);
+            }
+        });
+    }
+    checkChannel(0);
+
+    // --- THEME TOGGLE LOGIC ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+    const lightIcon = document.getElementById('theme-icon-light');
+    const darkIcon = document.getElementById('theme-icon-dark');
+    const mobileIconUse = themeToggleMobile.querySelector('svg use');
+
+    function applyTheme(isDark) {
+        document.documentElement.classList.toggle('dark', isDark);
+        document.documentElement.classList.toggle('light', !isDark);
+        lightIcon.classList.toggle('hidden', isDark);
+        darkIcon.classList.toggle('hidden', !isDark);
+        // This line is a bit tricky with `use`. Let's create a combined icon sprite.
+        // For simplicity, we'll just show/hide two separate SVGs in the mobile button.
+        // Or update the style directly as we did before.
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    function toggleTheme() {
+        const isDark = document.documentElement.classList.contains('dark');
+        applyTheme(!isDark);
+    }
+    
+    themeToggle.addEventListener('click', toggleTheme);
+    themeToggleMobile.addEventListener('click', toggleTheme); // Simplified for now
+    
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme) applyTheme(savedTheme === 'dark');
+    else applyTheme(prefersDark);
+
+
+    // --- COMPARATOR LOGIC ---
+    const tbody = document.getElementById('comparison-body');
+    const modal = document.getElementById('details-modal');
+    const modalBody = document.getElementById('modal-body');
+    const modalClose = document.getElementById('modal-close');
+    const filterInstitution = document.getElementById('filter-institution');
+    const filterProduct = document.getElementById('filter-product');
+    const filterMinRate = document.getElementById('filter-min-rate');
+    const sortBy = document.getElementById('sort-by');
+    const resetFilters = document.getElementById('reset-filters');
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+
+    function renderTable() {
+        tbody.innerHTML = '';
+        const institutionValue = filterInstitution.value;
+        const productValue = filterProduct.value;
+        const minRateValue = parseFloat(filterMinRate.value) || 0;
+        const sortValue = sortBy.value;
+
+        let filteredData = data.filter(item => 
+            (institutionValue === 'all' || item.institucion.toLowerCase().includes(institutionValue.toLowerCase())) &&
+            (productValue === 'all' || item.tipo === productValue) &&
+            item.tasa >= minRateValue
+        );
+
+        filteredData.sort((a, b) => {
+            if (sortValue === 'tasa-desc') return b.tasa - a.tasa;
+            if (sortValue === 'tasa-asc') return a.tasa - b.tasa;
+            if (sortValue === 'name') return a.institucion.localeCompare(b.institucion);
+        });
+
+        filteredData.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.dataset.id = item.id;
+            const isFavorite = favorites[item.id] || false;
+            tr.innerHTML = `
+                <td class="py-3 px-4 text-center" data-label="Favorito"><button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${item.id}">${isFavorite ? '❤️' : '🤍'}</button></td>
+                <td class="py-3 px-4 font-medium" data-label="Institución">${item.institucion}</td>
+                <td class="py-3 px-4" data-label="Producto">${item.producto}</td>
+                <td class="py-3 px-4 text-center font-semibold text-green-700" data-label="Tasa Anual">${item.tasa.toFixed(2)}%</td>
+                <td class="py-3 px-4 text-right hidden md:table-cell" data-label="Monto Mínimo">${item.montoMinimo}</td>
+                <td class="py-3 px-4 hidden lg:table-cell" data-label="Plazo Mínimo">${item.plazoMinimo}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    tbody.addEventListener('click', (e) => {
+        const row = e.target.closest('tr');
+        if (e.target.classList.contains('favorite-btn')) {
+            e.stopPropagation();
+            const btn = e.target;
+            const id = btn.dataset.id;
+            favorites[id] = !favorites[id];
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            btn.classList.toggle('active');
+            btn.innerHTML = favorites[id] ? '❤️' : '🤍';
+            return;
+        }
+        if (row) {
+            const itemData = data.find(d => d.id === row.dataset.id);
+            if (itemData) {
+                // Crear el enlace externo si existe URL
+                // Si la URL es externa (empieza con http) se abre en nueva pestaña, si es interna (ej. /c/banco/...) se abre en la misma pestaña
+                const linkAttrs = itemData.url && itemData.url.indexOf('http') === 0 ? ' target="_blank" rel="noopener noreferrer"' : '';
+                const websiteLink = itemData.url ? `
+                    <div class="mb-4 text-center">
+                        <a href="${itemData.url}" ${linkAttrs} class="external-link">
+                            <svg class="external-link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                            Visitar sitio (más info)
+                        </a>
+                    </div>
+                ` : '';
+                
+                modalBody.innerHTML = `
+                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: var(--primary-color);">${itemData.institucion}</h3>
+                    ${websiteLink}
+                    <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 text-left">
+                        <div class="p-4 rounded-lg" style="background-color: var(--background-color);"><h4 class="font-bold text-lg" style="color: var(--primary-color);">Ventajas y Desventajas</h4><p class="mt-2"><span class="font-semibold text-green-600">Ventaja:</span> ${itemData.ventaja}</p><p class="mt-1"><span class="font-semibold text-red-600">Desventaja:</span> ${itemData.desventaja}</p></div>
+                        <div class="p-4 rounded-lg" style="background-color: var(--background-color);"><h4 class="font-bold text-lg" style="color: var(--primary-color);">Proceso de Contratación</h4><p class="mt-2">${itemData.proceso}</p></div>
+                        <div class="p-4 rounded-lg" style="background-color: var(--background-color);"><h4 class="font-bold text-lg" style="color: var(--primary-color);">Capitalización y Riesgo</h4><p class="mt-2"><span class="font-semibold">Capitalización:</span> ${itemData.capitalizacion}</p><p class="mt-1"><span class="font-semibold">Nivel de Riesgo:</span> ${itemData.riesgo}</p></div>
+                        <div class="p-4 rounded-lg" style="background-color: var(--background-color);"><h4 class="font-bold text-lg" style="color: var(--primary-color);">Aspectos Fiscales</h4><p class="mt-2">${itemData.fiscal}</p></div>
+                    </div>
+                    <div class="mt-6 flex justify-center"><button class="text-white font-bold py-2 px-6 rounded" style="background-color: var(--primary-color);" onclick="document.getElementById('details-modal').style.display='none'">Cerrar</button></div>`;
+                modal.style.display = 'flex';
+            }
+        }
+    });
+
+    modalClose.addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+    [filterInstitution, filterProduct, filterMinRate, sortBy].forEach(filter => filter.addEventListener('change', renderTable));
+    filterMinRate.addEventListener('input', renderTable);
+    resetFilters.addEventListener('click', () => {
+        filterInstitution.value = 'all'; filterProduct.value = 'all'; filterMinRate.value = ''; sortBy.value = 'tasa-desc';
+        renderTable();
+    });
+
+    // --- OTHER PAGE LOGIC (Chart, Profiles, Back-to-Top) ---
+    loadChartJS().then(() => {
+        new Chart(document.getElementById('tpmChart').getContext('2d'), { type: 'line', data: { labels: ['Ene', 'Mar', 'May', 'Jul', 'Sep', 'Nov', 'Actual'], datasets: [{ label: 'Evolución Tasa de Política Monetaria (%)', data: [8.50, 8.50, 8.25, 7.75, 7.25, 6.75, 6.00], backgroundColor: 'rgba(46, 90, 136, 0.1)', borderColor: '#2E5A88', borderWidth: 2, fill: true, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: false, ticks: { callback: (v) => v + '%', color: 'var(--text-color)' } }, x: { ticks: { color: 'var(--text-color)' } } }, plugins: { legend: { display: false } } } });
+    }).catch(err => console.error('Failed to load Chart.js', err));
+
+    document.querySelectorAll('.btn-profile').forEach(button => {
+        button.addEventListener('click', () => {
+            const profile = button.id.replace('btn-', '');
+            document.querySelectorAll('.btn-profile').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.profile-content').forEach(content => content.classList.add('hidden'));
+            button.classList.add('active');
+            document.getElementById(`content-${profile}`).classList.remove('hidden');
+        });
+    });
+
+    const backToTopButton = document.getElementById('back-to-top');
+    window.onscroll = () => { backToTopButton.classList.toggle('opacity-0', !(document.body.scrollTop > 300 || document.documentElement.scrollTop > 300)); backToTopButton.classList.toggle('invisible', !(document.body.scrollTop > 300 || document.documentElement.scrollTop > 300)); };
+    
+    // --- SIMULATOR LOGIC & NUMBER FORMATTING ---
+    const calculateBtn = document.getElementById('calculate-btn');
+    const simAmount = document.getElementById('sim-amount');
+    const simProductSelect = document.getElementById('sim-product');
+    const simPeriod = document.getElementById('sim-period');
+    const resultInitial = document.getElementById('result-initial');
+    const resultInterest = document.getElementById('result-interest');
+    const resultTotal = document.getElementById('result-total');
+    const initialLabel = document.getElementById('initial-label');
+
+    const formatNumber = num => new Intl.NumberFormat('es-PY').format(Math.round(num));
+    const parseNumber = str => parseFloat(String(str).replace(/\./g, '')) || 0;
+
+    function populateSimulatorProducts() {
+        simProductSelect.innerHTML = '';
+        data.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = `${item.institucion} - ${item.producto} (${item.tasa}%)`;
+            simProductSelect.appendChild(option);
+        });
+    }
+
+    function calculateReturns() {
+        const amount = parseNumber(simAmount.value);
+        const productId = simProductSelect.value;
+        const periodMonths = parseInt(simPeriod.value);
+        const selectedProduct = data.find(item => item.id === productId);
+        if (!selectedProduct) return;
+
+        const rate = selectedProduct.tasa;
+        let interest = 0;
+        let initialAmount = amount;
+        let finalAmount = 0;
+
+        if (selectedProduct.tipo === 'cda') {
+            initialLabel.textContent = "Inversión inicial:";
+            interest = amount * (rate / 100) * (periodMonths / 12);
+            finalAmount = amount + interest;
+        } else if (selectedProduct.tipo === 'ahorro') {
+            initialLabel.textContent = "Total Ahorrado (cuotas):";
+            const totalSaved = amount * periodMonths;
+            interest = (totalSaved / 2) * (rate / 100) * (periodMonths / 12); // Approximation
+            initialAmount = totalSaved;
+            finalAmount = totalSaved + interest;
+        }
+        
+        resultInitial.textContent = `${formatNumber(initialAmount)} Gs.`;
+        resultInterest.textContent = `${formatNumber(interest)} Gs.`;
+        resultTotal.textContent = `${formatNumber(finalAmount)} Gs.`;
+    }
+
+    simAmount.addEventListener('blur', (e) => {
+        const value = parseNumber(e.target.value);
+        e.target.value = formatNumber(value);
+    });
+    
+    [calculateBtn, simProductSelect, simPeriod, simAmount].forEach(el => {
+        el.addEventListener('change', calculateReturns);
+        el.addEventListener('input', calculateReturns);
+    });
+
+    // Initial page load setup
+    renderTable();
+    populateSimulatorProducts();
+    calculateReturns();
+});
+</script>
+
+</body>
+</html>
