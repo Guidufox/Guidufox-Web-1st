@@ -1,1328 +1,1330 @@
 <!DOCTYPE html>
 <html lang="es" style="scroll-behavior: smooth;">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía Interactiva de Ahorro en Paraguay</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Interactiva de Ahorro en Paraguay</title>
 
-    <meta name="google-site-verification" content="qBR45iQnVdAz-G01792fk1Mdzh7Rg-BOvy30nMg-wQI" />
-    <meta name="description" content="Guía interactiva para analizar, comparar y elegir las mejores opciones de ahorro en Paraguay. Encuentra tasas de interés de bancos y cooperativas.">
-    <meta name="keywords" content="ahorro paraguay, invertir en paraguay, plazo fijo, cda, banco nacional de fomento, itaú, familiar, visión banco, cooperativa medalla milagrosa, cooperativa universitaria, tasas de interés paraguay, comparador ahorro">
-    <meta name="author" content="AhorroPY">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="google-site-verification" content="qBR45iQnVdAz-G01792fk1Mdzh7Rg-BOvy30nMg-wQI" />
+    <meta name="description" content="Guía interactiva para analizar, comparar y elegir las mejores opciones de ahorro en Paraguay. Encuentra tasas de interés de bancos y cooperativas.">
+    <meta name="keywords" content="ahorro paraguay, invertir en paraguay, plazo fijo, cda, banco nacional de fomento, itaú, familiar, visión banco, cooperativa medalla milagrosa, cooperativa universitaria, tasas de interés paraguay, comparador ahorro">
+    <meta name="author" content="AhorroPY">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        :root {
-            --primary-color: #2E5A88; --primary-hover: #25486C; --secondary-color: #4A4A4A; --background-color: #FDFBF8; --card-background: #FFFFFF; --text-color: #4A4A4A; --text-strong-color: #1F2937; --border-color: #EAEAEA; --header-bg: rgba(255, 255, 255, 0.8); --success-color: #10B981; --toast-bg: #1F2937; --toast-text: #FFFFFF; --warning-color: #F59E0B; --info-color: #3B82F6;
-        }
-        html.dark {
-            --primary-color: #58A6FF; --primary-hover: #79B8FF; --secondary-color: #8D96A0; --background-color: #0D1117; --card-background: #161B22; --text-color: #C9D1D9; --text-strong-color: #FFFFFF; --border-color: #30363D; --header-bg: rgba(22, 27, 34, 0.8); --toast-bg: #F9FAFB; --toast-text: #1F2937; --warning-color: #FBBF24; --info-color: #60A5FA;
-        }
-        body { font-family: 'Inter', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
-        h1, h2, h3, h4, h5, h6 { color: var(--text-strong-color); transition: color 0.3s; }
-        .card { background-color: var(--card-background); border: 1px solid var(--border-color); border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05); transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, border-color 0.3s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07); }
-        .comparison-table tbody tr { cursor: pointer; transition: background-color 0.2s; border-bottom: 1px solid var(--border-color); }
-        html.light .comparison-table tbody tr:hover { background-color: #F0F5F9; }
-        html.dark .comparison-table tbody tr:hover { background-color: #1f242c; }
-        .comparison-table .comparison-checkbox { width: 1rem; height: 1rem; cursor: pointer; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 100; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
-        .modal-content { background-color: var(--card-background); padding: 2rem; border-radius: 0.5rem; max-width: 90%; max-height: 90%; overflow-y: auto; width: 800px; transition: background-color 0.3s; }
-        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); }
-        .filter-container { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-end; }
-        .calculator-input, select { background-color: var(--background-color); border: 1px solid var(--border-color); color: var(--text-color); width: 100%; transition: background-color 0.3s, border-color 0.3s, color 0.3s; }
-        .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--toast-bg); color: var(--toast-text); padding: 1rem 1.5rem; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); z-index: 200; transition: bottom 0.5s ease-in-out; display: flex; align-items: center; gap: 0.5rem; }
-        .toast.show { bottom: 20px; }
-        .toast.success { background-color: var(--success-color); }
-        .toast.error { background-color: #EF4444; }
-        .toast.warning { background-color: var(--warning-color); }
-        .toast.info { background-color: var(--info-color); }
-        #compare-selected-btn:disabled { background-color: var(--secondary-color); cursor: not-allowed; opacity: 0.7; }
-        .tooltip { position: relative; display: inline-block; border-bottom: 1px dotted var(--primary-color); cursor: help; }
-        .tooltip .tooltiptext { visibility: hidden; width: 200px; background-color: var(--card-background); color: var(--text-color); text-align: center; border-radius: 6px; padding: 5px; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -100px; opacity: 0; transition: opacity 0.3s; border: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
-        .saved-simulations { max-height: 300px; overflow-y: auto; }
-        .notification-badge { position: absolute; top: -5px; right: -5px; background-color: #EF4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; justify-content: center; align-items: center; }
-        .progress-bar { height: 6px; background-color: #E5E7EB; border-radius: 3px; overflow: hidden; }
-        .progress-bar-fill { height: 100%; background-color: var(--primary-color); transition: width 0.3s ease; }
-        .fade-in { animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .floating-btn { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 90; cursor: pointer; transition: all 0.3s; }
-        .floating-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
-        .feature-card { transition: all 0.3s ease; }
-        .feature-card:hover { transform: translateY(-5px); }
+    <style>
+        :root {
+            --primary-color: #2E5A88; --primary-hover: #25486C; --secondary-color: #4A4A4A; --background-color: #FDFBF8; --card-background: #FFFFFF; --text-color: #4A4A4A; --text-strong-color: #1F2937; --border-color: #EAEAEA; --header-bg: rgba(255, 255, 255, 0.8); --success-color: #10B981; --toast-bg: #1F2937; --toast-text: #FFFFFF; --warning-color: #F59E0B; --info-color: #3B82F6;
+        }
+        html.dark {
+            --primary-color: #58A6FF; --primary-hover: #79B8FF; --secondary-color: #8D96A0; --background-color: #0D1117; --card-background: #161B22; --text-color: #C9D1D9; --text-strong-color: #FFFFFF; --border-color: #30363D; --header-bg: rgba(22, 27, 34, 0.8); --toast-bg: #F9FAFB; --toast-text: #1F2937; --warning-color: #FBBF24; --info-color: #60A5FA;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
+        h1, h2, h3, h4, h5, h6 { color: var(--text-strong-color); transition: color 0.3s; }
+        .card { background-color: var(--card-background); border: 1px solid var(--border-color); border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05); transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, border-color 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07); }
+        .comparison-table tbody tr { cursor: pointer; transition: background-color 0.2s; border-bottom: 1px solid var(--border-color); }
+        html.light .comparison-table tbody tr:hover { background-color: #F0F5F9; }
+        html.dark .comparison-table tbody tr:hover { background-color: #1f242c; }
+        .comparison-table .comparison-checkbox { width: 1rem; height: 1rem; cursor: pointer; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 100; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
+        .modal-content { background-color: var(--card-background); padding: 2rem; border-radius: 0.5rem; max-width: 90%; max-height: 90%; overflow-y: auto; width: 800px; transition: background-color 0.3s; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); }
+        .filter-container { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-end; }
+        .calculator-input, select { background-color: var(--background-color); border: 1px solid var(--border-color); color: var(--text-color); width: 100%; transition: background-color 0.3s, border-color 0.3s, color 0.3s; }
+        .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--toast-bg); color: var(--toast-text); padding: 1rem 1.5rem; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); z-index: 200; transition: bottom 0.5s ease-in-out; display: flex; align-items: center; gap: 0.5rem; }
+        .toast.show { bottom: 20px; }
+        .toast.success { background-color: var(--success-color); }
+        .toast.error { background-color: #EF4444; }
+        .toast.warning { background-color: var(--warning-color); }
+        .toast.info { background-color: var(--info-color); }
+        #compare-selected-btn:disabled { background-color: var(--secondary-color); cursor: not-allowed; opacity: 0.7; }
+        .tooltip { position: relative; display: inline-block; border-bottom: 1px dotted var(--primary-color); cursor: help; }
+        .tooltip .tooltiptext { visibility: hidden; width: 200px; background-color: var(--card-background); color: var(--text-color); text-align: center; border-radius: 6px; padding: 5px; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -100px; opacity: 0; transition: opacity 0.3s; border: 1px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+        .saved-simulations { max-height: 300px; overflow-y: auto; }
+        .notification-badge { position: absolute; top: -5px; right: -5px; background-color: #EF4444; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; justify-content: center; align-items: center; }
+        .progress-bar { height: 6px; background-color: #E5E7EB; border-radius: 3px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background-color: var(--primary-color); transition: width 0.3s ease; }
+        .fade-in { animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .floating-btn { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 90; cursor: pointer; transition: all 0.3s; }
+        .floating-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+        .feature-card { transition: all 0.3s ease; }
+        .feature-card:hover { transform: translateY(-5px); }
 
-        @media (max-width: 768px) {
-            .comparison-table thead { display: none; }
-            .comparison-table tr { display: block; margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; }
-            .comparison-table td { display: block; text-align: right; padding: 0.5rem 1rem; position: relative; padding-left: 50%; }
-            .comparison-table td::before { content: attr(data-label); position: absolute; left: 1rem; width: calc(50% - 1rem); padding-right: 1rem; text-align: left; font-weight: 600; }
-            .comparison-table td:first-child, .comparison-table td:nth-child(2) { padding-left: 1rem; text-align: left; }
-            .filter-container { flex-direction: column; align-items: stretch; }
-            .modal-content { width: 95%; padding: 1rem; }
-            .floating-btn { bottom: 1rem; right: 1rem; width: 50px; height: 50px; }
-        }
-    </style>
+        @media (max-width: 768px) {
+            .comparison-table thead { display: none; }
+            .comparison-table tr { display: block; margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; }
+            .comparison-table td { display: block; text-align: right; padding: 0.5rem 1rem; position: relative; padding-left: 50%; }
+            .comparison-table td::before { content: attr(data-label); position: absolute; left: 1rem; width: calc(50% - 1rem); padding-right: 1rem; text-align: left; font-weight: 600; }
+            .comparison-table td:first-child, .comparison-table td:nth-child(2) { padding-left: 1rem; text-align: left; }
+            .filter-container { flex-direction: column; align-items: stretch; }
+            .modal-content { width: 95%; padding: 1rem; }
+            .floating-btn { bottom: 1rem; right: 1rem; width: 50px; height: 50px; }
+        }
+    </style>
 </head>
 <body class="antialiased">
 
-    <header class="sticky top-0 z-50 shadow-sm bg-opacity-80 backdrop-blur-md" style="background-color: var(--header-bg);">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold">
-                <a href="#inicio" aria-label="Ir al inicio"><span style="color: var(--primary-color);">Ahorro</span>PY</a>
-            </div>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#comparador" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">Comparador</a>
-                <a href="#simulador" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">Simulador</a>
-                <a href="#articulos" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">Artículos</a>
-                <a href="#glosario" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">Glosario</a>
-                <a href="#faq" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">FAQ</a>
-                <div class="relative">
-                    <button id="notification-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                        <i class="fas fa-bell"></i>
-                        <span id="notification-badge" class="notification-badge hidden">0</span>
-                    </button>
-                </div>
-                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                    <svg id="theme-icon-light" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    <svg id="theme-icon-dark" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                </button>
-            </div>
-             <div class="md:hidden flex items-center space-x-4">
-                <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                </button>
-                <button id="mobile-menu-button" class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
-            </div>
-        </nav>
-        <div id="mobile-menu" class="hidden md:hidden border-t" style="background-color: var(--card-background); border-color: var(--border-color);">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#comparador" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Comparador</a>
-                <a href="#simulador" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Simulador</a>
-                <a href="#articulos" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Artículos</a>
-                <a href="#glosario" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Glosario</a>
-                <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">FAQ</a>
-            </div>
-        </div>
-    </header>
+    <header class="sticky top-0 z-50 shadow-sm bg-opacity-80 backdrop-blur-md" style="background-color: var(--header-bg);">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold">
+                <a href="#inicio" aria-label="Ir al inicio"><span style="color: var(--primary-color);">Ahorro</span>PY</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#comparador" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">Comparador</a>
+                <a href="#simulador" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">Simulador</a>
+                <a href="#articulos" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">Artículos</a>
+                <a href="#glosario" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">Glosario</a>
+                <a href="#faq" class="nav-link font-medium pb-1 hover:text-[var(--primary-color)] transition-colors">FAQ</a>
+                <div class="relative">
+                    <button id="notification-btn" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-bell"></i>
+                        <span id="notification-badge" class="notification-badge hidden">0</span>
+                    </button>
+                </div>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <svg id="theme-icon-light" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="theme-icon-dark" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+             <div class="md:hidden flex items-center space-x-4">
+                <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+                <button id="mobile-menu-button" class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden border-t" style="background-color: var(--card-background); border-color: var(--border-color);">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#comparador" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Comparador</a>
+                <a href="#simulador" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Simulador</a>
+                <a href="#articulos" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Artículos</a>
+                <a href="#glosario" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Glosario</a>
+                <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">FAQ</a>
+            </div>
+        </div>
+    </header>
 
-    <main>
-        <section id="inicio" class="py-20" style="background: linear-gradient(135deg, var(--card-background) 0%, var(--background-color) 100%);">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-bold leading-tight fade-in">Tu Guía Interactiva de Ahorro en Paraguay</h1>
-                <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto">Analiza, compara y elige la mejor opción para maximizar tus rendimientos.</p>
-                <div class="mt-8 flex justify-center gap-4 flex-wrap">
-                    <a href="#comparador" class="font-bold py-3 px-6 rounded-lg text-white hover:opacity-90 transition-opacity" style="background-color: var(--primary-color);">Comparar opciones</a>
-                    <a href="#simulador" class="font-bold py-3 px-6 rounded-lg border hover:bg-[var(--primary-color)] hover:text-white transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">Simular rendimientos</a>
-                    <a href="#articulos" class="font-bold py-3 px-6 rounded-lg border hover:bg-[var(--primary-color)] hover:text-white transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">Aprender más</a>
-                </div>
-            </div>
-        </section>
+    <main>
+        <section id="inicio" class="py-20" style="background: linear-gradient(135deg, var(--card-background) 0%, var(--background-color) 100%);">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight fade-in">Tu Guía Interactiva de Ahorro en Paraguay</h1>
+                <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto">Analiza, compara y elige la mejor opción para maximizar tus rendimientos.</p>
+                <div class="mt-8 flex justify-center gap-4 flex-wrap">
+                    <a href="#comparador" class="font-bold py-3 px-6 rounded-lg text-white hover:opacity-90 transition-opacity" style="background-color: var(--primary-color);">Comparar opciones</a>
+                    <a href="#simulador" class="font-bold py-3 px-6 rounded-lg border hover:bg-[var(--primary-color)] hover:text-white transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">Simular rendimientos</a>
+                    <a href="#articulos" class="font-bold py-3 px-6 rounded-lg border hover:bg-[var(--primary-color)] hover:text-white transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">Aprender más</a>
+                </div>
+            </div>
+        </section>
 
-        <section class="py-16">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">¿Por qué usar nuestra plataforma?</h2>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="feature-card card p-6 text-center">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: rgba(46, 90, 136, 0.1); color: var(--primary-color);">
-                            <i class="fas fa-chart-line text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Comparación en Tiempo Real</h3>
-                        <p>Accede a las últimas tasas de interés actualizadas de múltiples instituciones financieras en Paraguay.</p>
-                    </div>
-                    <div class="feature-card card p-6 text-center">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: rgba(46, 90, 136, 0.1); color: var(--primary-color);">
-                            <i class="fas fa-calculator text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Simuladores Avanzados</h3>
-                        <p>Calcula tus ganancias considerando inflación, impuestos y diferentes escenarios económicos.</p>
-                    </div>
-                    <div class="feature-card card p-6 text-center">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: rgba(46, 90, 136, 0.1); color: var(--primary-color);">
-                            <i class="fas fa-graduation-cap text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Educación Financiera</h3>
-                        <p>Aprende con nuestros artículos y guías sobre cómo maximizar tus ahorros e inversiones.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <section class="py-16">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">¿Por qué usar nuestra plataforma?</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card card p-6 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: rgba(46, 90, 136, 0.1); color: var(--primary-color);">
+                            <i class="fas fa-chart-line text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Comparación en Tiempo Real</h3>
+                        <p>Accede a las últimas tasas de interés actualizadas de múltiples instituciones financieras en Paraguay.</p>
+                    </div>
+                    <div class="feature-card card p-6 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: rgba(46, 90, 136, 0.1); color: var(--primary-color);">
+                            <i class="fas fa-calculator text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Simuladores Avanzados</h3>
+                        <p>Calcula tus ganancias considerando inflación, impuestos y diferentes escenarios económicos.</p>
+                    </div>
+                    <div class="feature-card card p-6 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: rgba(46, 90, 136, 0.1); color: var(--primary-color);">
+                            <i class="fas fa-graduation-cap text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Educación Financiera</h3>
+                        <p>Aprende con nuestros artículos y guías sobre cómo maximizar tus ahorros e inversiones.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section id="comparador" class="py-20" style="background-color: var(--card-background);">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold">Comparador de Productos de Ahorro</h2>
-                    <p class="mt-2">Selecciona y compara hasta 3 productos. Las tasas son estimadas y pueden variar.</p>
-                    <p class="text-sm mt-2">Última actualización de datos: <span id="last-updated" class="font-semibold"></span></p>
-                </div>
-                
-                <div class="mb-6 flex justify-between items-center flex-wrap gap-4">
-                    <div class="filter-container">
-                        <div class="filter-group">
-                            <label for="filter-institution" class="text-sm font-medium">Institución</label>
-                            <select id="filter-institution" class="p-2 rounded calculator-input"></select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="filter-product" class="text-sm font-medium">Producto</label>
-                            <select id="filter-product" class="p-2 rounded calculator-input">
-                                <option value="all">Todos</option>
-                                <option value="cda">CDA / Plazo Fijo</option>
-                                <option value="ahorro">Ahorro Programado</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="filter-min-amount" class="text-sm font-medium">Monto mínimo</label>
-                            <select id="filter-min-amount" class="p-2 rounded calculator-input">
-                                <option value="all">Cualquiera</option>
-                                <option value="1000000">Hasta 1.000.000 Gs.</option>
-                                <option value="5000000">Hasta 5.000.000 Gs.</option>
-                                <option value="10000000">Más de 10.000.000 Gs.</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="sort-by" class="text-sm font-medium">Ordenar por</label>
-                            <select id="sort-by" class="p-2 rounded calculator-input">
-                                <option value="tasa-desc">Mayor tasa</option>
-                                <option value="tasa-asc">Menor tasa</option>
-                                <option value="name">Nombre A-Z</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                           <button id="compare-selected-btn" class="font-bold py-2 px-4 rounded-lg text-white hover:opacity-90 transition-opacity" style="background-color: var(--primary-color);" disabled>Comparar (0)</button>
-                        </div>
-                    </div>
-                    <button id="reset-filters" class="text-sm text-[var(--primary-color)] hover:underline">Restablecer filtros</button>
-                </div>
-                
-                <div class="mb-4 flex items-center justify-between">
-                    <span id="product-count" class="text-sm font-medium"></span>
-                    <div class="flex items-center">
-                        <span class="text-sm mr-2">Vista:</span>
-                        <button id="view-toggle" class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                            <i class="fas fa-table"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="w-full overflow-x-auto">
-                    <table class="min-w-full comparison-table">
-                        <thead>
-                            <tr>
-                                <th class="py-3 px-2 font-semibold text-center">Sel.</th>
-                                <th class="text-left py-3 px-4 font-semibold">Favorito</th>
-                                <th class="text-left py-3 px-4 font-semibold">Institución</th>
-                                <th class="text-left py-3 px-4 font-semibold">Producto</th>
-                                <th class="text-center py-3 px-4 font-semibold">Tasa (%) <span class="tooltip">ℹ️
-                                    <span class="tooltiptext">Tasa de interés anual nominal</span>
-                                </span></th>
-                                <th class="text-center py-3 px-4 font-semibold">Monto Mínimo</th>
-                                <th class="text-center py-3 px-4 font-semibold">Plazo Mínimo</th>
-                            </tr>
-                        </thead>
-                        <tbody id="comparison-body"></tbody>
-                    </table>
-                </div>
-                
-                <div id="empty-state" class="hidden text-center py-12">
-                    <i class="fas fa-search fa-3x mb-4" style="color: var(--secondary-color);"></i>
-                    <h3 class="text-xl font-bold mb-2">No se encontraron productos</h3>
-                    <p>Intenta ajustar los filtros para ver más opciones.</p>
-                </div>
-            </div>
-        </section>
+        <section id="comparador" class="py-20" style="background-color: var(--card-background);">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Comparador de Productos de Ahorro</h2>
+                    <p class="mt-2">Selecciona y compara hasta 3 productos. Las tasas son estimadas y pueden variar.</p>
+                    <p class="text-sm mt-2">Última actualización de datos: <span id="last-updated" class="font-semibold"></span></p>
+                </div>
+                
+                <div class="mb-6 flex justify-between items-center flex-wrap gap-4">
+                    <div class="filter-container">
+                        <div class="filter-group">
+                            <label for="filter-institution" class="text-sm font-medium">Institución</label>
+                            <select id="filter-institution" class="p-2 rounded calculator-input"></select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-product" class="text-sm font-medium">Producto</label>
+                            <select id="filter-product" class="p-2 rounded calculator-input">
+                                <option value="all">Todos</option>
+                                <option value="cda">CDA / Plazo Fijo</option>
+                                <option value="ahorro">Ahorro Programado</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-min-amount" class="text-sm font-medium">Monto mínimo</label>
+                            <select id="filter-min-amount" class="p-2 rounded calculator-input">
+                                <option value="all">Cualquiera</option>
+                                <option value="1000000">Hasta 1.000.000 Gs.</option>
+                                <option value="5000000">Hasta 5.000.000 Gs.</option>
+                                <option value="10000000">Más de 10.000.000 Gs.</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="sort-by" class="text-sm font-medium">Ordenar por</label>
+                            <select id="sort-by" class="p-2 rounded calculator-input">
+                                <option value="tasa-desc">Mayor tasa</option>
+                                <option value="tasa-asc">Menor tasa</option>
+                                <option value="name">Nombre A-Z</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                           <button id="compare-selected-btn" class="font-bold py-2 px-4 rounded-lg text-white hover:opacity-90 transition-opacity" style="background-color: var(--primary-color);" disabled>Comparar (0)</button>
+                        </div>
+                    </div>
+                    <button id="reset-filters" class="text-sm text-[var(--primary-color)] hover:underline">Restablecer filtros</button>
+                </div>
+                
+                <div class="mb-4 flex items-center justify-between">
+                    <span id="product-count" class="text-sm font-medium"></span>
+                    <div class="flex items-center">
+                        <span class="text-sm mr-2">Vista:</span>
+                        <button id="view-toggle" class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-table"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="w-full overflow-x-auto">
+                    <table class="min-w-full comparison-table">
+                        <thead>
+                            <tr>
+                                <th class="py-3 px-2 font-semibold text-center">Sel.</th>
+                                <th class="text-left py-3 px-4 font-semibold">Favorito</th>
+                                <th class="text-left py-3 px-4 font-semibold">Institución</th>
+                                <th class="text-left py-3 px-4 font-semibold">Producto</th>
+                                <th class="text-center py-3 px-4 font-semibold">Tasa (%) <span class="tooltip">ℹ️
+                                    <span class="tooltiptext">Tasa de interés anual nominal</span>
+                                </span></th>
+                                <th class="text-center py-3 px-4 font-semibold">Monto Mínimo</th>
+                                <th class="text-center py-3 px-4 font-semibold">Plazo Mínimo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-body"></tbody>
+                    </table>
+                </div>
+                
+                <div id="empty-state" class="hidden text-center py-12">
+                    <i class="fas fa-search fa-3x mb-4" style="color: var(--secondary-color);"></i>
+                    <h3 class="text-xl font-bold mb-2">No se encontraron productos</h3>
+                    <p>Intenta ajustar los filtros para ver más opciones.</p>
+                </div>
+            </div>
+        </section>
 
-        <section id="simulador" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold">Simulador de Rendimientos</h2>
-                    <p class="mt-2">Calcula tu ganancia nominal y real, considerando la inflación.</p>
-                </div>
-                
-                <div class="grid lg:grid-cols-2 gap-8">
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-4" style="color: var(--primary-color);">Parámetros</h3>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="mb-4">
-                                <label for="sim-amount" class="block mb-2 text-sm font-medium">Monto (Gs.)</label>
-                                <input type="text" id="sim-amount" value="5.000.000" class="calculator-input rounded p-2 w-full">
-                            </div>
-                            <div class="mb-4">
-                                <label for="sim-period" class="block mb-2 text-sm font-medium">Plazo (meses)</label>
-                                <input type="number" id="sim-period" min="1" max="60" value="12" class="calculator-input rounded p-2 w-full">
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label for="sim-product" class="block mb-2 text-sm font-medium">Producto</label>
-                            <select id="sim-product" class="calculator-input rounded p-2 w-full"></select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="sim-inflation" class="block mb-2 text-sm font-medium">Inflación Anual Estimada (%)</label>
-                            <div class="flex items-center">
-                                <input type="range" id="sim-inflation-range" min="0" max="15" step="0.5" value="5.0" class="w-full mr-2">
-                                <input type="number" id="sim-inflation" min="0" max="50" step="0.1" value="5.0" class="calculator-input rounded p-2 w-20">
-                            </div>
-                            <div class="progress-bar mt-1">
-                                <div id="inflation-bar" class="progress-bar-fill" style="width: 33.33%;"></div>
-                            </div>
-                            <div class="flex justify-between text-xs mt-1">
-                                <span>0%</span>
-                                <span>7.5%</span>
-                                <span>15%</span>
-                            </div>
-                        </div>
-                        <div class="mt-6 flex gap-4">
-                            <button id="calculate-btn" class="flex-1 font-bold py-2 px-4 rounded text-white hover:opacity-90 transition-opacity" style="background-color: var(--primary-color);">Calcular</button>
-                            <button id="save-simulation" class="font-bold py-2 px-4 rounded border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">
-                                <i class="far fa-bookmark"></i>
-                            </button>
-                             <button id="share-btn" class="font-bold py-2 px-4 rounded border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">
-                                <i class="fas fa-share-alt"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="mt-6">
-                            <h4 class="font-bold mb-2">Simulaciones guardadas</h4>
-                            <div id="saved-simulations" class="saved-simulations space-y-2">
-                                <p class="text-sm text-center py-4">No hay simulaciones guardadas</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card p-6 flex flex-col">
-                        <h3 class="text-xl font-bold mb-4" style="color: var(--primary-color);">Resultados</h3>
-                        <div class="grid md:grid-cols-2 gap-4 mb-4 flex-grow">
-                            <div class="flex flex-col justify-between">
-                               <div class="mb-4 p-4 rounded-lg" style="background-color: var(--background-color);">
-                                   <div class="flex justify-between items-center mb-2"><span id="initial-label">Inversión:</span><span id="result-initial" class="font-bold">5.000.000 Gs.</span></div>
-                                   <div class="flex justify-between items-center mb-2"><span>Intereses:</span><span id="result-interest" class="font-bold">0 Gs.</span></div>
-                                   <div class="flex justify-between items-center text-lg mt-4 pt-2 border-t border-gray-200 dark:border-gray-700"><span class="font-bold">Monto final:</span><span id="result-total" class="font-bold">5.000.000 Gs.</span></div>
-                               </div>
-                               <div class="p-4 rounded-lg bg-green-100 dark:bg-green-900/50">
-                                   <div class="flex justify-between items-center text-green-800 dark:text-green-200">
-                                       <span class="font-medium">Ganancia Real:</span>
-                                       <span id="result-real-interest" class="font-bold">0 Gs.</span>
-                                   </div>
-                                   <div class="text-xs mt-1">Después de ajustar por inflación</div>
-                               </div>
-                            </div>
-                            <div class="chart-container self-center" style="height: 180px; max-width: 180px; margin-top: 1rem;">
-                                <canvas id="simulation-chart"></canvas>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-6">
-                            <h4 class="font-bold mb-2">Desglose de resultados</h4>
-                            <div class="grid grid-cols-2 gap-2 text-sm">
-                                <div class="p-2 rounded" style="background-color: var(--background-color);">
-                                    <div>Tasa mensual:</div>
-                                    <div id="monthly-rate" class="font-bold">0%</div>
-                                </div>
-                                <div class="p-2 rounded" style="background-color: var(--background-color);">
-                                    <div>Rendimiento anual:</div>
-                                    <div id="annual-yield" class="font-bold">0 Gs.</div>
-                                </div>
-                                <div class="p-2 rounded" style="background-color: var(--background-color);">
-                                    <div>Pérdida por inflación:</div>
-                                    <div id="inflation-loss" class="font-bold">0 Gs.</div>
-                                </div>
-                                <div class="p-2 rounded" style="background-color: var(--background-color);">
-                                    <div>Poder adquisitivo:</div>
-                                    <div id="purchasing-power" class="font-bold">0 Gs.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <section id="simulador" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Simulador de Rendimientos</h2>
+                    <p class="mt-2">Calcula tu ganancia nominal y real, considerando la inflación.</p>
+                </div>
+                
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-4" style="color: var(--primary-color);">Parámetros</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="mb-4">
+                                <label for="sim-amount" class="block mb-2 text-sm font-medium">Monto (Gs.)</label>
+                                <input type="text" id="sim-amount" value="5.000.000" class="calculator-input rounded p-2 w-full">
+                            </div>
+                            <div class="mb-4">
+                                <label for="sim-period" class="block mb-2 text-sm font-medium">Plazo (meses)</label>
+                                <input type="number" id="sim-period" min="1" max="60" value="12" class="calculator-input rounded p-2 w-full">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="sim-product" class="block mb-2 text-sm font-medium">Producto</label>
+                            <select id="sim-product" class="calculator-input rounded p-2 w-full"></select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="sim-inflation" class="block mb-2 text-sm font-medium">Inflación Anual Estimada (%)</label>
+                            <div class="flex items-center">
+                                <input type="range" id="sim-inflation-range" min="0" max="15" step="0.5" value="5.0" class="w-full mr-2">
+                                <input type="number" id="sim-inflation" min="0" max="50" step="0.1" value="5.0" class="calculator-input rounded p-2 w-20">
+                            </div>
+                            <div class="progress-bar mt-1">
+                                <div id="inflation-bar" class="progress-bar-fill" style="width: 33.33%;"></div>
+                            </div>
+                            <div class="flex justify-between text-xs mt-1">
+                                <span>0%</span>
+                                <span>7.5%</span>
+                                <span>15%</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex gap-4">
+                            <button id="calculate-btn" class="flex-1 font-bold py-2 px-4 rounded text-white hover:opacity-90 transition-opacity" style="background-color: var(--primary-color);">Calcular</button>
+                            <button id="save-simulation" class="font-bold py-2 px-4 rounded border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                             <button id="share-btn" class="font-bold py-2 px-4 rounded border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h4 class="font-bold mb-2">Simulaciones guardadas</h4>
+                            <div id="saved-simulations" class="saved-simulations space-y-2">
+                                <p class="text-sm text-center py-4">No hay simulaciones guardadas</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 flex flex-col">
+                        <h3 class="text-xl font-bold mb-4" style="color: var(--primary-color);">Resultados</h3>
+                        <div class="grid md:grid-cols-2 gap-4 mb-4 flex-grow">
+                            <div class="flex flex-col justify-between">
+                               <div class="mb-4 p-4 rounded-lg" style="background-color: var(--background-color);">
+                                   <div class="flex justify-between items-center mb-2"><span id="initial-label">Inversión:</span><span id="result-initial" class="font-bold">5.000.000 Gs.</span></div>
+                                   <div class="flex justify-between items-center mb-2"><span>Intereses:</span><span id="result-interest" class="font-bold">0 Gs.</span></div>
+                                   <div class="flex justify-between items-center text-lg mt-4 pt-2 border-t border-gray-200 dark:border-gray-700"><span class="font-bold">Monto final:</span><span id="result-total" class="font-bold">5.000.000 Gs.</span></div>
+                               </div>
+                               <div class="p-4 rounded-lg bg-green-100 dark:bg-green-900/50">
+                                   <div class="flex justify-between items-center text-green-800 dark:text-green-200">
+                                       <span class="font-medium">Ganancia Real:</span>
+                                       <span id="result-real-interest" class="font-bold">0 Gs.</span>
+                                   </div>
+                                   <div class="text-xs mt-1">Después de ajustar por inflación</div>
+                               </div>
+                            </div>
+                            <div class="chart-container self-center" style="height: 180px; max-width: 180px; margin-top: 1rem;">
+                                <canvas id="simulation-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h4 class="font-bold mb-2">Desglose de resultados</h4>
+                            <div class="grid grid-cols-2 gap-2 text-sm">
+                                <div class="p-2 rounded" style="background-color: var(--background-color);">
+                                    <div>Tasa mensual:</div>
+                                    <div id="monthly-rate" class="font-bold">0%</div>
+                                </div>
+                                <div class="p-2 rounded" style="background-color: var(--background-color);">
+                                    <div>Rendimiento anual:</div>
+                                    <div id="annual-yield" class="font-bold">0 Gs.</div>
+                                </div>
+                                <div class="p-2 rounded" style="background-color: var(--background-color);">
+                                    <div>Pérdida por inflación:</div>
+                                    <div id="inflation-loss" class="font-bold">0 Gs.</div>
+                                </div>
+                                <div class="p-2 rounded" style="background-color: var(--background-color);">
+                                    <div>Poder adquisitivo:</div>
+                                    <div id="purchasing-power" class="font-bold">0 Gs.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section id="articulos" class="py-20" style="background-color: var(--card-background);">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold">Artículos Educativos</h2>
-                    <p class="mt-2">Aprende estrategias para maximizar tus ahorros e inversiones.</p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card p-6">
-                        <div class="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
-                            <i class="fas fa-book-reader text-4xl" style="color: var(--primary-color);"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Guía para elegir el mejor plazo fijo</h3>
-                        <p class="text-sm mb-4">Aprende a evaluar las diferentes opciones de inversión según tus objetivos financieros.</p>
-                        <a href="#" class="text-[var(--primary-color)] font-medium hover:underline">Leer más →</a>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <div class="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
-                            <i class="fas fa-chart-pie text-4xl" style="color: var(--primary-color);"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Cómo diversificar tus inversiones en Paraguay</h3>
-                        <p class="text-sm mb-4">Descubre estrategias para distribuir tu capital entre diferentes instrumentos financieros.</p>
-                        <a href="#" class="text-[var(--primary-color)] font-medium hover:underline">Leer más →</a>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <div class="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
-                            <i class="fas fa-percentage text-4xl" style="color: var(--primary-color);"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Entendiendo la inflación y su impacto en tus ahorros</h3>
-                        <p class="text-sm mb-4">Comprende cómo la inflación afecta el valor de tu dinero y cómo protegerte.</p>
-                        <a href="#" class="text-[var(--primary-color)] font-medium hover:underline">Leer more →</a>
-                    </div>
-                </div>
-                
-                <div class="text-center mt-12">
-                    <a href="#" class="font-bold py-3 px-6 rounded-lg border hover:bg-[var(--primary-color)] hover:text-white transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">Ver todos los artículos</a>
-                </div>
-            </div>
-        </section>
+        <section id="articulos" class="py-20" style="background-color: var(--card-background);">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Artículos Educativos</h2>
+                    <p class="mt-2">Aprende estrategias para maximizar tus ahorros e inversiones.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card p-6">
+                        <div class="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
+                            <i class="fas fa-balance-scale text-4xl" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">CDA vs. Ahorro Programado: ¿Cuál te conviene más?</h3>
+                        <p class="text-sm mb-4">Analizamos las ventajas y desventajas de los Certificados de Depósito de Ahorro y los planes de Ahorro Programado para ayudarte a decidir.</p>
+                        <a href="#" class="text-[var(--primary-color)] font-medium hover:underline">Leer más →</a>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
+                            <i class="fas fa-chart-pie text-4xl" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Cómo diversificar tus inversiones en Paraguay</h3>
+                        <p class="text-sm mb-4">No pongas todos los huevos en la misma canasta. Explora cómo distribuir tu capital en diferentes instrumentos más allá de los CDAs.</p>
+                        <a href="#" class="text-[var(--primary-color)] font-medium hover:underline">Leer más →</a>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 flex items-center justify-center">
+                            <i class="fas fa-percentage text-4xl" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Entendiendo la inflación y tu tasa real de ganancia</h3>
+                        <p class="text-sm mb-4">Aprende cómo la inflación afecta tu poder adquisitivo y busca inversiones que realmente hagan crecer tu dinero.</p>
+                        <a href="#" class="text-[var(--primary-color)] font-medium hover:underline">Leer más →</a>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="#" class="font-bold py-3 px-6 rounded-lg border hover:bg-[var(--primary-color)] hover:text-white transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">Ver todos los artículos</a>
+                </div>
+            </div>
+        </section>
 
-        <section id="glosario" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold">Glosario Financiero</h2>
-                    <p class="mt-2">Entiende los términos clave del mundo del ahorro y las inversiones.</p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2 flex items-center">
-                            <i class="fas fa-piggy-bank mr-2" style="color: var(--primary-color);"></i>
-                            CDA (Certificado de Depósito de Ahorro)
-                        </h3>
-                        <p>Producto donde depositas tu dinero por un plazo fijo a cambio de una tasa de interés que no cambia. No puedes retirar el dinero antes del vencimiento sin penalización.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2 flex items-center">
-                            <i class="fas fa-calendar-alt mr-2" style="color: var(--primary-color);"></i>
-                            Ahorro Programado
-                        </h3>
-                        <p>Fomenta el hábito de ahorrar mediante depósitos mensuales de un monto fijo por un plazo determinado. Ideal para metas específicas.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2 flex items-center">
-                            <i class="fas fa-chart-line mr-2" style="color: var(--primary-color);"></i>
-                            Tasa de interés nominal
-                        </h3>
-                        <p>Porcentaje que las instituciones financieras pagan por el dinero depositado, sin considerar comisiones, impuestos o la inflación.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2 flex items-center">
-                            <i class="fas fa-money-bill-wave mr-2" style="color: var(--primary-color);"></i>
-                            Tasa de interés real
-                        </h3>
-                        <p>Rendimiento de una inversión después de descontar la inflación. Representa la ganancia real en términos de poder adquisitivo.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2 flex items-center">
-                            <i class="fas fa-fire mr-2" style="color: var(--primary-color);"></i>
-                            Inflación
-                        </h3>
-                        <p>Aumento generalizado y sostenido de los precios de bienes y servicios en una economía durante un período de tiempo.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2 flex items-center">
-                            <i class="fas fa-university mr-2" style="color: var(--primary-color);"></i>
-                            Banco Central del Paraguay (BCP)
-                        </h3>
-                        <p>Entidad responsable de la política monetaria y cambiaria del país, y de regular el sistema financiero paraguayo.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="faq" class="py-20" style="background-color: var(--card-background);">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold">Preguntas Frecuentes</h2>
-                    <p class="mt-2">Resolvemos las dudas más comunes sobre ahorro e inversión en Paraguay.</p>
-                </div>
-                
-                <div class="max-w-3xl mx-auto space-y-6">
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2">¿Cómo elijo la mejor opción de ahorro para mí?</h3>
-                        <p>Depende de tus objetivos financieros, plazo de inversión y tolerancia al riesgo. Nuestro comparador te ayuda a evaluar diferentes opciones según tus necesidades específicas.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2">¿Qué es más seguro, un banco o una cooperativa?</h3>
-                        <p>Ambas opciones son seguras, pero con matices. Los bancos están supervisados por el BCP y cubiertos por el Fondo de Garantía de Depósitos. Las cooperativas están reguladas por el INCOOP y muchas tienen sus propios fondos de garantía.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2">¿Cada cuánto se actualizan las tasas de interés?</h3>
-                        <p>Las tasas pueden cambiar frecuentemente según las condiciones del mercado. Nuestra plataforma se actualiza regularmente, pero siempre recomendamos verificar directamente con la institución financiera.</p>
-                    </div>
-                    
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-2">¿Qué impuestos debo pagar por mis ganancias?</h3>
-                        <p>Los intereses obtenidos por depósitos a plazo fijo están exentos del Impuesto a la Renta hasta cierto monto. Te recomendamos consultar con un contador para tu situación específica.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <section id="glosario" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Glosario Financiero</h2>
+                    <p class="mt-2">Entiende los términos clave del mundo del ahorro y las inversiones.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-piggy-bank mr-2" style="color: var(--primary-color);"></i>
+                            CDA (Certificado de Depósito de Ahorro)
+                        </h3>
+                        <p>Producto donde depositas tu dinero por un plazo fijo a cambio de una tasa de interés que no cambia. No puedes retirar el dinero antes del vencimiento sin penalización.</p>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-calendar-alt mr-2" style="color: var(--primary-color);"></i>
+                            Ahorro Programado
+                        </h3>
+                        <p>Fomenta el hábito de ahorrar mediante depósitos mensuales de un monto fijo por un plazo determinado. Ideal para metas específicas.</p>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-chart-line mr-2" style="color: var(--primary-color);"></i>
+                            Tasa de interés nominal
+                        </h3>
+                        <p>Porcentaje que las instituciones financieras pagan por el dinero depositado, sin considerar comisiones, impuestos o la inflación.</p>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-money-bill-wave mr-2" style="color: var(--primary-color);"></i>
+                            Tasa de interés real
+                        </h3>
+                        <p>Rendimiento de una inversión después de descontar la inflación. Representa la ganancia real en términos de poder adquisitivo.</p>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-fire mr-2" style="color: var(--primary-color);"></i>
+                            Inflación
+                        </h3>
+                        <p>Aumento generalizado y sostenido de los precios de bienes y servicios en una economía durante un período de tiempo.</p>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            <i class="fas fa-university mr-2" style="color: var(--primary-color);"></i>
+                            Banco Central del Paraguay (BCP)
+                        </h3>
+                        <p>Entidad responsable de la política monetaria y cambiaria del país, y de regular el sistema financiero paraguayo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="faq" class="py-20" style="background-color: var(--card-background);">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold">Preguntas Frecuentes</h2>
+                    <p class="mt-2">Resolvemos las dudas más comunes sobre ahorro e inversión en Paraguay.</p>
+        _B_
+                </div>
+                
+                <div class="max-w-3xl mx-auto space-y-6">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2">¿Cómo elijo la mejor opción de ahorro para mí?</h3>
+                        <p>Depende de tus objetivos financieros, plazo de inversión y tolerancia al riesgo. Nuestro comparador te ayuda a evaluar diferentes opciones según tus necesidades específicas.</p>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2">¿Qué es más seguro, un banco o una cooperativa?</h3>
+                        <p>Ambas opciones son seguras, pero con matices. Los bancos están supervisados por el BCP y cubiertos por el Fondo de Garantía de Depósitos. Las cooperativas están reguladas por el INCOOP y muchas tienen sus propios fondos de garantía.</p>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2">¿Cada cuánto se actualizan las tasas de interés?</h3>
+                        <p>Las tasas pueden cambiar frecuentemente según las condiciones del mercado. Nuestra plataforma se actualiza regularmente, pero siempre recomendamos verificar directamente con la institución financiera.</p>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-2">¿Qué impuestos debo pagar por mis ganancias?</h3>
+                        <p>Los intereses obtenidos por depósitos a plazo fijo están exentos del Impuesto a la Renta hasta cierto monto. Te recomendamos consultar con un contador para tu situación específica.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section id="fuentes" class="py-20">
-            <div class="container mx-auto px-6 text-center">
-                 <h2 class="text-2xl font-bold">Aviso Importante</h2>
-                 <p class="mt-4 max-w-3xl mx-auto">La información presentada es referencial. Las tasas y condiciones cambian constantemente. Verifica siempre los datos con la institución financiera antes de tomar una decisión.</p>
-                 <div class="mt-8 flex justify-center gap-4 flex-wrap">
-                    <a href="https://www.bcp.gov.py/tasas-de-interes-indicativas" target="_blank" rel="noopener noreferrer" class="font-bold py-3 px-6 rounded-lg text-white hover:opacity-90 transition-opacity" style="background-color: var(--primary-color);">
-                        Consultar Tasas Promedio en el BCP
-                    </a>
-                    <a href="https://www.incoop.gov.py" target="_blank" rel="noopener noreferrer" class="font-bold py-3 px-6 rounded-lg border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">
-                        Información sobre Cooperativas (INCOOP)
-                    </a>
-                 </div>
-            </div>
-        </section>
-    </main>
-    
-    <div id="details-modal" class="modal">
-        <div class="modal-content relative">
-            <button id="modal-close" class="modal-close" aria-label="Cerrar modal">&times;</button>
-            <div id="modal-body"></div>
-        </div>
-    </div>
+        <section id="fuentes" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-2xl font-bold">Aviso Importante</h2>
+                 <p class="mt-4 max-w-3xl mx-auto">La información presentada es referencial. Las tasas y condiciones cambian constantemente. Verifica siempre los datos con la institución financiera antes de tomar una decisión.</p>
+                 <div class="mt-8 flex justify-center gap-4 flex-wrap">
+                    <a href="https://www.bcp.gov.py/promedio-de-tasas-mensuales" target="_blank" rel="noopener noreferrer" class="font-bold py-3 px-6 rounded-lg text-white hover:opacity-90 transition-opacity" style="background-color: var(--primary-color);">
+                        Consultar Tasas Promedio en el BCP
+                    </a>
+                    <a href="https://www.incoop.gov.py" target="_blank" rel="noopener noreferrer" class="font-bold py-3 px-6 rounded-lg border hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" style="color: var(--primary-color); border-color: var(--primary-color);">
+                        Información sobre Cooperativas (INCOOP)
+                    </a>
+                 </div>
+            </div>
+        </section>
+    </main>
+    
+    <div id="details-modal" class="modal">
+        <div class="modal-content relative">
+            <button id="modal-close" class="modal-close" aria-label="Cerrar modal">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
 
-    <div id="comparison-modal" class="modal">
-        <div class="modal-content relative" style="max-width: 1000px;">
-            <button class="modal-close" aria-label="Cerrar modal">&times;</button>
-            <div id="comparison-modal-body"></div>
-        </div>
-    </div>
+    <div id="comparison-modal" class="modal">
+        <div class="modal-content relative" style="max-width: 1000px;">
+            <button class="modal-close" aria-label="Cerrar modal">&times;</button>
+            <div id="comparison-modal-body"></div>
+        </div>
+    </div>
 
-    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
 
-    <div class="floating-btn" id="scroll-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </div>
+    <div class="floating-btn" id="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
-    <footer class="py-10 border-t" style="background-color: var(--card-background); border-color: var(--border-color);">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-lg font-bold mb-4"><span style="color: var(--primary-color);">Ahorro</span>PY</h3>
-                    <p class="text-sm">Tu guía interactiva para tomar mejores decisiones de ahorro en Paraguay.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Enlaces útiles</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#comparador" class="hover:text-[var(--primary-color)] transition-colors">Comparador</a></li>
-                        <li><a href="#simulador" class="hover:text-[var(--primary-color)] transition-colors">Simulador</a></li>
-                        <li><a href="#glosario" class="hover:text-[var(--primary-color)] transition-colors">Glosario</a></li>
-                        <li><a href="#faq" class="hover:text-[var(--primary-color)] transition-colors">Preguntas Frecuentes</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Recursos</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-[var(--primary-color)] transition-colors">Artículos educativos</a></li>
-                        <li><a href="#" class="hover:text-[var(--primary-color)] transition-colors">Calculadoras</a></li>
-                        <li><a href="#" class="hover:text-[var(--primary-color)] transition-colors">Guías de inversión</a></li>
-                        <li><a href="#" class="hover:text-[var(--primary-color)] transition-colors">Noticias financieras</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Contacto</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li class="flex items-center"><i class="fas fa-envelope mr-2" style="color: var(--primary-color);"></i> info@ahorropy.com</li>
-                        <li class="flex items-center"><i class="fas fa-phone mr-2" style="color: var(--primary-color);"></i> +595 981 123 456</li>
-                        <li class="flex items-center gap-2 mt-4">
-                            <a href="#" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><i class="fab fa-linkedin-in"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t mt-8 pt-8 text-center text-sm" style="border-color: var(--border-color);">
-                <p>&copy; 2025 AhorroPY. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
+    <footer class="py-10 border-t" style="background-color: var(--card-background); border-color: var(--border-color);">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4"><span style="color: var(--primary-color);">Ahorro</span>PY</h3>
+                    <p class="text-sm">Tu guía interactiva para tomar mejores decisiones de ahorro en Paraguay.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Enlaces útiles</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#comparador" class="hover:text-[var(--primary-color)] transition-colors">Comparador</a></li>
+                        <li><a href="#simulador" class="hover:text-[var(--primary-color)] transition-colors">Simulador</a></li>
+                        <li><a href="#glosario" class="hover:text-[var(--primary-color)] transition-colors">Glosario</a></li>
+                        <li><a href="#faq" class="hover:text-[var(--primary-color)] transition-colors">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Recursos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-[var(--primary-color)] transition-colors">Artículos educativos</a></li>
+                        <li><a href="#" class="hover:text-[var(--primary-color)] transition-colors">Calculadoras</a></li>
+                        <li><a href="#" class="hover:text-[var(--primary-color)] transition-colors">Guías de inversión</a></li>
+                        <li><a href="#" class="hover:text-[var(--primary-color)] transition-colors">Noticias financieras</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center"><i class="fas fa-envelope mr-2" style="color: var(--primary-color);"></i> guidufox@proton.me</li>
+                        <li class="flex items-center"><i class="fas fa-phone mr-2" style="color: var(--primary-color);"></i> +595 981 123 456</li>
+                        <li class="flex items-center gap-2 mt-4">
+                            <a href="https://twitter.com/guidufox" target="_blank" rel="noopener noreferrer" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/guidufox" target="_blank" rel="noopener noreferrer" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><i class="fab fa-instagram"></i></a>
+                            <a href="https://twitch.tv/guidufox" target="_blank" rel="noopener noreferrer" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><i class="fab fa-twitch"></i></a>
+                            <a href="#" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t mt-8 pt-8 text-center text-sm" style="border-color: var(--border-color);">
+                <p>&copy; 2025 AhorroPY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Base de datos ampliada con más productos
-        const databaseData = {
-          "lastUpdated": "2025-09-06",
-          "products": [
-            { "id": "medalla-cda", "institucion": "Cooperativa Medalla Milagrosa", "url": "https://www.medalla.coop.py/", "producto": "Ahorro a Plazo Fijo", "tipo": "cda", "tasa": 11.00, "montoMinimo": "1.000.000", "plazoMinimo": "12 meses", "ventaja": "Suele ofrecer las tasas más altas del mercado", "desventaja": "Requiere ser socio de la cooperativa" },
-            { "id": "universitaria-cda", "institucion": "Cooperativa Universitaria", "url": "https://www.universitaria.coop.py/", "producto": "CDA Socios", "tipo": "cda", "tasa": 10.50, "montoMinimo": "1.000.000", "plazoMinimo": "12 meses", "ventaja": "Excelentes tasas y gran solidez", "desventaja": "Requiere ser socio y cumplir requisitos" },
-            { "id": "gnb-cda", "institucion": "Banco GNB Paraguay", "url": "https://www.gnb.com.py/", "producto": "CDA a Plazo Fijo", "tipo": "cda", "tasa": 8.75, "montoMinimo": "10.000.000", "plazoMinimo": "12 meses", "ventaja": "Tasas muy competitivas para montos altos", "desventaja": "Monto de apertura elevado" },
-            { "id": "familiar-cda", "institucion": "Banco Familiar", "url": "https://www.familiar.com.py/", "producto": "Ahorro a Plazo Fijo", "tipo": "cda", "tasa": 8.60, "montoMinimo": "1.000.000", "plazoMinimo": "12 meses", "ventaja": "Tasas atractivas y buena atención", "desventaja": "Red de sucursales más pequeña" },
-            { "id": "vision-ahorro", "institucion": "Visión Banco", "url": "https://www.visionbanco.com/", "producto": "Ahorro Programado Anual", "tipo": "ahorro", "tasa": 7.00, "montoMinimo": "100.000 (cuota mensual)", "plazoMinimo": "12 meses", "ventaja": "Fomenta el hábito del ahorro con cuotas bajas", "desventaja": "Tasa menor a un CDA por el mismo plazo" },
-            { "id": "itau-cda", "institucion": "Itaú Paraguay", "url": "https://www.itau.com.py/", "producto": "Plazo Fijo tradicional", "tipo": "cda", "tasa": 7.25, "montoMinimo": "500.000", "plazoMinimo": "30 días", "ventaja": "Plazos flexibles y amplia red de sucursales", "desventaja": "Tasas menores que cooperativas" },
-            { "id": "bbva-cda", "institucion": "BBVA Paraguay", "url": "https://www.bbva.com.py/", "producto": "Inversión a Plazo Fijo", "tipo": "cda", "tasa": 7.50, "montoMinimo": "1.000.000", "plazoMinimo": "32 días", "ventaja": "App móvil robusta y buena atención", "desventaja": "Tasas moderadas" },
-            { "id": "bnf-cda", "institucion": "Banco Nacional de Fomento", "url": "https://www.bnf.gov.py/", "producto": "Depósito a Plazo Fijo", "tipo": "cda", "tasa": 8.00, "montoMinimo": "500.000", "plazoMinimo": "30 días", "ventaja": "Tasas competitivas para montos bajos", "desventaja": "Atención al cliente variable" },
-            { "id": "sudameris-cda", "institucion": "Banco Sudameris", "url": "https://www.sudameris.com.py/", "producto": "Inversión a Plazo Fijo", "tipo": "cda", "tasa": 7.80, "montoMinimo": "1.000.000", "plazoMinimo": "30 días", "ventaja": "Opciones de renovación automática", "desventaja": "Tasas regulares" },
-            { "id": "regional-cda", "institucion": "Banco Regional", "url": "https://www.bancoregional.com.py/", "producto": "Plazo Fijo", "tipo": "cda", "tasa": 7.95, "montoMinimo": "1.000.000", "plazoMinimo": "30 días", "ventaja": "App fácil de usar", "desventaja": "Tasas promedio de mercado" },
-            { "id": "continental-cda", "institucion": "Banco Continental", "url": "https://www.continental.com.py/", "producto": "Depósito a Plazo Fijo", "tipo": "cda", "tasa": 7.70, "montoMinimo": "1.000.000", "plazoMinimo": "30 días", "ventaja": "Amplia red de cajeros automáticos", "desventaja": "Tasas similares a la competencia" },
-            { "id": "basa-cda", "institucion": "Banco Basa", "url": "https://www.basa.com.py/", "producto": "Inversión a Plazo Fijo", "tipo": "cda", "tasa": 8.20, "montoMinimo": "1.000.000", "plazoMinimo": "30 días", "ventaja": "Tasas ligeramente superiores al promedio", "desventaja": "Menor cantidad de sucursales" },
-            { "id": "ficensa-ahorro", "institucion": "Ficensa", "url": "https://www.ficensa.com.py/", "producto": "Ahorro Programado", "tipo": "ahorro", "tasa": 6.50, "montoMinimo": "200.000 (cuota mensual)", "plazoMinimo": "12 meses", "ventaja": "Disciplina de ahorro forzada", "desventaja": "Menor rentabilidad que CDAs" },
-            { "id": "lindo-ahorro", "institucion": "Cooperativa Lindo", "url": "https://www.lindo.com.py/", "producto": "Ahorro Programado", "tipo": "ahorro", "tasa": 6.75, "montoMinimo": "150.000 (cuota mensual)", "plazoMinimo": "12 meses", "ventaja": "Flexibilidad en montos de cuota", "desventaja": "Rendimiento moderado" }
-          ]
-        };
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Base de datos ampliada con más productos
+        const databaseData = {
+          "lastUpdated": "2025-09-06",
+          "products": [
+            { "id": "medalla-cda", "institucion": "Cooperativa Medalla Milagrosa", "url": "https://www.medalla.coop.py/", "producto": "Ahorro a Plazo Fijo", "tipo": "cda", "tasa": 11.00, "montoMinimo": "1.000.000", "plazoMinimo": "12 meses", "ventaja": "Suele ofrecer las tasas más altas del mercado", "desventaja": "Requiere ser socio de la cooperativa" },
+            { "id": "universitaria-cda", "institucion": "Cooperativa Universitaria", "url": "https://www.universitaria.coop.py/", "producto": "CDA Socios", "tipo": "cda", "tasa": 10.50, "montoMinimo": "1.000.000", "plazoMinimo": "12 meses", "ventaja": "Excelentes tasas y gran solidez", "desventaja": "Requiere ser socio y cumplir requisitos" },
+            { "id": "gnb-cda", "institucion": "Banco GNB Paraguay", "url": "https://www.gnb.com.py/", "producto": "CDA a Plazo Fijo", "tipo": "cda", "tasa": 8.75, "montoMinimo": "10.000.000", "plazoMinimo": "12 meses", "ventaja": "Tasas muy competitivas para montos altos", "desventaja": "Monto de apertura elevado" },
+            { "id": "familiar-cda", "institucion": "Banco Familiar", "url": "https://www.familiar.com.py/", "producto": "Ahorro a Plazo Fijo", "tipo": "cda", "tasa": 8.60, "montoMinimo": "1.000.000", "plazoMinimo": "12 meses", "ventaja": "Tasas atractivas y buena atención", "desventaja": "Red de sucursales más pequeña" },
+            { "id": "vision-ahorro", "institucion": "Visión Banco", "url": "https://www.visionbanco.com/", "producto": "Ahorro Programado Anual", "tipo": "ahorro", "tasa": 7.00, "montoMinimo": "100.000 (cuota mensual)", "plazoMinimo": "12 meses", "ventaja": "Fomenta el hábito del ahorro con cuotas bajas", "desventaja": "Tasa menor a un CDA por el mismo plazo" },
+            { "id": "itau-cda", "institucion": "Itaú Paraguay", "url": "https://www.itau.com.py/", "producto": "Plazo Fijo tradicional", "tipo": "cda", "tasa": 7.25, "montoMinimo": "500.000", "plazoMinimo": "30 días", "ventaja": "Plazos flexibles y amplia red de sucursales", "desventaja": "Tasas menores que cooperativas" },
+            { "id": "bbva-cda", "institucion": "BBVA Paraguay", "url": "https://www.bbva.com.py/", "producto": "Inversión a Plazo Fijo", "tipo": "cda", "tasa": 7.50, "montoMinimo": "1.000.000", "plazoMinimo": "32 días", "ventaja": "App móvil robusta y buena atención", "desventaja": "Tasas moderadas" },
+            { "id": "bnf-cda", "institucion": "Banco Nacional de Fomento", "url": "https://www.bnf.gov.py/", "producto": "Depósito a Plazo Fijo", "tipo": "cda", "tasa": 8.00, "montoMinimo": "500.000", "plazoMinimo": "30 días", "ventaja": "Tasas competitivas para montos bajos", "desventaja": "Atención al cliente variable" },
+            { "id": "sudameris-cda", "institucion": "Banco Sudameris", "url": "https://www.sudameris.com.py/", "producto": "Inversión a Plazo Fijo", "tipo": "cda", "tasa": 7.80, "montoMinimo": "1.000.000", "plazoMinimo": "30 días", "ventaja": "Opciones de renovación automática", "desventaja": "Tasas regulares" },
+            { "id": "regional-cda", "institucion": "Banco Regional", "url": "https://www.bancoregional.com.py/", "producto": "Plazo Fijo", "tipo": "cda", "tasa": 7.95, "montoMinimo": "1.000.000", "plazoMinimo": "30 días", "ventaja": "App fácil de usar", "desventaja": "Tasas promedio de mercado" },
+            { "id": "continental-cda", "institucion": "Banco Continental", "url": "https://www.continental.com.py/", "producto": "Depósito a Plazo Fijo", "tipo": "cda", "tasa": 7.70, "montoMinimo": "1.000.000", "plazoMinimo": "30 días", "ventaja": "Amplia red de cajeros automáticos", "desventaja": "Tasas similares a la competencia" },
+            { "id": "basa-cda", "institucion": "Banco Basa", "url": "https://www.basa.com.py/", "producto": "Inversión a Plazo Fijo", "tipo": "cda", "tasa": 8.20, "montoMinimo": "1.000.000", "plazoMinimo": "30 días", "ventaja": "Tasas ligeramente superiores al promedio", "desventaja": "Menor cantidad de sucursales" },
+            { "id": "ficensa-ahorro", "institucion": "Ficensa", "url": "https://www.ficensa.com.py/", "producto": "Ahorro Programado", "tipo": "ahorro", "tasa": 6.50, "montoMinimo": "200.000 (cuota mensual)", "plazoMinimo": "12 meses", "ventaja": "Disciplina de ahorro forzada", "desventaja": "Menor rentabilidad que CDAs" },
+            { "id": "lindo-ahorro", "institucion": "Cooperativa Lindo", "url": "https://www.lindo.com.py/", "producto": "Ahorro Programado", "tipo": "ahorro", "tasa": 6.75, "montoMinimo": "150.000 (cuota mensual)", "plazoMinimo": "12 meses", "ventaja": "Flexibilidad en montos de cuota", "desventaja": "Rendimiento moderado" }
+          ]
+        };
 
-        const allProducts = databaseData.products;
-        let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-        let selectedForComparison = new Set();
-        let simulationChart;
-        let savedSimulations = JSON.parse(localStorage.getItem('savedSimulations')) || [];
-        let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+        const allProducts = databaseData.products;
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+        let selectedForComparison = new Set();
+        let simulationChart;
+        let savedSimulations = JSON.parse(localStorage.getItem('savedSimulations')) || [];
+        let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
 
-        // Elementos DOM
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
-        const lightIcon = document.getElementById('theme-icon-light');
-        const darkIcon = document.getElementById('theme-icon-dark');
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const toastContainer = document.getElementById('toast-container');
-        const lastUpdatedSpans = document.querySelectorAll('#last-updated');
-        const tbody = document.getElementById('comparison-body');
-        const modal = document.getElementById('details-modal');
-        const comparisonModal = document.getElementById('comparison-modal');
-        const modalBody = document.getElementById('modal-body');
-        const comparisonModalBody = document.getElementById('comparison-modal-body');
-        const modalCloseButtons = document.querySelectorAll('.modal-close');
-        const scrollToTopBtn = document.getElementById('scroll-to-top');
-        const notificationBtn = document.getElementById('notification-btn');
-        const notificationBadge = document.getElementById('notification-badge');
-        
-        const filterInstitutionSelect = document.getElementById('filter-institution');
-        const filterProduct = document.getElementById('filter-product');
-        const filterMinAmount = document.getElementById('filter-min-amount');
-        const sortBy = document.getElementById('sort-by');
-        const resetFiltersBtn = document.getElementById('reset-filters');
-        const compareBtn = document.getElementById('compare-selected-btn');
-        const viewToggle = document.getElementById('view-toggle');
-        const productCount = document.getElementById('product-count');
-        const emptyState = document.getElementById('empty-state');
-        
-        const simAmount = document.getElementById('sim-amount');
-        const simProductSelect = document.getElementById('sim-product');
-        const simPeriod = document.getElementById('sim-period');
-        const simInflation = document.getElementById('sim-inflation');
-        const simInflationRange = document.getElementById('sim-inflation-range');
-        const inflationBar = document.getElementById('inflation-bar');
-        const calculateBtn = document.getElementById('calculate-btn');
-        const saveSimulationBtn = document.getElementById('save-simulation');
-        const shareBtn = document.getElementById('share-btn');
-        const savedSimulationsContainer = document.getElementById('saved-simulations');
-        
-        const resultInitial = document.getElementById('result-initial');
-        const resultInterest = document.getElementById('result-interest');
-        const resultRealInterest = document.getElementById('result-real-interest');
-        const resultTotal = document.getElementById('result-total');
-        const initialLabel = document.getElementById('initial-label');
-        const monthlyRate = document.getElementById('monthly-rate');
-        const annualYield = document.getElementById('annual-yield');
-        const inflationLoss = document.getElementById('inflation-loss');
-        const purchasingPower = document.getElementById('purchasing-power');
+        // Elementos DOM
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const lightIcon = document.getElementById('theme-icon-light');
+        const darkIcon = document.getElementById('theme-icon-dark');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const toastContainer = document.getElementById('toast-container');
+        const lastUpdatedSpans = document.querySelectorAll('#last-updated');
+        const tbody = document.getElementById('comparison-body');
+        const modal = document.getElementById('details-modal');
+        const comparisonModal = document.getElementById('comparison-modal');
+        const modalBody = document.getElementById('modal-body');
+        const comparisonModalBody = document.getElementById('comparison-modal-body');
+        const modalCloseButtons = document.querySelectorAll('.modal-close');
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        const notificationBtn = document.getElementById('notification-btn');
+        const notificationBadge = document.getElementById('notification-badge');
+        
+        const filterInstitutionSelect = document.getElementById('filter-institution');
+        const filterProduct = document.getElementById('filter-product');
+        const filterMinAmount = document.getElementById('filter-min-amount');
+        const sortBy = document.getElementById('sort-by');
+        const resetFiltersBtn = document.getElementById('reset-filters');
+        const compareBtn = document.getElementById('compare-selected-btn');
+        const viewToggle = document.getElementById('view-toggle');
+        const productCount = document.getElementById('product-count');
+        const emptyState = document.getElementById('empty-state');
+        
+        const simAmount = document.getElementById('sim-amount');
+        const simProductSelect = document.getElementById('sim-product');
+        const simPeriod = document.getElementById('sim-period');
+        const simInflation = document.getElementById('sim-inflation');
+        const simInflationRange = document.getElementById('sim-inflation-range');
+        const inflationBar = document.getElementById('inflation-bar');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const saveSimulationBtn = document.getElementById('save-simulation');
+        const shareBtn = document.getElementById('share-btn');
+        const savedSimulationsContainer = document.getElementById('saved-simulations');
+        
+        const resultInitial = document.getElementById('result-initial');
+        const resultInterest = document.getElementById('result-interest');
+        const resultRealInterest = document.getElementById('result-real-interest');
+        const resultTotal = document.getElementById('result-total');
+        const initialLabel = document.getElementById('initial-label');
+        const monthlyRate = document.getElementById('monthly-rate');
+        const annualYield = document.getElementById('annual-yield');
+        const inflationLoss = document.getElementById('inflation-loss');
+        const purchasingPower = document.getElementById('purchasing-power');
 
-        function initializeApp() {
-            lastUpdatedSpans.forEach(span => {
-                span.textContent = new Date(databaseData.lastUpdated).toLocaleDateString('es-PY', { year: 'numeric', month: 'long', day: 'numeric' });
-            });
-            populateFilterInstitutions();
-            populateSimulatorProducts();
-            setupEventListeners();
-            renderTable();
-            loadSimulatorState();
-            calculateReturns();
-            initTheme();
-            updateSavedSimulations();
-            updateNotificationBadge();
-            checkForNewRates();
+        function initializeApp() {
+            lastUpdatedSpans.forEach(span => {
+                span.textContent = new Date(databaseData.lastUpdated).toLocaleDateString('es-PY', { year: 'numeric', month: 'long', day: 'numeric' });
+            });
+            populateFilterInstitutions();
+            populateSimulatorProducts();
+            setupEventListeners();
+            renderTable();
+            loadSimulatorState();
+            calculateReturns();
+            initTheme();
+            updateSavedSimulations();
+            updateNotificationBadge();
+            checkForNewRates();
 
-            // Lazy loading para imágenes (si las hubiera)
-            if ('IntersectionObserver' in window) {
-                lazyLoadImages();
-            }
-        }
+            // Lazy loading para imágenes (si las hubiera)
+            if ('IntersectionObserver' in window) {
+                lazyLoadImages();
+            }
+        }
 
-        function setupEventListeners() {
-            [themeToggle, themeToggleMobile].forEach(btn => btn.addEventListener('click', toggleTheme));
-            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            modalCloseButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                });
-            });
-            window.addEventListener('click', (e) => { 
-                if (e.target.classList.contains('modal')) {
-                    e.target.style.display = 'none';
-                }
-            });
-            
-            [filterInstitutionSelect, filterProduct, filterMinAmount, sortBy].forEach(el => el.addEventListener('change', renderTable));
-            resetFiltersBtn.addEventListener('click', resetFilters);
-            viewToggle.addEventListener('click', toggleView);
-            tbody.addEventListener('click', handleTableClick);
-            compareBtn.addEventListener('click', showComparisonModal);
-            
-            simAmount.addEventListener('blur', (e) => { 
-                e.target.value = formatNumber(parseNumber(e.target.value));
-                calculateReturns();
-            });
-            simInflation.addEventListener('input', () => {
-                simInflationRange.value = simInflation.value;
-                updateInflationBar();
-                calculateReturns();
-            });
-            simInflationRange.addEventListener('input', () => {
-                simInflation.value = simInflationRange.value;
-                updateInflationBar();
-                calculateReturns();
-            });
-            [simProductSelect, simPeriod].forEach(el => {
-                el.addEventListener('change', calculateReturns);
-            });
-            
-            calculateBtn.addEventListener('click', calculateReturns);
-            saveSimulationBtn.addEventListener('click', saveSimulation);
-            shareBtn.addEventListener('click', handleShare);
-            
-            scrollToTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-            
-            window.addEventListener('scroll', toggleScrollToTopButton);
-            notificationBtn.addEventListener('click', showNotifications);
-            
-            // Cerrar menú móvil al hacer clic en un enlace
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-        }
+        function setupEventListeners() {
+            [themeToggle, themeToggleMobile].forEach(btn => btn.addEventListener('click', toggleTheme));
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            modalCloseButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                });
+            });
+            window.addEventListener('click', (e) => { 
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+            
+            [filterInstitutionSelect, filterProduct, filterMinAmount, sortBy].forEach(el => el.addEventListener('change', renderTable));
+            resetFiltersBtn.addEventListener('click', resetFilters);
+            viewToggle.addEventListener('click', toggleView);
+            tbody.addEventListener('click', handleTableClick);
+            compareBtn.addEventListener('click', showComparisonModal);
+            
+            simAmount.addEventListener('blur', (e) => { 
+                e.target.value = formatNumber(parseNumber(e.target.value));
+                calculateReturns();
+            });
+            simInflation.addEventListener('input', () => {
+                simInflationRange.value = simInflation.value;
+                updateInflationBar();
+                calculateReturns();
+            });
+            simInflationRange.addEventListener('input', () => {
+                simInflation.value = simInflationRange.value;
+                updateInflationBar();
+                calculateReturns();
+            });
+            [simProductSelect, simPeriod].forEach(el => {
+                el.addEventListener('change', calculateReturns);
+            });
+            
+            calculateBtn.addEventListener('click', calculateReturns);
+            saveSimulationBtn.addEventListener('click', saveSimulation);
+            shareBtn.addEventListener('click', handleShare);
+            
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            window.addEventListener('scroll', toggleScrollToTopButton);
+            notificationBtn.addEventListener('click', showNotifications);
+            
+            // Cerrar menú móvil al hacer clic en un enlace
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
 
-        function toggleScrollToTopButton() {
-            if (window.scrollY > 300) {
-                scrollToTopBtn.style.display = 'flex';
-            } else {
-                scrollToTopBtn.style.display = 'none';
-            }
-        }
+        function toggleScrollToTopButton() {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.style.display = 'flex';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        }
 
-        function applyTheme(isDark) {
-            document.documentElement.classList.toggle('dark', isDark);
-            lightIcon.classList.toggle('hidden', isDark);
-            darkIcon.classList.toggle('hidden', !isDark);
-            themeToggleMobile.innerHTML = isDark ? darkIcon.outerHTML : lightIcon.outerHTML;
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        }
+        function applyTheme(isDark) {
+            document.documentElement.classList.toggle('dark', isDark);
+            lightIcon.classList.toggle('hidden', isDark);
+            darkIcon.classList.toggle('hidden', !isDark);
+            themeToggleMobile.innerHTML = isDark ? darkIcon.outerHTML : lightIcon.outerHTML;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
 
-        function toggleTheme() {
-            applyTheme(!document.documentElement.classList.contains('dark'));
-            showToast('Tema ' + (document.documentElement.classList.contains('dark') ? 'oscuro' : 'claro') + ' activado', 'success');
-        }
+        function toggleTheme() {
+            applyTheme(!document.documentElement.classList.contains('dark'));
+            showToast('Tema ' + (document.documentElement.classList.contains('dark') ? 'oscuro' : 'claro') + ' activado', 'success');
+        }
 
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            applyTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
-        }
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
+        }
 
-        function populateFilterInstitutions() {
-            const institutions = ['all', ...new Set(allProducts.map(p => p.institucion))].sort((a, b) => a === 'all' ? -1 : b === 'all' ? 1 : a.localeCompare(b));
-            filterInstitutionSelect.innerHTML = '';
-            institutions.forEach(inst => {
-                const option = document.createElement('option');
-                option.value = inst;
-                option.textContent = inst === 'all' ? 'Todas' : inst;
-                filterInstitutionSelect.appendChild(option);
-            });
-        }
+        function populateFilterInstitutions() {
+            const institutions = ['all', ...new Set(allProducts.map(p => p.institucion))].sort((a, b) => a === 'all' ? -1 : b === 'all' ? 1 : a.localeCompare(b));
+            filterInstitutionSelect.innerHTML = '';
+            institutions.forEach(inst => {
+                const option = document.createElement('option');
+                option.value = inst;
+                option.textContent = inst === 'all' ? 'Todas' : inst;
+                filterInstitutionSelect.appendChild(option);
+            });
+        }
 
-        function resetFilters() {
-            filterInstitutionSelect.value = 'all';
-            filterProduct.value = 'all';
-            filterMinAmount.value = 'all';
-            sortBy.value = 'tasa-desc';
-            renderTable();
-            showToast('Filtros restablecidos', 'success');
-        }
+        function resetFilters() {
+            filterInstitutionSelect.value = 'all';
+            filterProduct.value = 'all';
+            filterMinAmount.value = 'all';
+            sortBy.value = 'tasa-desc';
+            renderTable();
+            showToast('Filtros restablecidos', 'success');
+        }
 
-        function toggleView() {
-            // Cambiar entre vista de tabla y tarjetas (por implementar)
-            showToast('Funcionalidad en desarrollo', 'info');
-        }
+        function toggleView() {
+            // Cambiar entre vista de tabla y tarjetas (por implementar)
+            showToast('Funcionalidad en desarrollo', 'info');
+        }
 
-        function renderTable() {
-            const institutionValue = filterInstitutionSelect.value;
-            const productValue = filterProduct.value;
-            const minAmountValue = filterMinAmount.value;
-            const sortValue = sortBy.value;
+        function renderTable() {
+            const institutionValue = filterInstitutionSelect.value;
+            const productValue = filterProduct.value;
+            const minAmountValue = filterMinAmount.value;
+            const sortValue = sortBy.value;
 
-            let filteredData = allProducts.filter(item => 
-                (institutionValue === 'all' || item.institucion === institutionValue) &&
-                (productValue === 'all' || item.tipo === productValue) &&
-                (minAmountValue === 'all' || parseNumber(item.montoMinimo) <= parseInt(minAmountValue))
-            );
+            let filteredData = allProducts.filter(item => 
+                (institutionValue === 'all' || item.institucion === institutionValue) &&
+                (productValue === 'all' || item.tipo === productValue) &&
+                (minAmountValue === 'all' || parseNumber(item.montoMinimo) <= parseInt(minAmountValue))
+            );
 
-            filteredData.sort((a, b) => {
-                if (sortValue === 'tasa-desc') return b.tasa - a.tasa;
-                if (sortValue === 'tasa-asc') return a.tasa - b.tasa;
-                if (sortValue === 'name') return a.institucion.localeCompare(b.institucion);
-                return 0;
-            });
+            filteredData.sort((a, b) => {
+                if (sortValue === 'tasa-desc') return b.tasa - a.tasa;
+                if (sortValue === 'tasa-asc') return a.tasa - b.tasa;
+                if (sortValue === 'name') return a.institucion.localeCompare(b.institucion);
+                return 0;
+            });
 
-            tbody.innerHTML = '';
-            
-            if (filteredData.length === 0) {
-                emptyState.classList.remove('hidden');
-                productCount.textContent = '0 productos encontrados';
-            } else {
-                emptyState.classList.add('hidden');
-                productCount.textContent = `${filteredData.length} producto${filteredData.length !== 1 ? 's' : ''} encontrado${filteredData.length !== 1 ? 's' : ''}`;
-                
-                filteredData.forEach(item => {
-                    const tr = document.createElement('tr');
-                    tr.dataset.id = item.id;
-                    const isFavorite = favorites[item.id] || false;
-                    tr.innerHTML = `
-                        <td data-label="Seleccionar" class="text-center"><input type="checkbox" data-id="${item.id}" class="comparison-checkbox" ${selectedForComparison.has(item.id) ? 'checked' : ''}></td>
-                        <td data-label="Favorito" class="text-center"><button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${item.id}">${isFavorite ? '❤️' : '🤍'}</button></td>
-                        <td data-label="Institución">${item.institucion}</td>
-                        <td data-label="Producto">${item.producto}</td>
-                        <td data-label="Tasa (%)" class="text-center font-semibold text-green-700">${item.tasa.toFixed(2)}%</td>
-                        <td data-label="Monto Mínimo" class="text-center">${item.montoMinimo}</td>
-                        <td data-label="Plazo Mínimo" class="text-center">${item.plazoMinimo}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            }
-            
-            updateCompareButton();
-        }
+            tbody.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                emptyState.classList.remove('hidden');
+                productCount.textContent = '0 productos encontrados';
+            } else {
+                emptyState.classList.add('hidden');
+                productCount.textContent = `${filteredData.length} producto${filteredData.length !== 1 ? 's' : ''} encontrado${filteredData.length !== 1 ? 's' : ''}`;
+                
+                filteredData.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.dataset.id = item.id;
+                    const isFavorite = favorites[item.id] || false;
+                    tr.innerHTML = `
+                        <td data-label="Seleccionar" class="text-center"><input type="checkbox" data-id="${item.id}" class="comparison-checkbox" ${selectedForComparison.has(item.id) ? 'checked' : ''}></td>
+                        <td data-label="Favorito" class="text-center"><button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${item.id}">${isFavorite ? '❤️' : '🤍'}</button></td>
+                        <td data-label="Institución">${item.institucion}</td>
+                        <td data-label="Producto">${item.producto}</td>
+                        <td data-label="Tasa (%)" class="text-center font-semibold text-green-700">${item.tasa.toFixed(2)}%</td>
+                        <td data-label="Monto Mínimo" class="text-center">${item.montoMinimo}</td>
+                        <td data-label="Plazo Mínimo" class="text-center">${item.plazoMinimo}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+            
+            updateCompareButton();
+        }
 
-        function handleTableClick(e) {
-            const target = e.target;
-            const row = target.closest('tr');
-            if (!row) return;
+        function handleTableClick(e) {
+            const target = e.target;
+            const row = target.closest('tr');
+            if (!row) return;
 
-            if (target.matches('.comparison-checkbox')) {
-                const id = target.dataset.id;
-                if (target.checked) {
-                    if (selectedForComparison.size < 3) {
-                        selectedForComparison.add(id);
-                        showToast('Producto añadido para comparación', 'success');
-                    } else {
-                        target.checked = false;
-                        showToast("Puedes seleccionar hasta 3 productos.", 'warning');
-                    }
-                } else {
-                    selectedForComparison.delete(id);
-                    showToast('Producto eliminado de la comparación', 'info');
-                }
-                updateCompareButton();
-                e.stopPropagation();
-            } else if (target.matches('.favorite-btn')) {
-                const id = target.dataset.id;
-                favorites[id] = !favorites[id];
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-                target.classList.toggle('active');
-                target.innerHTML = favorites[id] ? '❤️' : '🤍';
-                showToast(favorites[id] ? 'Añadido a favoritos' : 'Eliminado de favoritos', 'success');
-                e.stopPropagation();
-            } else {
-                const itemData = allProducts.find(d => d.id === row.dataset.id);
-                if (itemData) showDetailsModal(itemData);
-            }
-        }
-        
-        function updateCompareButton() {
-            const count = selectedForComparison.size;
-            compareBtn.textContent = `Comparar (${count})`;
-            compareBtn.disabled = count < 2;
-        }
+            if (target.matches('.comparison-checkbox')) {
+                const id = target.dataset.id;
+                if (target.checked) {
+                    if (selectedForComparison.size < 3) {
+                        selectedForComparison.add(id);
+                        showToast('Producto añadido para comparación', 'success');
+                    } else {
+                        target.checked = false;
+                        showToast("Puedes seleccionar hasta 3 productos.", 'warning');
+                    }
+                } else {
+                    selectedForComparison.delete(id);
+                    showToast('Producto eliminado de la comparación', 'info');
+                }
+                updateCompareButton();
+                e.stopPropagation();
+            } else if (target.matches('.favorite-btn')) {
+                const id = target.dataset.id;
+                favorites[id] = !favorites[id];
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                target.classList.toggle('active');
+                target.innerHTML = favorites[id] ? '❤️' : '🤍';
+                showToast(favorites[id] ? 'Añadido a favoritos' : 'Eliminado de favoritos', 'success');
+                e.stopPropagation();
+            } else {
+                const itemData = allProducts.find(d => d.id === row.dataset.id);
+                if (itemData) showDetailsModal(itemData);
+            }
+        }
+        
+        function updateCompareButton() {
+            const count = selectedForComparison.size;
+            compareBtn.textContent = `Comparar (${count})`;
+            compareBtn.disabled = count < 2;
+        }
 
-        function showDetailsModal(itemData) {
-            modalBody.innerHTML = `<h3 class="text-2xl font-bold mb-4" style="color: var(--primary-color);">${item.institucion}</h3>
-                <div class="grid md:grid-cols-2 gap-4 text-left">
-                    <div class="p-3 rounded-lg" style="background-color: var(--background-color);"><strong>Producto:</strong> ${itemData.producto}</div>
-                    <div class="p-3 rounded-lg" style="background-color: var(--background-color);"><strong>Tasa Anual:</strong> <span class="font-bold text-green-600">${itemData.tasa.toFixed(2)}%</span></div>
-                    <div class="p-3 rounded-lg" style="background-color: var(--background-color);"><strong>Monto Mínimo:</strong> ${itemData.montoMinimo} Gs.</div>
-                    <div class="p-3 rounded-lg" style="background-color: var(--background-color);"><strong>Plazo Mínimo:</strong> ${itemData.plazoMinimo}</div>
-                </div>
-                <div class="mt-4 p-4 rounded-lg" style="background-color: var(--background-color);">
-                    <p><strong class="text-green-600">Ventaja:</strong> ${itemData.ventaja}</p>
-                    <p class="mt-2"><strong class="text-red-500">Desventaja:</strong> ${itemData.desventaja}</p>
-                </div>
-                <div class="mt-6 text-center"><a href="${itemData.url}" target="_blank" rel="noopener noreferrer" class="text-white font-bold py-2 px-6 rounded" style="background-color: var(--primary-color);">Visitar Sitio Web</a></div>`;
-            modal.style.display = 'flex';
-        }
+        function showDetailsModal(itemData) {
+            modalBody.innerHTML = `<h3 class="text-2xl font-bold mb-4" style="color: var(--primary-color);">${item.institucion}</h3>
+                <div class="grid md:grid-cols-2 gap-4 text-left">
+                    <div class="p-3 rounded-lg" style="background-color: var(--background-color);"><strong>Producto:</strong> ${itemData.producto}</div>
+                    <div class="p-3 rounded-lg" style="background-color: var(--background-color);"><strong>Tasa Anual:</strong> <span class="font-bold text-green-600">${itemData.tasa.toFixed(2)}%</span></div>
+                    <div class="p-3 rounded-lg" style="background-color: var(--background-color);"><strong>Monto Mínimo:</strong> ${itemData.montoMinimo} Gs.</div>
+                    <div class="p-3 rounded-lg" style="background-color: var(--background-color);"><strong>Plazo Mínimo:</strong> ${itemData.plazoMinimo}</div>
+                </div>
+                <div class="mt-4 p-4 rounded-lg" style="background-color: var(--background-color);">
+                    <p><strong class="text-green-600">Ventaja:</strong> ${itemData.ventaja}</p>
+                    <p class="mt-2"><strong class="text-red-500">Desventaja:</strong> ${itemData.desventaja}</p>
+                </div>
+                <div class="mt-6 text-center"><a href="${itemData.url}" target="_blank" rel="noopener noreferrer" class="text-white font-bold py-2 px-6 rounded" style="background-color: var(--primary-color);">Visitar Sitio Web</a></div>`;
+            modal.style.display = 'flex';
+        }
 
-        function showComparisonModal() {
-            const itemsToCompare = Array.from(selectedForComparison).map(id => allProducts.find(p => p.id === id));
-            
-            let tableHTML = `<h3 class="text-2xl font-bold mb-6 text-center" style="color: var(--primary-color);">Comparación de Productos</h3>
-                <div class="overflow-x-auto mb-6"><table class="w-full text-left"><thead><tr><th class="p-3 border-b font-semibold">Característica</th>`;
-            
-            itemsToCompare.forEach(item => {
-                tableHTML += `<th class="p-3 border-b text-center font-semibold">${item.institucion}</th>`;
-            });
-            
-            tableHTML += `</tr></thead><tbody>`;
-            
-            const rows = { 
-                producto: 'Producto', 
-                tasa: 'Tasa Anual (%)', 
-                montoMinimo: 'Monto Mínimo', 
-                plazoMinimo: 'Plazo Mínimo', 
-                ventaja: 'Ventaja', 
-                desventaja: 'Desventaja' 
-            };
-            
-            for (const key in rows) {
-                tableHTML += `<tr class="border-b"><td class="p-3 font-semibold">${rows[key]}</td>`;
-                itemsToCompare.forEach(item => {
-                    const value = key === 'tasa' ? `<span class="font-bold text-green-600">${item[key].toFixed(2)}%</span>` : item[key];
-                    tableHTML += `<td class="p-3 text-center">${value}</td>`;
-                });
-                tableHTML += `</tr>`;
-            }
+        function showComparisonModal() {
+            const itemsToCompare = Array.from(selectedForComparison).map(id => allProducts.find(p => p.id === id));
+            
+            let tableHTML = `<h3 class="text-2xl font-bold mb-6 text-center" style="color: var(--primary-color);">Comparación de Productos</h3>
+                <div class="overflow-x-auto mb-6"><table class="w-full text-left"><thead><tr><th class="p-3 border-b font-semibold">Característica</th>`;
+            
+            itemsToCompare.forEach(item => {
+                tableHTML += `<th class="p-3 border-b text-center font-semibold">${item.institucion}</th>`;
+            });
+            
+            tableHTML += `</tr></thead><tbody>`;
+            
+            const rows = { 
+                producto: 'Producto', 
+                tasa: 'Tasa Anual (%)', 
+                montoMinimo: 'Monto Mínimo', 
+                plazoMinimo: 'Plazo Mínimo', 
+                ventaja: 'Ventaja', 
+                desventaja: 'Desventaja' 
+            };
+            
+            for (const key in rows) {
+                tableHTML += `<tr class="border-b"><td class="p-3 font-semibold">${rows[key]}</td>`;
+                itemsToCompare.forEach(item => {
+                    const value = key === 'tasa' ? `<span class="font-bold text-green-600">${item[key].toFixed(2)}%</span>` : item[key];
+                    tableHTML += `<td class="p-3 text-center">${value}</td>`;
+                });
+                tableHTML += `</tr>`;
+            }
 
-            tableHTML += `</tbody></table></div>`;
-            
-            // Añadir gráfico comparativo
-            tableHTML += `<div class="mt-8">
-                <h4 class="text-lg font-bold mb-4 text-center">Comparación de Tasas de Interés</h4>
-                <div class="chart-container"><canvas id="comparison-chart" height="250"></canvas></div>
-            </div>`;
-            
-            comparisonModalBody.innerHTML = tableHTML;
-            comparisonModal.style.display = 'flex';
-            
-            // Renderizar gráfico comparativo
-            renderComparisonChart(itemsToCompare);
-        }
-        
-        function renderComparisonChart(items) {
-            const ctx = document.getElementById('comparison-chart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: items.map(item => item.institucion),
-                    datasets: [{
-                        label: 'Tasa de interés anual (%)',
-                        data: items.map(item => item.tasa),
-                        backgroundColor: items.map((_, i) => {
-                            const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'];
-                            return colors[i % colors.length];
-                        }),
-                        borderColor: 'transparent',
-                        borderWidth: 0,
-                        borderRadius: 4,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `Tasa: ${context.raw}%`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Tasa de interés anual (%)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        function populateSimulatorProducts() {
-            const sortedProducts = [...allProducts].sort((a, b) => b.tasa - a.tasa);
-            simProductSelect.innerHTML = '';
-            sortedProducts.forEach(item => {
-                const option = document.createElement('option');
-                option.value = item.id;
-                option.textContent = `${item.institucion} - ${item.producto} (${item.tasa}%)`;
-                simProductSelect.appendChild(option);
-            });
-        }
+            tableHTML += `</tbody></table></div>`;
+            
+            // Añadir gráfico comparativo
+            tableHTML += `<div class="mt-8">
+                <h4 class="text-lg font-bold mb-4 text-center">Comparación de Tasas de Interés</h4>
+                <div class="chart-container"><canvas id="comparison-chart" height="250"></canvas></div>
+            </div>`;
+            
+            comparisonModalBody.innerHTML = tableHTML;
+            comparisonModal.style.display = 'flex';
+            
+            // Renderizar gráfico comparativo
+            renderComparisonChart(itemsToCompare);
+        }
+        
+        function renderComparisonChart(items) {
+            const ctx = document.getElementById('comparison-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: items.map(item => item.institucion),
+                    datasets: [{
+                        label: 'Tasa de interés anual (%)',
+                        data: items.map(item => item.tasa),
+                        backgroundColor: items.map((_, i) => {
+                            const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'];
+                            return colors[i % colors.length];
+                        }),
+                        borderColor: 'transparent',
+                        borderWidth: 0,
+                        borderRadius: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Tasa: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Tasa de interés anual (%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function populateSimulatorProducts() {
+            const sortedProducts = [...allProducts].sort((a, b) => b.tasa - a.tasa);
+            simProductSelect.innerHTML = '';
+            sortedProducts.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = `${item.institucion} - ${item.producto} (${item.tasa}%)`;
+                simProductSelect.appendChild(option);
+            });
+        }
 
-        function updateInflationBar() {
-            const inflationValue = parseFloat(simInflation.value) || 0;
-            const percentage = Math.min(100, (inflationValue / 15) * 100);
-            inflationBar.style.width = `${percentage}%`;
-            
-            // Cambiar color según el nivel de inflación
-            if (inflationValue < 3) {
-                inflationBar.style.backgroundColor = '#10B981'; // Verde
-            } else if (inflationValue < 7) {
-                inflationBar.style.backgroundColor = '#F59E0B'; // Amarillo
-            } else {
-                inflationBar.style.backgroundColor = '#EF4444'; // Rojo
-            }
-        }
+        function updateInflationBar() {
+            const inflationValue = parseFloat(simInflation.value) || 0;
+            const percentage = Math.min(100, (inflationValue / 15) * 100);
+            inflationBar.style.width = `${percentage}%`;
+            
+            // Cambiar color según el nivel de inflación
+            if (inflationValue < 3) {
+                inflationBar.style.backgroundColor = '#10B981'; // Verde
+            } else if (inflationValue < 7) {
+                inflationBar.style.backgroundColor = '#F59E0B'; // Amarillo
+            } else {
+                inflationBar.style.backgroundColor = '#EF4444'; // Rojo
+            }
+        }
 
-        function calculateReturns() {
-            const amount = parseNumber(simAmount.value);
-            const periodMonths = parseInt(simPeriod.value);
-            const inflationRate = parseFloat(simInflation.value) || 0;
-            const selectedProduct = allProducts.find(item => item.id === simProductSelect.value);
+        function calculateReturns() {
+            const amount = parseNumber(simAmount.value);
+            const periodMonths = parseInt(simPeriod.value);
+            const inflationRate = parseFloat(simInflation.value) || 0;
+            const selectedProduct = allProducts.find(item => item.id === simProductSelect.value);
 
-            if (!selectedProduct || !amount || !periodMonths) return;
+            if (!selectedProduct || !amount || !periodMonths) return;
 
-            const rate = selectedProduct.tasa;
-            let interest = 0;
-            let initialAmount = amount;
-            
-            if (selectedProduct.tipo === 'cda') {
-                initialLabel.textContent = "Inversión:";
-                interest = amount * (rate / 100) * (periodMonths / 12);
-            } else if (selectedProduct.tipo === 'ahorro') {
-                initialLabel.textContent = "Total Ahorrado:";
-                initialAmount = amount * periodMonths;
-                interest = (initialAmount / 2) * (rate / 100) * (periodMonths / 12);
-            }
+            const rate = selectedProduct.tasa;
+            let interest = 0;
+            let initialAmount = amount;
+            
+            if (selectedProduct.tipo === 'cda') {
+                initialLabel.textContent = "Inversión:";
+                interest = amount * (rate / 100) * (periodMonths / 12);
+            } else if (selectedProduct.tipo === 'ahorro') {
+                initialLabel.textContent = "Total Ahorrado:";
+                initialAmount = amount * periodMonths;
+                interest = (initialAmount / 2) * (rate / 100) * (periodMonths / 12);
+            }
 
-            const finalAmount = initialAmount + interest;
-            const inflationLossValue = initialAmount * (inflationRate / 100) * (periodMonths / 12);
-            const realInterest = interest - inflationLossValue;
-            const purchasingPowerValue = finalAmount - inflationLossValue;
+            const finalAmount = initialAmount + interest;
+            const inflationLossValue = initialAmount * (inflationRate / 100) * (periodMonths / 12);
+            const realInterest = interest - inflationLossValue;
+            const purchasingPowerValue = finalAmount - inflationLossValue;
 
-            resultInitial.textContent = `${formatNumber(initialAmount)} Gs.`;
-            resultInterest.textContent = `${formatNumber(interest)} Gs.`;
-            resultTotal.textContent = `${formatNumber(finalAmount)} Gs.`;
-            resultRealInterest.textContent = `${formatNumber(realInterest)} Gs.`;
-            resultRealInterest.parentElement.style.color = realInterest >= 0 ? 'var(--success-color)' : '#EF4444';
-            
-            // Actualizar detalles adicionales
-            monthlyRate.textContent = `${(rate / 12).toFixed(2)}%`;
-            annualYield.textContent = `${formatNumber(initialAmount * (rate / 100))} Gs.`;
-            inflationLoss.textContent = `${formatNumber(inflationLossValue)} Gs.`;
-            purchasingPower.textContent = `${formatNumber(purchasingPowerValue)} Gs.`;
-            
-            updateSimulationChart(initialAmount, interest);
-            saveSimulatorState();
-        }
+            resultInitial.textContent = `${formatNumber(initialAmount)} Gs.`;
+            resultInterest.textContent = `${formatNumber(interest)} Gs.`;
+            resultTotal.textContent = `${formatNumber(finalAmount)} Gs.`;
+            resultRealInterest.textContent = `${formatNumber(realInterest)} Gs.`;
+            resultRealInterest.parentElement.style.color = realInterest >= 0 ? 'var(--success-color)' : '#EF4444';
+            
+            // Actualizar detalles adicionales
+            monthlyRate.textContent = `${(rate / 12).toFixed(2)}%`;
+            annualYield.textContent = `${formatNumber(initialAmount * (rate / 100))} Gs.`;
+            inflationLoss.textContent = `${formatNumber(inflationLossValue)} Gs.`;
+            purchasingPower.textContent = `${formatNumber(purchasingPowerValue)} Gs.`;
+            
+            updateSimulationChart(initialAmount, interest);
+            saveSimulatorState();
+        }
 
-        function updateSimulationChart(capital, interest) {
-            const ctx = document.getElementById('simulation-chart').getContext('2d');
-            const data = {
-                labels: ['Capital', 'Intereses'],
-                datasets: [{
-                    data: [capital, interest > 0 ? interest : 0],
-                    backgroundColor: ['#3B82F6', '#10B981'],
-                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--card-background').trim(),
-                }]
-            };
+        function updateSimulationChart(capital, interest) {
+            const ctx = document.getElementById('simulation-chart').getContext('2d');
+            const data = {
+                labels: ['Capital', 'Intereses'],
+                datasets: [{
+                    data: [capital, interest > 0 ? interest : 0],
+                    backgroundColor: ['#3B82F6', '#10B981'],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--card-background').trim(),
+                }]
+            };
 
-            if (simulationChart) {
-                simulationChart.data = data;
-                simulationChart.update();
-            } else {
-                simulationChart = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        plugins: { 
-                            legend: { 
-                                display: false 
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const value = context.raw;
-                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                        const percentage = Math.round((value / total) * 100);
-                                        return `${context.label}: ${formatNumber(value)} Gs. (${percentage}%)`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-        }
-        
-        function saveSimulatorState() {
-            const state = {
-                amount: simAmount.value,
-                period: simPeriod.value,
-                product: simProductSelect.value,
-                inflation: simInflation.value
-            };
-            localStorage.setItem('simulatorState', JSON.stringify(state));
-        }
+            if (simulationChart) {
+                simulationChart.data = data;
+                simulationChart.update();
+            } else {
+                simulationChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        plugins: { 
+                            legend: { 
+                                display: false 
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const value = context.raw;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = Math.round((value / total) * 100);
+                                        return `${context.label}: ${formatNumber(value)} Gs. (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        function saveSimulatorState() {
+            const state = {
+                amount: simAmount.value,
+                period: simPeriod.value,
+                product: simProductSelect.value,
+                inflation: simInflation.value
+            };
+            localStorage.setItem('simulatorState', JSON.stringify(state));
+        }
 
-        function loadSimulatorState() {
-            const state = JSON.parse(localStorage.getItem('simulatorState'));
-            if (state) {
-                simAmount.value = state.amount;
-                simPeriod.value = state.period;
-                simProductSelect.value = state.product;
-                simInflation.value = state.inflation;
-                simInflationRange.value = state.inflation;
-                updateInflationBar();
-            }
-        }
-        
-        function saveSimulation() {
-            const amount = parseNumber(simAmount.value);
-            const periodMonths = parseInt(simPeriod.value);
-            const inflationRate = parseFloat(simInflation.value) || 0;
-            const selectedProduct = allProducts.find(item => item.id === simProductSelect.value);
-            
-            if (!selectedProduct || !amount || !periodMonths) {
-                showToast('Complete todos los campos para guardar la simulación', 'warning');
-                return;
-            }
-            
-            const simulation = {
-                id: Date.now(),
-                date: new Date().toLocaleDateString('es-PY'),
-                amount: amount,
-                period: periodMonths,
-                product: selectedProduct.id,
-                inflation: inflationRate,
-                institution: selectedProduct.institucion,
-                productName: selectedProduct.producto,
-                rate: selectedProduct.tasa
-            };
-            
-            savedSimulations.unshift(simulation);
-            localStorage.setItem('savedSimulations', JSON.stringify(savedSimulations));
-            updateSavedSimulations();
-            showToast('Simulación guardada correctamente', 'success');
-        }
-        
-        function updateSavedSimulations() {
-            if (savedSimulations.length === 0) {
-                savedSimulationsContainer.innerHTML = '<p class="text-sm text-center py-4">No hay simulaciones guardadas</p>';
-                return;
-            }
-            
-            savedSimulationsContainer.innerHTML = '';
-            savedSimulations.slice(0, 5).forEach(sim => {
-                const div = document.createElement('div');
-                div.className = 'p-3 rounded border flex justify-between items-center';
-                div.style.borderColor = 'var(--border-color)';
-                div.innerHTML = `
-                    <div>
-                        <div class="font-medium">${sim.institution}</div>
-                        <div class="text-sm">${formatNumber(sim.amount)} Gs. · ${sim.period} meses</div>
-                    </div>
-                    <button class="load-simulation p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" data-id="${sim.id}">
-                        <i class="fas fa-upload"></i>
-                    </button>
-                `;
-                savedSimulationsContainer.appendChild(div);
-            });
-            
-            // Añadir event listeners a los botones de carga
-            document.querySelectorAll('.load-simulation').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const id = parseInt(e.currentTarget.dataset.id);
-                    loadSimulation(id);
-                });
-            });
-        }
-        
-        function loadSimulation(id) {
-            const simulation = savedSimulations.find(s => s.id === id);
-            if (simulation) {
-                simAmount.value = formatNumber(simulation.amount);
-                simPeriod.value = simulation.period;
-                simProductSelect.value = simulation.product;
-                simInflation.value = simulation.inflation;
-                simInflationRange.value = simulation.inflation;
-                updateInflationBar();
-                calculateReturns();
-                showToast('Simulación cargada', 'success');
-            }
-        }
-        
-        function handleShare() {
-            const state = {
-                amount: parseNumber(simAmount.value),
-                period: simPeriod.value,
-                product: simProductSelect.value,
-                inflation: simInflation.value
-            };
-            const params = new URLSearchParams(state).toString();
-            const url = `${window.location.origin}${window.location.pathname}?${params}`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Simulación de ahorro - AhorroPY',
-                    text: 'Mira esta simulación de ahorro que creé con AhorroPY',
-                    url: url
-                }).then(() => {
-                    showToast('¡Simulación compartida!', 'success');
-                }).catch(() => {
-                    copyShareUrl(url);
-                });
-            } else {
-                copyShareUrl(url);
-            }
-        }
-        
-        function copyShareUrl(url) {
-            navigator.clipboard.writeText(url).then(() => {
-                showToast('¡Enlace de simulación copiado!', 'success');
-            }, () => {
-                showToast('Error al copiar el enlace.', 'error');
-            });
-        }
+        function loadSimulatorState() {
+            const state = JSON.parse(localStorage.getItem('simulatorState'));
+            if (state) {
+                simAmount.value = state.amount;
+                simPeriod.value = state.period;
+                simProductSelect.value = state.product;
+                simInflation.value = state.inflation;
+                simInflationRange.value = state.inflation;
+                updateInflationBar();
+            }
+        }
+        
+        function saveSimulation() {
+            const amount = parseNumber(simAmount.value);
+            const periodMonths = parseInt(simPeriod.value);
+            const inflationRate = parseFloat(simInflation.value) || 0;
+            const selectedProduct = allProducts.find(item => item.id === simProductSelect.value);
+            
+            if (!selectedProduct || !amount || !periodMonths) {
+                showToast('Complete todos los campos para guardar la simulación', 'warning');
+                return;
+            }
+            
+            const simulation = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString('es-PY'),
+                amount: amount,
+                period: periodMonths,
+                product: selectedProduct.id,
+                inflation: inflationRate,
+                institution: selectedProduct.institucion,
+                productName: selectedProduct.producto,
+                rate: selectedProduct.tasa
+            };
+            
+            savedSimulations.unshift(simulation);
+            localStorage.setItem('savedSimulations', JSON.stringify(savedSimulations));
+            updateSavedSimulations();
+            showToast('Simulación guardada correctamente', 'success');
+        }
+        
+        function updateSavedSimulations() {
+            if (savedSimulations.length === 0) {
+                savedSimulationsContainer.innerHTML = '<p class="text-sm text-center py-4">No hay simulaciones guardadas</p>';
+                return;
+            }
+            
+            savedSimulationsContainer.innerHTML = '';
+            savedSimulations.slice(0, 5).forEach(sim => {
+                const div = document.createElement('div');
+                div.className = 'p-3 rounded border flex justify-between items-center';
+                div.style.borderColor = 'var(--border-color)';
+                div.innerHTML = `
+                    <div>
+                        <div class="font-medium">${sim.institution}</div>
+                        <div class="text-sm">${formatNumber(sim.amount)} Gs. · ${sim.period} meses</div>
+                    </div>
+                    <button class="load-simulation p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" data-id="${sim.id}">
+                        <i class="fas fa-upload"></i>
+                    </button>
+                `;
+                savedSimulationsContainer.appendChild(div);
+            });
+            
+            // Añadir event listeners a los botones de carga
+            document.querySelectorAll('.load-simulation').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.currentTarget.dataset.id);
+                    loadSimulation(id);
+                });
+            });
+        }
+        
+        function loadSimulation(id) {
+            const simulation = savedSimulations.find(s => s.id === id);
+            if (simulation) {
+                simAmount.value = formatNumber(simulation.amount);
+                simPeriod.value = simulation.period;
+                simProductSelect.value = simulation.product;
+                simInflation.value = simulation.inflation;
+                simInflationRange.value = simulation.inflation;
+                updateInflationBar();
+                calculateReturns();
+                showToast('Simulación cargada', 'success');
+            }
+        }
+        
+        function handleShare() {
+            const state = {
+                amount: parseNumber(simAmount.value),
+                period: simPeriod.value,
+                product: simProductSelect.value,
+                inflation: simInflation.value
+            };
+            const params = new URLSearchParams(state).toString();
+            const url = `${window.location.origin}${window.location.pathname}?${params}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Simulación de ahorro - AhorroPY',
+                    text: 'Mira esta simulación de ahorro que creé con AhorroPY',
+                    url: url
+                }).then(() => {
+                    showToast('¡Simulación compartida!', 'success');
+                }).catch(() => {
+                    copyShareUrl(url);
+                });
+            } else {
+                copyShareUrl(url);
+        _B_
+            }
+        }
+        
+        function copyShareUrl(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('¡Enlace de simulación copiado!', 'success');
+            }, () => {
+                showToast('Error al copiar el enlace.', 'error');
+            });
+        }
 
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type} show`;
-            
-            let icon = 'ℹ️';
-            if (type === 'success') icon = '✅';
-            if (type === 'error') icon = '❌';
-            if (type === 'warning') icon = '⚠️';
-            
-            toast.innerHTML = `
-                <span>${icon}</span>
-                <span>${message}</span>
-                <button class="ml-2 toast-close">✕</button>
-            `;
-            
-            toastContainer.appendChild(toast);
-            
-            // Añadir evento para cerrar el toast
-            toast.querySelector('.toast-close').addEventListener('click', () => {
-                toast.remove();
-            });
-            
-            // Auto-remove después de 5 segundos
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.remove();
-                }
-            }, 5000);
-        }
-        
-        function checkForNewRates() {
-            // Simular chequeo de nuevas tasas (en una app real, aquí se haría una petición a una API)
-            const hasNewRates = Math.random() > 0.7; // 30% de probabilidad
-            if (hasNewRates) {
-                const notification = {
-                    id: Date.now(),
-                    type: 'info',
-                    message: 'Hay nuevas tasas de interés disponibles',
-                    date: new Date().toISOString(),
-                    read: false
-                };
-                
-                notifications.unshift(notification);
-                localStorage.setItem('notifications', JSON.stringify(notifications));
-                updateNotificationBadge();
-            }
-        }
-        
-        function updateNotificationBadge() {
-            const unreadCount = notifications.filter(n => !n.read).length;
-            if (unreadCount > 0) {
-                notificationBadge.textContent = unreadCount;
-                notificationBadge.classList.remove('hidden');
-            } else {
-                notificationBadge.classList.add('hidden');
-            }
-        }
-        
-        function showNotifications() {
-            // Marcar todas como leídas
-            notifications = notifications.map(n => ({ ...n, read: true }));
-            localStorage.setItem('notifications', JSON.stringify(notifications));
-            updateNotificationBadge();
-            
-            // Mostrar modal con notificaciones
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.innerHTML = `
-                <div class="modal-content relative" style="max-width: 500px;">
-                    <button class="modal-close" aria-label="Cerrar modal">&times;</button>
-                    <h3 class="text-xl font-bold mb-4">Notificaciones</h3>
-                    <div class="space-y-3">
-                        ${notifications.length > 0 ? 
-                            notifications.map(n => `
-                                <div class="p-3 rounded border" style="border-color: var(--border-color);">
-                                    <div class="font-medium">${n.message}</div>
-                                    <div class="text-sm text-gray-500">${new Date(n.date).toLocaleDateString('es-PY')}</div>
-                                </div>
-                            `).join('') : 
-                            '<p class="text-center py-4">No hay notificaciones</p>'
-                        }
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            modal.style.display = 'flex';
-            
-            // Añadir event listener para cerrar
-            modal.querySelector('.modal-close').addEventListener('click', () => {
-                modal.remove();
-            });
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
-        
-        function lazyLoadImages() {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.remove('lazy');
-                        observer.unobserve(img);
-                    }
-                });
-            });
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type} show`;
+            
+            let icon = 'ℹ️';
+            if (type === 'success') icon = '✅';
+            if (type === 'error') icon = '❌';
+            if (type === 'warning') icon = '⚠️';
+            
+            toast.innerHTML = `
+                <span>${icon}</span>
+                <span>${message}</span>
+                <button class="ml-2 toast-close">✕</button>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Añadir evento para cerrar el toast
+            toast.querySelector('.toast-close').addEventListener('click', () => {
+                toast.remove();
+            });
+            
+            // Auto-remove después de 5 segundos
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 5000);
+        }
+        
+        function checkForNewRates() {
+            // Simular chequeo de nuevas tasas (en una app real, aquí se haría una petición a una API)
+            const hasNewRates = Math.random() > 0.7; // 30% de probabilidad
+            if (hasNewRates) {
+                const notification = {
+                    id: Date.now(),
+                    type: 'info',
+                    message: 'Hay nuevas tasas de interés disponibles',
+                    date: new Date().toISOString(),
+                    read: false
+                };
+                
+                notifications.unshift(notification);
+                localStorage.setItem('notifications', JSON.stringify(notifications));
+                updateNotificationBadge();
+            }
+        }
+        
+        function updateNotificationBadge() {
+            const unreadCount = notifications.filter(n => !n.read).length;
+            if (unreadCount > 0) {
+                notificationBadge.textContent = unreadCount;
+                notificationBadge.classList.remove('hidden');
+            } else {
+                notificationBadge.classList.add('hidden');
+            }
+        }
+        
+        function showNotifications() {
+            // Marcar todas como leídas
+            notifications = notifications.map(n => ({ ...n, read: true }));
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            updateNotificationBadge();
+            
+            // Mostrar modal con notificaciones
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content relative" style="max-width: 500px;">
+                    <button class="modal-close" aria-label="Cerrar modal">&times;</button>
+                    <h3 class="text-xl font-bold mb-4">Notificaciones</h3>
+                    <div class="space-y-3">
+                        ${notifications.length > 0 ? 
+                            notifications.map(n => `
+                                <div class="p-3 rounded border" style="border-color: var(--border-color);">
+                                    <div class="font-medium">${n.message}</div>
+                                    <div class="text-sm text-gray-500">${new Date(n.date).toLocaleDateString('es-PY')}</div>
+                                </div>
+                            `).join('') : 
+                            '<p class="text-center py-4">No hay notificaciones</p>'
+                        }
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+            
+            // Añadir event listener para cerrar
+            modal.querySelector('.modal-close').addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        function lazyLoadImages() {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                });
+            });
 
-            document.querySelectorAll('img.lazy').forEach(img => {
-                imageObserver.observe(img);
-            });
-        }
+            document.querySelectorAll('img.lazy').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
 
-        const formatNumber = num => new Intl.NumberFormat('es-PY').format(Math.round(num));
-        const parseNumber = str => parseFloat(String(str).replace(/\./g, '')) || 0;
+        const formatNumber = num => new Intl.NumberFormat('es-PY').format(Math.round(num));
+        const parseNumber = str => parseFloat(String(str).replace(/\./g, '')) || 0;
 
-        initializeApp();
-    });
-    </script>
+        initializeApp();
+    });
+    </script>
 </body>
 </html>
