@@ -23,6 +23,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Twitch Embed Script -->
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
     <script>
         // Cargar Chart.js solo cuando sea necesario
         function loadChartJS() {
@@ -110,7 +112,6 @@
         .calculator-input, select { background-color: var(--background-color); border: 1px solid var(--border-color); color: var(--text-color); }
         select option { background-color: var(--card-background); color: var(--text-color); }
 
-        /* Estilos para el fondo de la sección #inicio */
         #inicio {
             position: relative;
             overflow: hidden;
@@ -143,6 +144,8 @@
     </style>
 </head>
 <body class="antialiased">
+
+    <div id="twitch-embed" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.1; pointer-events: none;"></div>
 
     <header class="sticky top-0 z-50 shadow-sm bg-opacity-80 backdrop-blur-md" style="background-color: var(--header-bg);">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -473,25 +476,64 @@
 document.addEventListener('DOMContentLoaded', function () {
     // --- DATABASE ---
     const data = [
-        { id: 'medalla-cda', institucion: 'Cooperativa Medalla Milagrosa', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 11.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Suele ofrecer las tasas más altas del mercado', desventaja: 'Requiere ser socio de la cooperativa', proceso: 'Primero debes asociarte (implica un aporte de capital). La apertura del plazo fijo es presencial.', capitalizacion: 'Al vencimiento.', riesgo: 'Regulada por INCOOP. Considerada de bajo riesgo en el sector cooperativo.', fiscal: 'Rendimientos (excedentes) suelen tener beneficios fiscales.' },
-        { id: 'universitaria-cda', institucion: 'Cooperativa Universitaria', producto: 'CDA Socios', tipo: 'cda', tasa: 10.50, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Excelentes tasas y gran solidez', desventaja: 'Requiere ser socio y cumplir requisitos', proceso: 'Debes ser socio para acceder. La apertura se realiza en sucursales.', capitalizacion: 'Generalmente al vencimiento.', riesgo: 'Regulada por INCOOP. Una de las cooperativas más grandes y seguras del país.', fiscal: 'Excedentes de socios suelen tener beneficios fiscales. Consultar normativa.' },
-        { id: 'gnb-cda', institucion: 'Banco GNB Paraguay', producto: 'CDA a Plazo Fijo', tipo: 'cda', tasa: 8.75, montoMinimo: '10.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas muy competitivas', desventaja: 'Monto de apertura elevado', proceso: 'Gestión en sucursales con atención personalizada. Requiere documentación estándar.', capitalizacion: 'Al vencimiento.', riesgo: 'Parte de un grupo financiero internacional sólido. Entidad segura.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.' },
-        { id: 'familiar-cda', institucion: 'Banco Familiar', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 8.60, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas atractivas y buena atención al cliente', desventaja: 'Red de sucursales más pequeña que los bancos más grandes', proceso: 'Apertura generalmente presencial. Se requiere documentación básica y comprobante de ingresos.', capitalizacion: 'Al vencimiento del plazo.', riesgo: 'Banco de larga trayectoria en el país, regulado y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.' },
-        { id: 'atlas-cda', institucion: 'Banco Atlas', producto: 'CDA Plus', tipo: 'cda', tasa: 8.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Buenas tasas y promociones frecuentes', desventaja: 'Mejores tasas a veces exigen plazos más largos', proceso: 'Contratación en sucursales con asesoría. Requiere CI y comprobantes de ingresos.', capitalizacion: 'Al vencimiento.', riesgo: 'Banco privado con décadas en el mercado, de alta solidez.', fiscal: 'Rendimientos alcanzados por el IRP o IRE. El banco realiza la retención.' },
-        { id: 'continental-cda', institucion: 'Banco Continental', producto: 'CDA Digital a 1 año', tipo: 'cda', tasa: 8.25, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Proceso 100% online y montos accesibles', desventaja: 'Tasas competitivas pero no siempre las más altas', proceso: 'Fácil y rápido a través de su app o web si ya eres cliente.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos privados más grandes y sólidos del país.', fiscal: 'Rendimientos gravados. El banco practica la retención correspondiente.' },
-        { id: 'itau-cda', institucion: 'Banco Itaú', producto: 'CDA Digital', tipo: 'cda', tasa: 8.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Plataforma digital robusta y gran solidez del banco', desventaja: 'Sus tasas de interés no suelen ser las más altas del mercado', proceso: 'Fácil de gestionar desde la app o web para clientes. No requiere ir a sucursal.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos más grandes y seguros de la región.', fiscal: 'Rendimientos sujetos a la retención de impuestos vigente.' },
-        { id: 'bnf-cda', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'CDA a 1 año', tipo: 'cda', tasa: 7.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Máxima seguridad (banco estatal)', desventaja: 'Procesos pueden ser más burocráticos', proceso: 'Generalmente presencial en sucursales. Requiere documentación básica.', capitalizacion: 'Al vencimiento.', riesgo: 'Considerado el riesgo más bajo del sistema financiero paraguayo.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.' },
-        { id: 'familiar-ahorro', institucion: 'Banco Familiar', producto: 'Ahorro Flexible', tipo: 'ahorro', tasa: 7.25, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Tasa muy competitiva para ahorro programado y plazos flexibles', desventaja: 'Puede requerir apertura presencial de cuenta base', proceso: 'Se puede programar desde la app o web una vez que se es cliente.', capitalizacion: 'Al final del plazo.', riesgo: 'Banco seguro y con buena reputación.', fiscal: 'Intereses sujetos a retención de impuestos.' },
-        { id: 'vision-ahorro', institucion: 'Visión Banco', producto: 'Ahorro Programado Anual', tipo: 'ahorro', tasa: 7.00, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Fomenta el hábito del ahorro con cuotas bajas', desventaja: 'Tasa menor a un CDA por el mismo plazo', proceso: 'Contratación sencilla en sucursales o canales digitales para clientes.', capitalizacion: 'Los intereses se calculan sobre el saldo promedio y se acreditan al final.', riesgo: 'Banco de gran trayectoria y solidez. Opción segura.', fiscal: 'Intereses sujetos a retenciones de impuestos.' },
-        { id: 'atlas-ahorro', institucion: 'Banco Atlas', producto: 'Ahorro Programado Mi Meta', tipo: 'ahorro', tasa: 6.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Flexibilidad en plazos y cuotas, 100% digital', desventaja: 'Tasa inferior a otras opciones de inversión', proceso: 'Se puede abrir y gestionar desde la app del banco si ya eres cliente.', capitalizacion: 'Al final del periodo.', riesgo: 'Banco privado sólido y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.' },
-        { id: 'itau-ahorro', institucion: 'Banco Itaú', producto: 'Mi Ahorro', tipo: 'ahorro', tasa: 6.00, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Muy fácil de configurar desde la app, fomenta el hábito', desventaja: 'Rendimiento modesto en comparación con otras opciones', proceso: 'Totalmente digital para clientes a través de la app de Itaú.', capitalizacion: 'Al final del plazo elegido.', riesgo: 'Muy bajo, respaldado por la solidez del banco.', fiscal: 'Intereses sujetos a retención de impuestos.' },
-        { id: 'bnf-ahorro', institucion: 'Banco Nacional de Fomento (BNF)', producto: 'Ahorro Programado', tipo: 'ahorro', tasa: 5.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Seguridad máxima del estado', desventaja: 'Tasa de interés más baja del mercado', proceso: 'Apertura presencial en sucursales.', capitalizacion: 'Al vencimiento.', riesgo: 'El más bajo posible al ser el banco del estado.', fiscal: 'Rendimientos sujetos a retención.' }
+        { id: 'medalla-cda', institucion: 'Cooperativa Medalla Milagrosa', url: 'https://www.medalla.coop.py/', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 11.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Suele ofrecer las tasas más altas del mercado', desventaja: 'Requiere ser socio de la cooperativa', proceso: 'Primero debes asociarte (implica un aporte de capital). La apertura del plazo fijo es presencial.', capitalizacion: 'Al vencimiento.', riesgo: 'Regulada por INCOOP. Considerada de bajo riesgo en el sector cooperativo.', fiscal: 'Rendimientos (excedentes) suelen tener beneficios fiscales.' },
+        { id: 'universitaria-cda', institucion: 'Cooperativa Universitaria', url: 'https://www.universitaria.coop.py/', producto: 'CDA Socios', tipo: 'cda', tasa: 10.50, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Excelentes tasas y gran solidez', desventaja: 'Requiere ser socio y cumplir requisitos', proceso: 'Debes ser socio para acceder. La apertura se realiza en sucursales.', capitalizacion: 'Generalmente al vencimiento.', riesgo: 'Regulada por INCOOP. Una de las cooperativas más grandes y seguras del país.', fiscal: 'Excedentes de socios suelen tener beneficios fiscales. Consultar normativa.' },
+        { id: 'gnb-cda', institucion: 'Banco GNB Paraguay', url: 'https://www.gnb.com.py/', producto: 'CDA a Plazo Fijo', tipo: 'cda', tasa: 8.75, montoMinimo: '10.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas muy competitivas', desventaja: 'Monto de apertura elevado', proceso: 'Gestión en sucursales con atención personalizada. Requiere documentación estándar.', capitalizacion: 'Al vencimiento.', riesgo: 'Parte de un grupo financiero internacional sólido. Entidad segura.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.' },
+        { id: 'familiar-cda', institucion: 'Banco Familiar', url: 'https://www.familiar.com.py/', producto: 'Ahorro a Plazo Fijo', tipo: 'cda', tasa: 8.60, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Tasas atractivas y buena atención al cliente', desventaja: 'Red de sucursales más pequeña que los bancos más grandes', proceso: 'Apertura generalmente presencial. Se requiere documentación básica y comprobante de ingresos.', capitalizacion: 'Al vencimiento del plazo.', riesgo: 'Banco de larga trayectoria en el país, regulado y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.' },
+        { id: 'atlas-cda', institucion: 'Banco Atlas', url: 'https://www.bancoatlas.com.py/', producto: 'CDA Plus', tipo: 'cda', tasa: 8.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Buenas tasas y promociones frecuentes', desventaja: 'Mejores tasas a veces exigen plazos más largos', proceso: 'Contratación en sucursales con asesoría. Requiere CI y comprobantes de ingresos.', capitalizacion: 'Al vencimiento.', riesgo: 'Banco privado con décadas en el mercado, de alta solidez.', fiscal: 'Rendimientos alcanzados por el IRP o IRE. El banco realiza la retención.' },
+        { id: 'continental-cda', institucion: 'Banco Continental', url: 'https://www.bancontinental.com.py/', producto: 'CDA Digital a 1 año', tipo: 'cda', tasa: 8.25, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Proceso 100% online y montos accesibles', desventaja: 'Tasas competitivas pero no siempre las más altas', proceso: 'Fácil y rápido a través de su app o web si ya eres cliente.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos privados más grandes y sólidos del país.', fiscal: 'Rendimientos gravados. El banco practica la retención correspondiente.' },
+        { id: 'itau-cda', institucion: 'Banco Itaú', url: 'https://www.itau.com.py/', producto: 'CDA Digital', tipo: 'cda', tasa: 8.00, montoMinimo: '1.000.000', plazoMinimo: '12 meses', ventaja: 'Plataforma digital robusta y gran solidez del banco', desventaja: 'Sus tasas de interés no suelen ser las más altas del mercado', proceso: 'Fácil de gestionar desde la app o web para clientes. No requiere ir a sucursal.', capitalizacion: 'Al vencimiento.', riesgo: 'Uno de los bancos más grandes y seguros de la región.', fiscal: 'Rendimientos sujetos a la retención de impuestos vigente.' },
+        { id: 'bnf-cda', institucion: 'Banco Nacional de Fomento (BNF)', url: 'https://www.bnf.gov.py/', producto: 'CDA a 1 año', tipo: 'cda', tasa: 7.50, montoMinimo: '5.000.000', plazoMinimo: '12 meses', ventaja: 'Máxima seguridad (banco estatal)', desventaja: 'Procesos pueden ser más burocráticos', proceso: 'Generalmente presencial en sucursales. Requiere documentación básica.', capitalizacion: 'Al vencimiento.', riesgo: 'Considerado el riesgo más bajo del sistema financiero paraguayo.', fiscal: 'Rendimientos sujetos a retención de IRP o IRE.' },
+        { id: 'familiar-ahorro', institucion: 'Banco Familiar', url: 'https://www.familiar.com.py/', producto: 'Ahorro Flexible', tipo: 'ahorro', tasa: 7.25, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Tasa muy competitiva para ahorro programado y plazos flexibles', desventaja: 'Puede requerir apertura presencial de cuenta base', proceso: 'Se puede programar desde la app o web una vez que se es cliente.', capitalizacion: 'Al final del plazo.', riesgo: 'Banco seguro y con buena reputación.', fiscal: 'Intereses sujetos a retención de impuestos.' },
+        { id: 'vision-ahorro', institucion: 'Visión Banco', url: 'https://www.visionbanco.com/', producto: 'Ahorro Programado Anual', tipo: 'ahorro', tasa: 7.00, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Fomenta el hábito del ahorro con cuotas bajas', desventaja: 'Tasa menor a un CDA por el mismo plazo', proceso: 'Contratación sencilla en sucursales o canales digitales para clientes.', capitalizacion: 'Los intereses se calculan sobre el saldo promedio y se acreditan al final.', riesgo: 'Banco de gran trayectoria y solidez. Opción segura.', fiscal: 'Intereses sujetos a retenciones de impuestos.' },
+        { id: 'atlas-ahorro', institucion: 'Banco Atlas', url: 'https://www.bancoatlas.com.py/', producto: 'Ahorro Programado Mi Meta', tipo: 'ahorro', tasa: 6.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Flexibilidad en plazos y cuotas, 100% digital', desventaja: 'Tasa inferior a otras opciones de inversión', proceso: 'Se puede abrir y gestionar desde la app del banco si ya eres cliente.', capitalizacion: 'Al final del periodo.', riesgo: 'Banco privado sólido y seguro.', fiscal: 'Rendimientos sujetos a retención de impuestos.' },
+        { id: 'itau-ahorro', institucion: 'Banco Itaú', url: 'https://www.itau.com.py/', producto: 'Mi Ahorro', tipo: 'ahorro', tasa: 6.00, montoMinimo: '50.000 (cuota mensual)', plazoMinimo: '6 meses', ventaja: 'Muy fácil de configurar desde la app, fomenta el hábito', desventaja: 'Rendimiento modesto en comparación con otras opciones', proceso: 'Totalmente digital para clientes a través de la app de Itaú.', capitalizacion: 'Al final del plazo elegido.', riesgo: 'Muy bajo, respaldado por la solidez del banco.', fiscal: 'Intereses sujetos a retención de impuestos.' },
+        { id: 'bnf-ahorro', institucion: 'Banco Nacional de Fomento (BNF)', url: 'https://www.bnf.gov.py/', producto: 'Ahorro Programado', tipo: 'ahorro', tasa: 5.50, montoMinimo: '100.000 (cuota mensual)', plazoMinimo: '12 meses', ventaja: 'Seguridad máxima del estado', desventaja: 'Tasa de interés más baja del mercado', proceso: 'Apertura presencial en sucursales.', capitalizacion: 'Al vencimiento.', riesgo: 'El más bajo posible al ser el banco del estado.', fiscal: 'Rendimientos sujetos a retención.' }
     ];
 
     // --- GENERAL PAGE SETUP ---
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     if (mobileMenuButton) mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    // --- TWITCH FALLBACK PLAYER LOGIC ---
+    const twitchChannels = ['guidufox', 'deihvaok', 'draco_fds'];
+    function loadTwitchPlayer(options) {
+        document.getElementById('twitch-embed').innerHTML = '';
+        new Twitch.Embed("twitch-embed", { ...options, width: "100%", height: "100%", parent: ["guidufox.github.io"], muted: true, autoplay: true });
+    }
+
+    function checkChannel(index) {
+        if (index >= twitchChannels.length) {
+            console.log("No live channels. Loading VODs for guidufox.");
+            loadTwitchPlayer({ collection: 'vods', channel: 'guidufox' });
+            return;
+        }
+        const channel = twitchChannels[index];
+        const tempEmbedContainer = document.createElement('div');
+        document.body.appendChild(tempEmbedContainer);
+        const embed = new Twitch.Embed(tempEmbedContainer, { width: "1", height: "1", channel: channel, parent: ["guidufox.github.io"] });
+        let isLive = false;
+        
+        embed.addEventListener(Twitch.Embed.ONLINE, () => {
+            isLive = true;
+            console.log(`${channel} is live (ONLINE event). Loading player.`);
+            loadTwitchPlayer({ channel: channel });
+            tempEmbedContainer.remove();
+        });
+        
+        setTimeout(() => {
+            if (!isLive) {
+                console.log(`${channel} appears to be offline. Checking next...`);
+                checkChannel(index + 1);
+            }
+            if (tempEmbedContainer) {
+                 tempEmbedContainer.remove();
+            }
+        }, 5000);
+    }
+    // checkChannel(0); // Descomentar para activar Twitch
+
 
     // --- THEME TOGGLE LOGIC ---
     const themeToggle = document.getElementById('theme-toggle');
@@ -559,7 +601,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const isFavorite = favorites[item.id] || false;
             tr.innerHTML = `
                 <td class="py-3 px-4 text-center" data-label="Favorito"><button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${item.id}">${isFavorite ? '❤️' : '🤍'}</button></td>
-                <td class="py-3 px-4 font-medium" data-label="Institución">${item.institucion}</td>
+                <td class="py-3 px-4" data-label="Institución">
+                    <div class="font-medium">${item.institucion}</div>
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="text-xs hover:underline" style="color: var(--primary-color);" onclick="event.stopPropagation()">Visitar sitio web</a>
+                </td>
                 <td class="py-3 px-4" data-label="Producto">${item.producto}</td>
                 <td class="py-3 px-4 text-center font-semibold text-green-700" data-label="Tasa Anual">${item.tasa.toFixed(2)}%</td>
                 <td class="py-3 px-4 text-right hidden md:table-cell" data-label="Monto Mínimo">${item.montoMinimo}</td>
