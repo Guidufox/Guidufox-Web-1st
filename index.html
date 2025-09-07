@@ -55,7 +55,23 @@
         .progress-bar-fill { height: 100%; background-color: var(--primary-color); transition: width 0.3s ease; }
         .fade-in { animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .floating-btn { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 90; cursor: pointer; transition: all 0.3s; }
+        .floating-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem; /* <-- CAMBIO REALIZADO AQUÍ */
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 90;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
         .floating-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
         .feature-card { transition: all 0.3s ease; }
         .feature-card:hover { transform: translateY(-5px); }
@@ -68,7 +84,12 @@
             .comparison-table td:first-child, .comparison-table td:nth-child(2) { padding-left: 1rem; text-align: left; }
             .filter-container { flex-direction: column; align-items: stretch; }
             .modal-content { width: 95%; padding: 1rem; }
-            .floating-btn { bottom: 1rem; right: 1rem; width: 50px; height: 50px; }
+            .floating-btn {
+                bottom: 1rem;
+                left: 1rem; /* <-- CAMBIO REALIZADO AQUÍ */
+                width: 50px;
+                height: 50px;
+            }
         }
     </style>
 </head>
@@ -559,7 +580,6 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Base de datos ampliada con más productos
         const databaseData = {
           "lastUpdated": "2025-09-06",
           "products": [
@@ -587,7 +607,6 @@
         let savedSimulations = JSON.parse(localStorage.getItem('savedSimulations')) || [];
         let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
 
-        // Elementos DOM
         const themeToggle = document.getElementById('theme-toggle');
         const themeToggleMobile = document.getElementById('theme-toggle-mobile');
         const lightIcon = document.getElementById('theme-icon-light');
@@ -1311,6 +1330,7 @@
         initializeApp();
     });
     </script>
+    
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -1323,7 +1343,4 @@
     })();
     </script>
     </body>
-</body>
 </html>
-
-
