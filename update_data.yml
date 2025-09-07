@@ -1,0 +1,41 @@
+name: Actualización Diaria de Tasas
+
+on:
+  # Permite ejecutarlo manualmente desde la pestaña "Actions" de GitHub
+  workflow_dispatch:
+  
+  # Lo programa para que se ejecute todos los días a las 09:00 UTC (6:00 AM en Paraguay)
+  schedule:
+    - cron: '0 9 * * *'
+
+jobs:
+  update-data-file:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Clona tu repositorio para tener acceso a los archivos
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Configura el entorno de Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # 3. Instala las librerías necesarias (pytz en nuestro caso)
+      - name: Install dependencies
+        run: pip install pytz
+
+      # 4. Ejecuta tu script de Python para actualizar datos.json
+      - name: Run the updater script
+        run: python updater.py
+
+      # 5. Guarda los cambios en datos.json de vuelta a tu repositorio
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "Bot de Actualización"
+          git config --global user.email "bot@github.com"
+          git add datos.json
+          # El siguiente comando solo hará un commit si hay cambios en datos.json
+          git commit -m "Actualización automática de tasas de interés" || echo "No hay cambios para commitear"
+          git push
